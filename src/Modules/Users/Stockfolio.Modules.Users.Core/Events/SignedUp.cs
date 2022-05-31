@@ -1,0 +1,5 @@
+﻿using Stockfolio.Shared.Abstractions.Events;
+
+namespace Stockfolio.Modules.Users.Core.Events;
+
+internal record SignedUp(Guid UserId, string Email, string Role) : IEvent;

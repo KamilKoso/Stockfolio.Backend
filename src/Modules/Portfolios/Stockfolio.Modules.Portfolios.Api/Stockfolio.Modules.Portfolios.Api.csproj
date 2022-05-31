@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <TargetFramework>net6.0</TargetFramework>
+	  <RootNamespace>Stockfolio.Modules.Portfolios.Api</RootNamespace>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<None Remove="module.portfolios.json" />
+		<Content Include="module.portfolios.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<None Remove="module.portfolios.development.json" />
+		<Content Include="module.portfolios.development.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\StockFolio.Shared.Infrastructure\StockFolio.Shared.Infrastructure.csproj" />
+    <ProjectReference Include="..\Stockfolio.Modules.Portfolios.Infrastructure\Stockfolio.Modules.Portfolios.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,8 @@
+{
+	"portfolios": {
+		"module": {
+			"name": "Portfolios",
+			"enabled": true
+		}
+	}
+}

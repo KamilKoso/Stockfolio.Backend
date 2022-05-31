@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\StockFolio.Shared.Abstractions\StockFolio.Shared.Abstractions.csproj" />
+    <ProjectReference Include="..\Stockfolio.Modules.Portfolios.Core\Stockfolio.Modules.Portfolios.Core.csproj" />
+  </ItemGroup>
+
+</Project>
