@@ -5,5 +5,5 @@ namespace Stockfolio.Modules.Users.Core.Queries;
 
 internal class GetUserByEmail : IQuery<UserDetailsDto>
 {
-    public string Email { get; set; }
+    public string Email { get; init; }
 }

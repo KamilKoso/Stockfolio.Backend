@@ -61,6 +61,26 @@ internal class AccountController : BaseController
         return Ok(user);
     }
 
+    [HttpPost("generate-email-confirmation-token")]
+    [SwaggerOperation("Generate email confirmation token")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult> GenerateEmailConfirmationTokenAsync(GenerateEmailConfirmationToken command)
+    {
+        await _dispatcher.SendAsync(command);
+        return NoContent();
+    }
+
+    [HttpPost("confirm-email")]
+    [SwaggerOperation("Confirm email")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult> ConfirmEmail(ConfirmEmail command)
+    {
+        await _dispatcher.SendAsync(command);
+        return NoContent();
+    }
+
     [Authorize]
     [HttpDelete("sign-out")]
     [SwaggerOperation("Sign out")]

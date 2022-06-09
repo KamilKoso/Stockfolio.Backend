@@ -5,5 +5,5 @@ namespace Stockfolio.Modules.Users.Core.Queries;
 
 internal class GetUser : IQuery<UserDetailsDto>
 {
-    public Guid UserId { get; set; }
+    public Guid UserId { get; init; }
 }

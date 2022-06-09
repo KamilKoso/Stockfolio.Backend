@@ -1,16 +1,16 @@
+using Microsoft.IdentityModel.Tokens;
+using Stockfolio.Shared.Abstractions.Auth;
+using Stockfolio.Shared.Abstractions.Time;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using Stockfolio.Shared.Abstractions.Auth;
-using Stockfolio.Shared.Abstractions.Time;
 
 namespace Stockfolio.Shared.Infrastructure.Auth;
 
-public sealed class AuthManager : IAuthManager
+public sealed class JwtProvider : IJwtProvider
 {
     private static readonly Dictionary<string, IEnumerable<string>> EmptyClaims = new();
     private readonly AuthOptions _options;
@@ -18,7 +18,7 @@ public sealed class AuthManager : IAuthManager
     private readonly SigningCredentials _signingCredentials;
     private readonly string _issuer;
 
-    public AuthManager(AuthOptions options, IClock clock)
+    public JwtProvider(AuthOptions options, IClock clock)
     {
         var issuerSigningKey = options.IssuerSigningKey;
         if (issuerSigningKey is null)
@@ -28,11 +28,11 @@ public sealed class AuthManager : IAuthManager
 
         _options = options;
         _clock = clock;
-        _signingCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.IssuerSigningKey)),  SecurityAlgorithms.HmacSha256);
+        _signingCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.IssuerSigningKey)), SecurityAlgorithms.HmacSha256);
         _issuer = options.Issuer;
     }
 
-    public JsonWebToken CreateToken(Guid userId, string role = null, string audience = null,
+    public JsonWebToken CreateToken(Guid userId, IEnumerable<string> roles = null, string audience = null,
         IDictionary<string, IEnumerable<string>> claims = null)
     {
         var now = _clock.CurrentDate();
@@ -43,7 +43,8 @@ public sealed class AuthManager : IAuthManager
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new(JwtRegisteredClaimNames.Iat, new DateTimeOffset(now).ToUnixTimeMilliseconds().ToString())
         };
-        if (!string.IsNullOrWhiteSpace(role))
+
+        foreach (var role in roles)
         {
             jwtClaims.Add(new Claim(ClaimTypes.Role, role));
         }
@@ -81,7 +82,7 @@ public sealed class AuthManager : IAuthManager
             AccessToken = token,
             Expiry = new DateTimeOffset(expires).ToUnixTimeMilliseconds(),
             UserId = userId,
-            Role = role ?? string.Empty,
+            Roles = roles,
             Claims = claims ?? EmptyClaims
         };
     }

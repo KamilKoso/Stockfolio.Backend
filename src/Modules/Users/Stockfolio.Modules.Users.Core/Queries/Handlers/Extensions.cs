@@ -16,10 +16,7 @@ internal static class Extensions
 
     public static UserDetailsDto AsDetailsDto(this User user)
     {
-        var dto = user.Map<UserDetailsDto>();
-        dto.Permissions = user.Role.Permissions;
-
-        return dto;
+        return user.Map<UserDetailsDto>();
     }
 
     private static T Map<T>(this User user) where T : UserDto, new()
@@ -28,7 +25,7 @@ internal static class Extensions
             UserId = user.Id,
             Email = user.Email,
             State = States[user.State],
-            Role = user.Role.Name,
+            Roles = user.Roles.Select(x => x.Name),
             CreatedAt = user.CreatedAt
         };
 }

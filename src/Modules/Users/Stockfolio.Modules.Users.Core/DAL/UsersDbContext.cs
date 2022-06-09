@@ -1,15 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Stockfolio.Modules.Users.Core.Entities;
 using Stockfolio.Shared.Infrastructure.Messaging.Outbox;
 
 namespace Stockfolio.Modules.Users.Core.DAL;
 
-internal class UsersDbContext : DbContext
+internal class UsersDbContext : IdentityDbContext<User, Role, Guid>
 {
     public DbSet<InboxMessage> Inbox { get; set; }
     public DbSet<OutboxMessage> Outbox { get; set; }
-    public DbSet<User> Users { get; set; }
-    public DbSet<Role> Roles { get; set; }
 
     public UsersDbContext(DbContextOptions<UsersDbContext> options) : base(options)
     {
@@ -19,6 +18,7 @@ internal class UsersDbContext : DbContext
     {
         modelBuilder.HasDefaultSchema("users");
         modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
+        base.OnModelCreating(modelBuilder);
     }
 }
 

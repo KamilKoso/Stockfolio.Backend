@@ -18,7 +18,7 @@ internal sealed class GetUserByEmailHandler : IQueryHandler<GetUserByEmail, User
     {
         var user = await _dbContext.Users
             .AsNoTracking()
-            .Include(x => x.Role)
+            .Include(x => x.Roles)
             .SingleOrDefaultAsync(x => x.Email == query.Email, cancellationToken);
 
         return user?.AsDetailsDto();

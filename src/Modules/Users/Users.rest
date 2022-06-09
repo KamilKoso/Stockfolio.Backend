@@ -4,20 +4,21 @@
 GET {{url}}
 
 ###
+@username = user
 @email = user1@stockfolio.io
-@adminEmail = admin1@stockfolio.io
 @password = Secret123!
 
-### Register as the regular user
+### Register
 POST {{url}}/account/sign-up
 Content-Type: application/json
 
 {
+  "username": "{{username}}",
   "email": "{{email}}",
   "password": "{{password}}"
 }
 
-### Login as the regular user
+### Login
 # @name sign_in
 POST {{url}}/account/sign-in
 Content-Type: application/json
@@ -28,9 +29,21 @@ Content-Type: application/json
 }
 
 
+
 ###
 @authCookie = {{sign_in.response.headers.$.set-cookie}}
 @userId = {{sign_in.response.body.$.id}}
+
+### Logout
+# @name sign_out
+POST {{url}}/account/sign-out
+Set-Cookie: {{authCookie}}
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
 
 ### Get user account
 GET {{url}}/account
@@ -45,27 +58,6 @@ Content-Type: application/json
   "currentPassword": "{{password}}",
   "newPassword": "Secret1234!"
 }
-
-### Register as the admin user
-POST {{url}}/account/sign-up
-Content-Type: application/json
-
-{
-  "email": "{{adminEmail}}",
-  "password": "{{password}}",
-  "role": "admin"
-}
-
-### Login as the admin user
-# @name sign_in
-POST {{url}}/account/sign-in
-Content-Type: application/json
-
-{
-  "email": "{{adminEmail}}",
-  "password": "{{password}}"
-}
-
 
 ### Browse users as admin
 GET {{url}}/users

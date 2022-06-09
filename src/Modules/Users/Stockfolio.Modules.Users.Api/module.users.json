@@ -4,6 +4,7 @@
       "name": "Users",
       "enabled": true
     },
+
     "registration": {
       "enabled": true,
       "invalidEmailProviders": [
@@ -12,12 +13,21 @@
         "mailinator"
       ]
     },
-    "passwordStrengthPolicy": {
-      "minLength": "6",
-      "maxLength": "50",
-      "requireSpecialCharacter": true,
-      "requireUppercaseCharacter": true,
-      "requireNumber": true
+
+    "identity": {
+      "requireUniqueEmail": true,
+      "passwordOptions": {
+        "requiredLength": "6",
+        "requireNonLetterOrDigit": true,
+        "requireUppercase": true,
+        "requireLowercase": true,
+        "requireDigit": true
+      },
+      "signInOptions": {
+        "requireConfirmedAccount": false,
+        "requireConfirmedEmail": true,
+        "requireConfirmedPhoneNumber": false
+      }
     }
   }
 }

@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization.Policy;
@@ -12,6 +7,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Stockfolio.Shared.Abstractions.Auth;
 using Stockfolio.Shared.Abstractions.Modules;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Stockfolio.Shared.Infrastructure.Auth;
 
@@ -24,7 +24,7 @@ public static class Extensions
         Action<JwtBearerOptions> optionsFactory = null)
     {
         var options = services.GetOptions<AuthOptions>("auth");
-        services.AddSingleton<IAuthManager, AuthManager>();
+        services.AddSingleton<IJwtProvider, JwtProvider>();
 
         if (options.AuthenticationDisabled)
         {

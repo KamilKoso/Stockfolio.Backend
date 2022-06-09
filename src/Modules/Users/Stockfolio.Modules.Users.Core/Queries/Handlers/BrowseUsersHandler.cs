@@ -24,10 +24,10 @@ internal sealed class BrowseUsersHandler : IQueryHandler<BrowseUsers, Paged<User
             users = users.Where(x => x.Email == query.Email);
         }
 
-        if (!string.IsNullOrWhiteSpace(query.Role))
-        {
-            users = users.Where(x => x.RoleId == query.Role);
-        }
+        //if (!string.IsNullOrWhiteSpace(query.Role))
+        //{
+        //    users = users.Where(x => x.RoleId == query.Role);
+        //}
 
         if (!string.IsNullOrWhiteSpace(query.State) && Enum.TryParse<UserState>(query.State, true, out var state))
         {
@@ -35,7 +35,7 @@ internal sealed class BrowseUsersHandler : IQueryHandler<BrowseUsers, Paged<User
         }
 
         return users.AsNoTracking()
-            .Include(x => x.Role)
+            .Include(x => x.Roles)
             .OrderByDescending(x => x.CreatedAt)
             .Select(x => x.AsDto())
             .PaginateAsync(query, cancellationToken);

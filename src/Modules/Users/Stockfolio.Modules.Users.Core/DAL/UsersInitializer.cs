@@ -7,11 +7,6 @@ namespace Stockfolio.Modules.Users.Core.DAL;
 
 internal sealed class UsersInitializer : IInitializer
 {
-    private readonly HashSet<string> _permissions = new()
-    {
-        "users",
-    };
-
     private readonly UsersDbContext _dbContext;
     private readonly ILogger<UsersInitializer> _logger;
 
@@ -34,17 +29,10 @@ internal sealed class UsersInitializer : IInitializer
 
     private async Task AddRolesAsync()
     {
-        await _dbContext.Roles.AddAsync(new Role
-        {
-            Name = "admin",
-            Permissions = _permissions
-        });
-        await _dbContext.Roles.AddAsync(new Role
-        {
-            Name = "user",
-            Permissions = new List<string>()
-        });
-
+        await _dbContext.Roles.AddRangeAsync(
+            new Role(Role.Admin),
+            new Role(Role.User)
+            );
         _logger.LogInformation("Initialized roles.");
     }
 }

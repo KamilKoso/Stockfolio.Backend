@@ -1,7 +1,7 @@
 ﻿using Stockfolio.Shared.Abstractions.Auth;
 using Stockfolio.Shared.Abstractions.Storage;
 
-namespace Stockfolio.Modules.Users.Core.Services;
+namespace Stockfolio.Modules.Users.Core.Services.RequestStorage;
 
 internal sealed class UserRequestStorage : IUserRequestStorage
 {

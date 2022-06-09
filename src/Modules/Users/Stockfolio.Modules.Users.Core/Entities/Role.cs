@@ -1,12 +1,20 @@
-﻿namespace Stockfolio.Modules.Users.Core.Entities;
+﻿using Microsoft.AspNetCore.Identity;
 
-internal class Role
+namespace Stockfolio.Modules.Users.Core.Entities;
+
+internal class Role : IdentityRole<Guid>
 {
-    public string Name { get; set; }
+    public Role(string roleName) : base(roleName)
+    {
+        Id = Guid.NewGuid();
+        NormalizedName = roleName.ToUpperInvariant();
+    }
 
-    public IEnumerable<string> Permissions { get; set; }
+    private Role() : base()
+    {
+    }
 
-    public IEnumerable<User> Users { get; set; }
+    public ICollection<User> Users { get; set; }
 
     public static string Default => User;
     public const string User = "user";

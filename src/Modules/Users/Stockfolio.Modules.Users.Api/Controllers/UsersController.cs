@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Stockfolio.Modules.Users.Core.Commands;
 using Stockfolio.Modules.Users.Core.DTO;
 using Stockfolio.Modules.Users.Core.Queries;
 using Stockfolio.Shared.Abstractions.Dispatchers;
 using Stockfolio.Shared.Abstractions.Queries;
-using Stockfolio.Shared.Infrastructure.Api;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Stockfolio.Modules.Users.Api.Controllers;
@@ -38,16 +36,4 @@ internal class UsersController : BaseController
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<ActionResult<Paged<UserDto>>> BrowseAsync([FromQuery] BrowseUsers query)
         => Ok(await _dispatcher.QueryAsync(query));
-
-    [HttpPut("{userId:guid}/state")]
-    [SwaggerOperation("Update user state")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public async Task<ActionResult> UpdateStateAsync(Guid userId, UpdateUserState command)
-    {
-        await _dispatcher.SendAsync(command.Bind(x => x.UserId, userId));
-        return NoContent();
-    }
 }

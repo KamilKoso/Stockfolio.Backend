@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using Stockfolio.Shared.Infrastructure.Auth;
+﻿using Stockfolio.Shared.Infrastructure.Auth;
 using Stockfolio.Shared.Infrastructure.Time;
+using System;
+using System.Collections.Generic;
 
 namespace Stockfolio.Shared.Tests;
 
 public static class AuthHelper
 {
-    private static readonly AuthManager AuthManager;
+    private static readonly JwtProvider AuthManager;
 
     static AuthHelper()
     {
         var options = OptionsHelper.GetOptions<AuthOptions>("auth");
-        AuthManager = new AuthManager(options, new UtcClock());
+        AuthManager = new JwtProvider(options, new UtcClock());
     }
 
-    public static string GenerateJwt(Guid userId, string role = null, string audience = null,
+    public static string GenerateJwt(Guid userId, IEnumerable<string> roles = null, string audience = null,
         IDictionary<string, IEnumerable<string>> claims = null)
-        => AuthManager.CreateToken(userId, role, audience, claims).AccessToken;
+        => AuthManager.CreateToken(userId, roles, audience, claims).AccessToken;
 }

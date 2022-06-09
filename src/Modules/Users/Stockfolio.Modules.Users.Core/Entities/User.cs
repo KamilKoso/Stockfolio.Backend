@@ -1,14 +1,10 @@
-﻿using Stockfolio.Shared.Abstractions.Kernel.ValueObjects;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace Stockfolio.Modules.Users.Core.Entities;
 
-internal class User
+internal class User : IdentityUser<Guid>
 {
-    public Guid Id { get; set; }
-    public Email Email { get; set; }
-    public string Password { get; set; }
-    public Role Role { get; set; }
-    public string RoleId { get; set; }
+    public ICollection<Role> Roles { get; set; }
     public UserState State { get; set; }
     public DateTime CreatedAt { get; set; }
 }
