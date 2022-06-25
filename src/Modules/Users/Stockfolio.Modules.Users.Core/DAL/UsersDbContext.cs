@@ -5,7 +5,7 @@ using Stockfolio.Shared.Infrastructure.Messaging.Outbox;
 
 namespace Stockfolio.Modules.Users.Core.DAL;
 
-internal class UsersDbContext : IdentityDbContext<User, Role, Guid>
+internal class UsersDbContext : IdentityDbContext<User, Role, Guid, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>
 {
     public DbSet<InboxMessage> Inbox { get; set; }
     public DbSet<OutboxMessage> Outbox { get; set; }
@@ -16,9 +16,9 @@ internal class UsersDbContext : IdentityDbContext<User, Role, Guid>
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder); // Keep this line first so ASP .NET Identity registers its default, which later could be override
         modelBuilder.HasDefaultSchema("users");
         modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
-        base.OnModelCreating(modelBuilder);
     }
 }
 

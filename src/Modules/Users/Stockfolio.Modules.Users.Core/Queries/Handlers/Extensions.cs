@@ -25,7 +25,7 @@ internal static class Extensions
             UserId = user.Id,
             Email = user.Email,
             State = States[user.State],
-            Roles = user.Roles.Select(x => x.Name),
+            Roles = user.UserRoles.Select(x => x.Role.Name),
             CreatedAt = user.CreatedAt
         };
 }

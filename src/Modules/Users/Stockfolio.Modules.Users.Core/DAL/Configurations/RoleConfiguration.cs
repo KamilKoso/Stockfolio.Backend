@@ -8,7 +8,6 @@ internal class RoleConfiguration : IEntityTypeConfiguration<Role>
 {
     public void Configure(EntityTypeBuilder<Role> builder)
     {
-        builder.HasKey(x => x.Name);
         builder.Property(x => x.Name).IsRequired().HasMaxLength(100);
     }
 }

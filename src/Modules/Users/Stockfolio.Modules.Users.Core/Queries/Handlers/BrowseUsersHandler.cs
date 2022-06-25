@@ -35,7 +35,8 @@ internal sealed class BrowseUsersHandler : IQueryHandler<BrowseUsers, Paged<User
         }
 
         return users.AsNoTracking()
-            .Include(x => x.Roles)
+            .Include(x => x.UserRoles)
+                .ThenInclude(x => x.User)
             .OrderByDescending(x => x.CreatedAt)
             .Select(x => x.AsDto())
             .PaginateAsync(query, cancellationToken);

@@ -1,6 +1,6 @@
+using Stockfolio.Shared.Abstractions.Kernel.Exceptions;
 using System;
 using System.Text.RegularExpressions;
-using Stockfolio.Shared.Abstractions.Kernel.Exceptions;
 
 namespace Stockfolio.Shared.Abstractions.Kernel.ValueObjects;
 
@@ -10,7 +10,9 @@ public class Email : IEquatable<Email>
         @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
         @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-0-9a-z]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$",
         RegexOptions.Compiled);
-        
+
+    private static readonly int EmailMaxLength = 320; //
+
     public string Value { get; }
 
     public Email(string value)
@@ -20,7 +22,7 @@ public class Email : IEquatable<Email>
             throw new InvalidEmailException(value);
         }
 
-        if (value.Length > 100)
+        if (value.Length > EmailMaxLength)
         {
             throw new InvalidEmailException(value);
         }
@@ -49,10 +51,10 @@ public class Email : IEquatable<Email>
     {
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;
-        return obj.GetType() == GetType() && Equals((Email) obj);
+        return obj.GetType() == GetType() && Equals((Email)obj);
     }
 
     public override int GetHashCode() => Value is not null ? Value.GetHashCode() : 0;
-        
+
     public override string ToString() => Value;
 }

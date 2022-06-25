@@ -24,4 +24,14 @@ internal class UserManager : UserManager<User>
     {
         return FindByIdAsync(userId.ToString());
     }
+
+    public Task<IdentityResult> AddToRoleAsync(User user, Guid roleId)
+    {
+        return AddToRoleAsync(user, roleId.ToString());
+    }
+
+    public Task<IdentityResult> AddToRoleAsync(User user, IEnumerable<Guid> rolesId)
+    {
+        return AddToRolesAsync(user, rolesId.Select(x => x.ToString()));
+    }
 }

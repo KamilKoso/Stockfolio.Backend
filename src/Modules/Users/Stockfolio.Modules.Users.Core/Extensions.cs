@@ -3,10 +3,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Stockfolio.Modules.Users.Core.DAL;
 using Stockfolio.Modules.Users.Core.Entities;
 using Stockfolio.Modules.Users.Core.Managers;
-using Stockfolio.Modules.Users.Core.Options;
 using Stockfolio.Modules.Users.Core.Services;
 using Stockfolio.Modules.Users.Core.Services.RequestStorage;
 using Stockfolio.Modules.Users.Core.Stores;
+using Stockfolio.Modules.Users.Core.Validators;
 using Stockfolio.Shared.Infrastructure;
 using Stockfolio.Shared.Infrastructure.Messaging.Outbox;
 using Stockfolio.Shared.Infrastructure.Postgres;
@@ -33,20 +33,20 @@ internal static class Extensions
 
     private static IServiceCollection AddIdentity(this IServiceCollection services)
     {
-        var registrationOptions = services.GetOptions<RegistrationOptions>("users:registration");
         var identityOptions = services.GetOptions<IdentityOptions>("users:identity");
         services
             .AddSingleton(identityOptions)
-            .AddSingleton(registrationOptions)
             .AddIdentity<User, Role>(options =>
             {
                 options.Password = identityOptions.PasswordOptions;
                 options.SignIn = identityOptions.SignInOptions;
                 options.User.RequireUniqueEmail = identityOptions.RequireUniqueEmail;
             })
+            .AddErrorDescriber<UserErrorDescriber>()
             .AddEntityFrameworkStores<UsersDbContext>()
             .AddUserStore<UserStore>()
             .AddUserManager<UserManager>()
+            .AddUserValidator<UserValidator>()
             .AddDefaultTokenProviders();
         return services;
     }

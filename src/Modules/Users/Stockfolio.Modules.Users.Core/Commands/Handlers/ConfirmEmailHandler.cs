@@ -6,7 +6,7 @@ using Stockfolio.Shared.Abstractions;
 using Stockfolio.Shared.Abstractions.Commands;
 using Stockfolio.Shared.Abstractions.Messaging;
 
-namespace Stockfolio.Modules.Users.Core.Queries.Handlers;
+namespace Stockfolio.Modules.Users.Core.Commands.Handlers;
 
 internal sealed class ConfirmEmailHandler : ICommandHandler<ConfirmEmail>
 {

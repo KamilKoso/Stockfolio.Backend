@@ -14,7 +14,7 @@ internal class Role : IdentityRole<Guid>
     {
     }
 
-    public ICollection<User> Users { get; set; }
+    public IReadOnlyCollection<UserRole> UserRoles { get; init; }
 
     public static string Default => User;
     public const string User = "user";

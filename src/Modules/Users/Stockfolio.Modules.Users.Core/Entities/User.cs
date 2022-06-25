@@ -4,7 +4,7 @@ namespace Stockfolio.Modules.Users.Core.Entities;
 
 internal class User : IdentityUser<Guid>
 {
-    public ICollection<Role> Roles { get; set; }
-    public UserState State { get; set; }
-    public DateTime CreatedAt { get; set; }
+    public IReadOnlyCollection<UserRole> UserRoles { get; init; }
+    public UserState State { get; init; }
+    public DateTime CreatedAt { get; init; }
 }

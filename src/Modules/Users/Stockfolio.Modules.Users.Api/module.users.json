@@ -5,16 +5,13 @@
       "enabled": true
     },
 
-    "registration": {
-      "enabled": true,
+    "identity": {
+      "registrationEnabled": true,
       "invalidEmailProviders": [
         "discard",
         "dispostable",
         "mailinator"
-      ]
-    },
-
-    "identity": {
+      ],
       "requireUniqueEmail": true,
       "passwordOptions": {
         "requiredLength": "6",

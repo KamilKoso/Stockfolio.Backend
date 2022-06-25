@@ -47,7 +47,7 @@ internal sealed class SignInHandler : ICommandHandler<SignIn>
             throw new InvalidCredentialsException();
         }
 
-        var jwt = _jwtProvider.CreateToken(user.Id, user.Roles.Select(x => x.Name));
+        var jwt = _jwtProvider.CreateToken(user.Id, user.UserRoles.Select(x => x.Role.Name));
         jwt.Email = user.Email;
         await _messageBroker.PublishAsync(new SignedIn(user.Id), cancellationToken);
         _logger.LogInformation($"User with ID: '{user.Id}' has signed in.");

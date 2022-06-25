@@ -4,7 +4,6 @@ using Stockfolio.Modules.Users.Core.Entities;
 using Stockfolio.Modules.Users.Core.Events;
 using Stockfolio.Modules.Users.Core.Exceptions;
 using Stockfolio.Modules.Users.Core.Managers;
-using Stockfolio.Modules.Users.Core.Options;
 using Stockfolio.Shared.Abstractions.Commands;
 using Stockfolio.Shared.Abstractions.Kernel.Exceptions;
 using Stockfolio.Shared.Abstractions.Messaging;
@@ -19,7 +18,6 @@ internal sealed class SignUpHandler : ICommandHandler<SignUp>
     private readonly IClock _clock;
     private readonly IMessageBroker _messageBroker;
     private readonly ILogger<SignUpHandler> _logger;
-    private readonly RegistrationOptions _registrationOptions;
     private readonly Options.IdentityOptions _identityOptions;
 
     public SignUpHandler(UserManager userManager,
@@ -27,7 +25,6 @@ internal sealed class SignUpHandler : ICommandHandler<SignUp>
                          IClock clock,
                          IMessageBroker messageBroker,
                          ILogger<SignUpHandler> logger,
-                         RegistrationOptions registrationOptions,
                          Options.IdentityOptions identityOptions)
     {
         _userManager = userManager;
@@ -35,36 +32,24 @@ internal sealed class SignUpHandler : ICommandHandler<SignUp>
         _clock = clock;
         _messageBroker = messageBroker;
         _logger = logger;
-        _registrationOptions = registrationOptions;
         _identityOptions = identityOptions;
     }
 
     public async Task HandleAsync(SignUp command, CancellationToken cancellationToken = default)
     {
-        if (!_registrationOptions.Enabled)
+        if (!_identityOptions.RegistrationEnabled)
         {
             throw new SignUpDisabledException();
         }
 
-        var provider = command.Email.Split("@").Last();
-        if (_registrationOptions.InvalidEmailProviders?.Any(x => provider.Contains(x)) is true)
-        {
-            throw new InvalidEmailException(command.Email);
-        }
-
-        var user = await _userManager.FindByEmailAsync(command.Email);
-        if (user is not null)
-        {
-            throw new EmailInUseException();
-        }
-
         var role = await _roleManager.FindByNameAsync(Role.Default);
         var now = _clock.CurrentDate();
-        user = new User
+        var user = new User
         {
             Id = command.UserId,
+            UserName = command.UserId.ToString(),
+            UserRoles = new List<UserRole> { new UserRole(command.UserId, role.Id) },
             Email = command.Email,
-            Roles = new[] { role },
             CreatedAt = now,
             State = UserState.Active,
         };
