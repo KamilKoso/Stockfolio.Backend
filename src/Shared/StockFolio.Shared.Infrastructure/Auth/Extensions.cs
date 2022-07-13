@@ -24,7 +24,7 @@ public static class Extensions
         Action<JwtBearerOptions> optionsFactory = null)
     {
         var options = services.GetOptions<AuthOptions>("auth");
-        services.AddSingleton<IJwtProvider, JwtProvider>();
+        services.AddSingleton<IAccessTokenProvider, JwtAccessTokenProvider>();
 
         if (options.AuthenticationDisabled)
         {

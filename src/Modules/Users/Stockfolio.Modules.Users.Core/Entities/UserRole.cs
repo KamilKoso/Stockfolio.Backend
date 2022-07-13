@@ -14,7 +14,7 @@ internal class UserRole : IdentityUserRole<Guid>
     {
     }
 
-    public Role Role { get; set; }
+    public Role Role { get; private set; }
 
-    public User User { get; set; }
+    public User User { get; private set; }
 }

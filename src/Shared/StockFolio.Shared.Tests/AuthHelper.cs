@@ -7,12 +7,12 @@ namespace Stockfolio.Shared.Tests;
 
 public static class AuthHelper
 {
-    private static readonly JwtProvider AuthManager;
+    private static readonly JwtAccessTokenProvider AuthManager;
 
     static AuthHelper()
     {
         var options = OptionsHelper.GetOptions<AuthOptions>("auth");
-        AuthManager = new JwtProvider(options, new UtcClock());
+        AuthManager = new JwtAccessTokenProvider(options, new UtcClock());
     }
 
     public static string GenerateJwt(Guid userId, IEnumerable<string> roles = null, string audience = null,

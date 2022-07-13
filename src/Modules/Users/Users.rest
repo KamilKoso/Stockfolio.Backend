@@ -5,7 +5,7 @@ GET {{url}}
 
 ###
 @username = user
-@email = user1@mailinator.io
+@email = user1@stockfolio.io
 @password = Secret123!
 
 ### Register

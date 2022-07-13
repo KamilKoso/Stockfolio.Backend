@@ -14,19 +14,19 @@ namespace Stockfolio.Modules.Users.Core.Commands.Handlers;
 internal sealed class SignInHandler : ICommandHandler<SignIn>
 {
     private readonly UserManager _userManager;
-    private readonly IJwtProvider _jwtProvider;
+    private readonly IAccessTokenProvider _accessTokenProvider;
     private readonly IUserRequestStorage _userRequestStorage;
     private readonly IMessageBroker _messageBroker;
     private readonly ILogger<SignInHandler> _logger;
 
     public SignInHandler(UserManager userManager,
-                         IJwtProvider jwtProvider,
+                         IAccessTokenProvider accessTokenProvider,
                          IUserRequestStorage userRequestStorage,
                          IMessageBroker messageBroker,
                          ILogger<SignInHandler> logger)
     {
         _userManager = userManager;
-        _jwtProvider = jwtProvider;
+        _accessTokenProvider = accessTokenProvider;
         _userRequestStorage = userRequestStorage;
         _messageBroker = messageBroker;
         _logger = logger;
@@ -47,7 +47,7 @@ internal sealed class SignInHandler : ICommandHandler<SignIn>
             throw new InvalidCredentialsException();
         }
 
-        var jwt = _jwtProvider.CreateToken(user.Id, user.UserRoles.Select(x => x.Role.Name));
+        var jwt = _accessTokenProvider.CreateToken(user.Id, user.UserRoles.Select(x => x.Role.Name));
         jwt.Email = user.Email;
         await _messageBroker.PublishAsync(new SignedIn(user.Id), cancellationToken);
         _logger.LogInformation($"User with ID: '{user.Id}' has signed in.");

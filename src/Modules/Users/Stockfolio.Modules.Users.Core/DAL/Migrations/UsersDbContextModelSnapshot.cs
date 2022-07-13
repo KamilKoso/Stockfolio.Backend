@@ -298,20 +298,24 @@ namespace Stockfolio.Modules.Users.Core.DAL.Migrations
 
             modelBuilder.Entity("Stockfolio.Modules.Users.Core.Entities.UserClaim", b =>
                 {
-                    b.HasOne("Stockfolio.Modules.Users.Core.Entities.User", null)
-                        .WithMany()
+                    b.HasOne("Stockfolio.Modules.Users.Core.Entities.User", "User")
+                        .WithMany("UserClaims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Stockfolio.Modules.Users.Core.Entities.UserLogin", b =>
                 {
-                    b.HasOne("Stockfolio.Modules.Users.Core.Entities.User", null)
-                        .WithMany()
+                    b.HasOne("Stockfolio.Modules.Users.Core.Entities.User", "User")
+                        .WithMany("UserLogins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Stockfolio.Modules.Users.Core.Entities.UserRole", b =>
@@ -349,6 +353,10 @@ namespace Stockfolio.Modules.Users.Core.DAL.Migrations
 
             modelBuilder.Entity("Stockfolio.Modules.Users.Core.Entities.User", b =>
                 {
+                    b.Navigation("UserClaims");
+
+                    b.Navigation("UserLogins");
+
                     b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618

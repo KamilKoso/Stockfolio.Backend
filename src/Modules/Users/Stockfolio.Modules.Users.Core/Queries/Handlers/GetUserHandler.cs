@@ -19,6 +19,7 @@ internal sealed class GetUserHandler : IQueryHandler<GetUser, UserDetailsDto>
         var user = await _dbContext.Users
             .AsNoTracking()
             .Include(x => x.UserRoles)
+                .ThenInclude(x => x.Role)
             .SingleOrDefaultAsync(x => x.Id == query.UserId, cancellationToken);
 
         return user?.AsDetailsDto();

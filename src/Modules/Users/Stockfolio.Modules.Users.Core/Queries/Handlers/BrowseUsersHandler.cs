@@ -24,10 +24,13 @@ internal sealed class BrowseUsersHandler : IQueryHandler<BrowseUsers, Paged<User
             users = users.Where(x => x.Email == query.Email);
         }
 
-        //if (!string.IsNullOrWhiteSpace(query.Role))
-        //{
-        //    users = users.Where(x => x.RoleId == query.Role);
-        //}
+        if (!string.IsNullOrWhiteSpace(query.Role))
+        {
+            users = users
+                .Include(x => x.UserRoles)
+                    .ThenInclude(x => x.Role)
+                .Where(x => x.UserRoles.Select(x => x.Role.Name).Contains(query.Role));
+        }
 
         if (!string.IsNullOrWhiteSpace(query.State) && Enum.TryParse<UserState>(query.State, true, out var state))
         {

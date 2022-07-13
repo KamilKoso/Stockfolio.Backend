@@ -10,7 +10,7 @@ using System.Text;
 
 namespace Stockfolio.Shared.Infrastructure.Auth;
 
-public sealed class JwtProvider : IJwtProvider
+public sealed class JwtAccessTokenProvider : IAccessTokenProvider
 {
     private static readonly Dictionary<string, IEnumerable<string>> EmptyClaims = new();
     private readonly AuthOptions _options;
@@ -18,7 +18,7 @@ public sealed class JwtProvider : IJwtProvider
     private readonly SigningCredentials _signingCredentials;
     private readonly string _issuer;
 
-    public JwtProvider(AuthOptions options, IClock clock)
+    public JwtAccessTokenProvider(AuthOptions options, IClock clock)
     {
         var issuerSigningKey = options.IssuerSigningKey;
         if (issuerSigningKey is null)
