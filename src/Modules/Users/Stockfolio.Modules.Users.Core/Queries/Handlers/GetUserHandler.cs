@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Stockfolio.Modules.Users.Core.DAL;
 using Stockfolio.Modules.Users.Core.DTO;
+using Stockfolio.Modules.Users.Core.Mappings;
 using Stockfolio.Shared.Abstractions.Queries;
 
 namespace Stockfolio.Modules.Users.Core.Queries.Handlers;
 
-internal sealed class GetUserHandler : IQueryHandler<GetUser, UserDetailsDto>
+internal sealed class GetUserHandler : IQueryHandler<GetUser, UserDto>
 {
     private readonly UsersDbContext _dbContext;
 
@@ -14,7 +15,7 @@ internal sealed class GetUserHandler : IQueryHandler<GetUser, UserDetailsDto>
         _dbContext = dbContext;
     }
 
-    public async Task<UserDetailsDto> HandleAsync(GetUser query, CancellationToken cancellationToken = default)
+    public async Task<UserDto> HandleAsync(GetUser query, CancellationToken cancellationToken = default)
     {
         var user = await _dbContext.Users
             .AsNoTracking()
@@ -22,6 +23,6 @@ internal sealed class GetUserHandler : IQueryHandler<GetUser, UserDetailsDto>
                 .ThenInclude(x => x.Role)
             .SingleOrDefaultAsync(x => x.Id == query.UserId, cancellationToken);
 
-        return user?.AsDetailsDto();
+        return user?.AsDto();
     }
 }

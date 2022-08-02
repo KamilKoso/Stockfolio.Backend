@@ -45,6 +45,7 @@ public static class Extensions
             }
         });
 
+
         var tokenValidationParameters = new TokenValidationParameters
         {
             RequireAudience = options.RequireAudience,

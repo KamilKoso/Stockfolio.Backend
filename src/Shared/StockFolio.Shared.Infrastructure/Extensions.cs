@@ -33,18 +33,19 @@ using Stockfolio.Shared.Infrastructure.Postgres;
 using Stockfolio.Shared.Infrastructure.Queries;
 using Stockfolio.Shared.Infrastructure.Security;
 using Stockfolio.Shared.Infrastructure.Services;
+using System.Net.Http;
 
 namespace Stockfolio.Shared.Infrastructure;
 
 public static class Extensions
 {
     private const string CorrelationIdKey = "correlation-id";
-        
+
     public static IServiceCollection AddInitializer<T>(this IServiceCollection services) where T : class, IInitializer
         => services.AddTransient<IInitializer, T>();
-        
+
     public static IServiceCollection AddModularInfrastructure(this IServiceCollection services,
-        IList<Assembly> assemblies, IList<IModule> modules) 
+        IList<Assembly> assemblies, IList<IModule> modules)
     {
         var disabledModules = new List<string>();
         using (var serviceProvider = services.BuildServiceProvider())
@@ -117,10 +118,10 @@ public static class Extensions
                 {
                     manager.ApplicationParts.Remove(part);
                 }
-                    
+
                 manager.FeatureProviders.Add(new InternalControllerFeatureProvider());
             });
-            
+
         return services;
     }
 
@@ -177,14 +178,14 @@ public static class Extensions
             ? type.Namespace.Split(".")[splitIndex].ToLowerInvariant()
             : string.Empty;
     }
-        
+
     public static IApplicationBuilder UseCorrelationId(this IApplicationBuilder app)
         => app.Use((ctx, next) =>
         {
             ctx.Items.Add(CorrelationIdKey, Guid.NewGuid());
             return next();
         });
-        
+
     public static Guid? TryGetCorrelationId(this HttpContext context)
-        => context.Items.TryGetValue(CorrelationIdKey, out var id) ? (Guid) id : null;
+        => context.Items.TryGetValue(CorrelationIdKey, out var id) ? (Guid)id : null;
 }

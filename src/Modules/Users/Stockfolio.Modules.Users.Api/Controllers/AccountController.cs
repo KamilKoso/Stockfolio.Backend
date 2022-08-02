@@ -35,7 +35,7 @@ internal class AccountController : BaseController
     [SwaggerOperation("Get account")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public async Task<ActionResult<UserDetailsDto>> GetAsync()
+    public async Task<ActionResult<UserDto>> GetAsync()
         => OkOrNotFound(await _dispatcher.QueryAsync(new GetUser { UserId = _context.Identity.Id }));
 
     [HttpPost("sign-up")]
@@ -52,7 +52,7 @@ internal class AccountController : BaseController
     [SwaggerOperation("Sign in")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<UserDetailsDto>> SignInAsync(SignIn command)
+    public async Task<ActionResult<UserDto>> SignInAsync(SignIn command)
     {
         await _dispatcher.SendAsync(command);
         var jwt = _userRequestStorage.GetToken(command.Id);

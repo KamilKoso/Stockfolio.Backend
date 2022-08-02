@@ -1,0 +1,21 @@
+@url = http://localhost:5000
+
+###
+GET {{url}}
+
+##
+
+@searchQuery = jpy=x
+@seachCount = 0
+
+### Search quotes
+# @name serach_quotes
+GET {{url}}/quotes/search?query={{searchQuery}}
+Content-Type: application/json
+
+
+@symbols = aapl
+### Search quotes
+# @name get_quotes
+GET {{url}}/quotes/get?symbols={{symbols}}
+Content-Type: application/json

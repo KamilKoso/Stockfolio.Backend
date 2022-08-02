@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Shared\StockFolio.Shared.Infrastructure\StockFolio.Shared.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\Shared\StockFolio.Shared.Infrastructure\Stockfolio.Shared.Infrastructure.csproj" />
     <ProjectReference Include="..\Stockfolio.Modules.Portfolios.Application\Stockfolio.Modules.Portfolios.Application.csproj" />
   </ItemGroup>
 

@@ -4,17 +4,17 @@ VisualStudioVersion = 17.3.32505.426
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{FCA8CA8F-EE29-4CEA-8627-5EA7638B7C04}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockFolio.Shared.Tests", "src\Shared\StockFolio.Shared.Tests\StockFolio.Shared.Tests.csproj", "{3C49875F-386E-4C94-A80C-0C75C7A83BCB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stockfolio.Shared.Tests", "src\Shared\Stockfolio.Shared.Tests\Stockfolio.Shared.Tests.csproj", "{3C49875F-386E-4C94-A80C-0C75C7A83BCB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bootstrapper", "Bootstrapper", "{110B9A2A-E39B-4883-ACB6-7E05CE77AF9C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockFolio.Bootstrapper", "src\Bootstrapper\StockFolio.Bootstrapper\StockFolio.Bootstrapper.csproj", "{F478360B-DE13-4F0B-9649-C7D4F8539D28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stockfolio.Bootstrapper", "src\Bootstrapper\Stockfolio.Bootstrapper\Stockfolio.Bootstrapper.csproj", "{F478360B-DE13-4F0B-9649-C7D4F8539D28}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockFolio.Shared.Abstractions", "src\Shared\StockFolio.Shared.Abstractions\StockFolio.Shared.Abstractions.csproj", "{C8212E43-5130-49C7-A5B0-7C6FD5249A34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stockfolio.Shared.Abstractions", "src\Shared\Stockfolio.Shared.Abstractions\Stockfolio.Shared.Abstractions.csproj", "{C8212E43-5130-49C7-A5B0-7C6FD5249A34}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockFolio.Shared.Infrastructure", "src\Shared\StockFolio.Shared.Infrastructure\StockFolio.Shared.Infrastructure.csproj", "{BEFC3D0A-B8FF-4147-835D-B5AA3F089CE9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stockfolio.Shared.Infrastructure", "src\Shared\Stockfolio.Shared.Infrastructure\Stockfolio.Shared.Infrastructure.csproj", "{BEFC3D0A-B8FF-4147-835D-B5AA3F089CE9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockFolio.Shared.Tests.EndToEnd", "src\Shared\StockFolio.Shared.Tests.EndToEnd\StockFolio.Shared.Tests.EndToEnd.csproj", "{1A0FF48D-B70B-48FE-88B3-46010BA48E7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stockfolio.Shared.Tests.EndToEnd", "src\Shared\Stockfolio.Shared.Tests.EndToEnd\Stockfolio.Shared.Tests.EndToEnd.csproj", "{1A0FF48D-B70B-48FE-88B3-46010BA48E7D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{47446019-475A-4080-AEAD-C4A02C7C32B0}"
 EndProject
@@ -51,6 +51,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D886B717-2B3B-404D-8ADC-9AA49398FA5E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stockfolio.Modules.Users.Tests.Unit", "src\Modules\Users\Tests\Stockfolio.Modules.Users.Tests.Unit\Stockfolio.Modules.Users.Tests.Unit.csproj", "{925B2F06-2A7F-4033-9EAB-0BFC0B0F7569}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stockfolio.Modules.StockMarket.Api", "src\Modules\StockMarket\Stockfolio.Modules.StockMarket.Api\Stockfolio.Modules.StockMarket.Api.csproj", "{8752A79D-6461-4108-B586-4073D28E6117}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockfolio.Modules.StockMarket.Infrastructure", "src\Modules\StockMarket\Stockfolio.Modules.StockMarket.Infrastructure\Stockfolio.Modules.StockMarket.Infrastructure.csproj", "{9DA398B7-8A00-4F55-B454-38704A17B9D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockfolio.Modules.StockMarket.Application", "src\Modules\StockMarket\Stockfolio.Modules.StockMarket.Application\Stockfolio.Modules.StockMarket.Application.csproj", "{E90AC67F-701B-4663-8408-52ED31B0DE03}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -242,6 +248,42 @@ Global
 		{925B2F06-2A7F-4033-9EAB-0BFC0B0F7569}.Release|x64.Build.0 = Release|Any CPU
 		{925B2F06-2A7F-4033-9EAB-0BFC0B0F7569}.Release|x86.ActiveCfg = Release|Any CPU
 		{925B2F06-2A7F-4033-9EAB-0BFC0B0F7569}.Release|x86.Build.0 = Release|Any CPU
+		{8752A79D-6461-4108-B586-4073D28E6117}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8752A79D-6461-4108-B586-4073D28E6117}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8752A79D-6461-4108-B586-4073D28E6117}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8752A79D-6461-4108-B586-4073D28E6117}.Debug|x64.Build.0 = Debug|Any CPU
+		{8752A79D-6461-4108-B586-4073D28E6117}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8752A79D-6461-4108-B586-4073D28E6117}.Debug|x86.Build.0 = Debug|Any CPU
+		{8752A79D-6461-4108-B586-4073D28E6117}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8752A79D-6461-4108-B586-4073D28E6117}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8752A79D-6461-4108-B586-4073D28E6117}.Release|x64.ActiveCfg = Release|Any CPU
+		{8752A79D-6461-4108-B586-4073D28E6117}.Release|x64.Build.0 = Release|Any CPU
+		{8752A79D-6461-4108-B586-4073D28E6117}.Release|x86.ActiveCfg = Release|Any CPU
+		{8752A79D-6461-4108-B586-4073D28E6117}.Release|x86.Build.0 = Release|Any CPU
+		{9DA398B7-8A00-4F55-B454-38704A17B9D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DA398B7-8A00-4F55-B454-38704A17B9D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DA398B7-8A00-4F55-B454-38704A17B9D8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9DA398B7-8A00-4F55-B454-38704A17B9D8}.Debug|x64.Build.0 = Debug|Any CPU
+		{9DA398B7-8A00-4F55-B454-38704A17B9D8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9DA398B7-8A00-4F55-B454-38704A17B9D8}.Debug|x86.Build.0 = Debug|Any CPU
+		{9DA398B7-8A00-4F55-B454-38704A17B9D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DA398B7-8A00-4F55-B454-38704A17B9D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DA398B7-8A00-4F55-B454-38704A17B9D8}.Release|x64.ActiveCfg = Release|Any CPU
+		{9DA398B7-8A00-4F55-B454-38704A17B9D8}.Release|x64.Build.0 = Release|Any CPU
+		{9DA398B7-8A00-4F55-B454-38704A17B9D8}.Release|x86.ActiveCfg = Release|Any CPU
+		{9DA398B7-8A00-4F55-B454-38704A17B9D8}.Release|x86.Build.0 = Release|Any CPU
+		{E90AC67F-701B-4663-8408-52ED31B0DE03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E90AC67F-701B-4663-8408-52ED31B0DE03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E90AC67F-701B-4663-8408-52ED31B0DE03}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E90AC67F-701B-4663-8408-52ED31B0DE03}.Debug|x64.Build.0 = Debug|Any CPU
+		{E90AC67F-701B-4663-8408-52ED31B0DE03}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E90AC67F-701B-4663-8408-52ED31B0DE03}.Debug|x86.Build.0 = Debug|Any CPU
+		{E90AC67F-701B-4663-8408-52ED31B0DE03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E90AC67F-701B-4663-8408-52ED31B0DE03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E90AC67F-701B-4663-8408-52ED31B0DE03}.Release|x64.ActiveCfg = Release|Any CPU
+		{E90AC67F-701B-4663-8408-52ED31B0DE03}.Release|x64.Build.0 = Release|Any CPU
+		{E90AC67F-701B-4663-8408-52ED31B0DE03}.Release|x86.ActiveCfg = Release|Any CPU
+		{E90AC67F-701B-4663-8408-52ED31B0DE03}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -268,6 +310,9 @@ Global
 		{B1AF57F7-A498-46B8-946E-FF47E2F9FA3C} = {30D0171C-EB8A-4675-85E6-C38DE20696F2}
 		{D886B717-2B3B-404D-8ADC-9AA49398FA5E} = {30D0171C-EB8A-4675-85E6-C38DE20696F2}
 		{925B2F06-2A7F-4033-9EAB-0BFC0B0F7569} = {D886B717-2B3B-404D-8ADC-9AA49398FA5E}
+		{8752A79D-6461-4108-B586-4073D28E6117} = {24266F7D-EC6E-4072-A807-1E2EA7994DAB}
+		{9DA398B7-8A00-4F55-B454-38704A17B9D8} = {24266F7D-EC6E-4072-A807-1E2EA7994DAB}
+		{E90AC67F-701B-4663-8408-52ED31B0DE03} = {24266F7D-EC6E-4072-A807-1E2EA7994DAB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {824A34F1-8A95-4A8A-8585-3F7FCDE66AFB}

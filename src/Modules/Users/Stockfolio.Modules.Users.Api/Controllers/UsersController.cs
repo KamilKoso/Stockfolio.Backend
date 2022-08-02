@@ -26,7 +26,7 @@ internal class UsersController : BaseController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public async Task<ActionResult<UserDetailsDto>> GetAsync(Guid userId)
+    public async Task<ActionResult<UserDto>> GetAsync(Guid userId)
         => OkOrNotFound(await _dispatcher.QueryAsync(new GetUser { UserId = userId }));
 
     [HttpGet]

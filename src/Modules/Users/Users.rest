@@ -27,11 +27,19 @@ Content-Type: application/json
   "password": "{{password}}"
 }
 
-
-
 ###
-@authCookie = {{sign_in.response.headers.$.set-cookie}}
-@userId = {{sign_in.response.body.$.id}}
+@authCookie = {{sign_in.response.headers.set-cookie}}
+@userId = {{sign_in.response.body.id}}
+
+### Activate account
+# @name generate_email_confirmation_token
+POST {{url}}/account/generate-email-confirmation-token
+Content-Type: application/json
+
+{
+  "userId": "{{userId}}"
+}
+
 
 ### Logout
 # @name sign_out
@@ -61,8 +69,6 @@ Content-Type: application/json
 ### Browse users as admin
 GET {{url}}/users
 Set-Cookie: {{authCookie}}
-
-@userId = 00000000-0000-0000-0000-000000000000
 
 ### Get user details as admin
 GET {{url}}/users/{{userId}}

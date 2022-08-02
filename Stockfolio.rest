@@ -4,13 +4,13 @@
 GET {{url}}
 
 ###
-GET {{url}}/customers
+GET {{url}}/modules
 
 ###
-GET {{url}}/payments
+GET {{url}}/portfolios
 
 ###
-GET {{url}}/wallets
+GET {{url}}/stockmarket
 
 ###
 GET {{url}}/users

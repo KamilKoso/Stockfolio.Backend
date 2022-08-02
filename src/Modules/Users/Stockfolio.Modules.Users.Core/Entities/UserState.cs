@@ -3,5 +3,5 @@
 internal enum UserState
 {
     Active = 1,
-    Locked = 2
+    Locked = 3
 }

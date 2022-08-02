@@ -1,9 +1,9 @@
 ﻿using Stockfolio.Modules.Users.Core.DTO;
 using Stockfolio.Modules.Users.Core.Entities;
 
-namespace Stockfolio.Modules.Users.Core.Queries.Handlers;
+namespace Stockfolio.Modules.Users.Core.Mappings;
 
-internal static class Extensions
+internal static class UserMappings
 {
     private static readonly Dictionary<UserState, string> States = new()
     {
@@ -11,21 +11,14 @@ internal static class Extensions
         [UserState.Locked] = UserState.Locked.ToString().ToLowerInvariant()
     };
 
-    public static UserDto AsDto(this User member)
-        => member.Map<UserDto>();
-
-    public static UserDetailsDto AsDetailsDto(this User user)
-    {
-        return user.Map<UserDetailsDto>();
-    }
-
-    private static T Map<T>(this User user) where T : UserDto, new()
+    public static UserDto AsDto(this User user)
         => new()
         {
-            UserId = user.Id,
+            Id = user.Id,
             Email = user.Email,
             State = States[user.State],
             Roles = user.UserRoles.Select(x => x.Role.Name),
-            CreatedAt = user.CreatedAt
+            CreatedAt = user.CreatedAt,
+            EmailConfirmed = user.EmailConfirmed
         };
 }

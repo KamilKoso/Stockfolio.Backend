@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="YahooQuotesApi" Version="5.1.1" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\Shared\Stockfolio.Shared.Infrastructure\Stockfolio.Shared.Infrastructure.csproj" />
+		<ProjectReference Include="..\Stockfolio.Modules.StockMarket.Application\Stockfolio.Modules.StockMarket.Application.csproj" />
+	</ItemGroup>
+
+</Project>
