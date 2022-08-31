@@ -1,13 +1,14 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Stockfolio.Modules.StockMarket.Application.Repositories;
-using Stockfolio.Modules.StockMarket.Infrastructure.Repositories;
 using Stockfolio.Modules.StockMarket.Infrastructure.YahooFinance.Options;
+using Stockfolio.Modules.StockMarket.Infrastructure.YahooFinance.Repositories;
 using Stockfolio.Shared.Infrastructure;
 using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("Stockfolio.Modules.StockMarket.Tests.Integration")]
 [assembly: InternalsVisibleTo("Stockfolio.Modules.StockMarket.Api")]
 
-namespace Stockfolio.Modules.Portfolios.Application;
+namespace Stockfolio.Modules.StockMarket.Infrastructure;
 
 internal static class Extensions
 {

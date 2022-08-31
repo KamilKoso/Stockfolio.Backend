@@ -10,4 +10,6 @@ internal interface IQuotesRepository
     Task<IEnumerable<QuoteDetailsDto>> GetQuotes(IEnumerable<string> symbols, CancellationToken cancellationToken = default);
 
     Task<QuoteDetailsDto> GetQuote(string symbol, CancellationToken cancellationToken = default);
+
+    Task<QuoteDividendsDto> GetDividends(string symbol, DateTimeOffset start, DateTimeOffset end, CancellationToken cancellationToken = default);
 }

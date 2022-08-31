@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Stockfolio.Modules.Portfolios.Application;
+using Stockfolio.Modules.StockMarket.Infrastructure;
 using Stockfolio.Shared.Abstractions.Modules;
 using Stockfolio.Shared.Infrastructure.Modules;
 

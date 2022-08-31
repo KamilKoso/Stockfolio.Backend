@@ -5,8 +5,7 @@ GET {{url}}
 
 ##
 
-@searchQuery = jpy=x
-@seachCount = 0
+@searchQuery = kghm
 
 ### Search quotes
 # @name serach_quotes
@@ -14,8 +13,16 @@ GET {{url}}/quotes/search?query={{searchQuery}}
 Content-Type: application/json
 
 
-@symbols = aapl
-### Search quotes
+@symbol = EXPO
+### Get quotes
 # @name get_quotes
-GET {{url}}/quotes/get?symbols={{symbols}}
+GET {{url}}/quotes?symbols={{symbol}}
+Content-Type: application/json
+
+
+@startDate = 2015-08-05T07:00:00-04
+@endDate = 2015-08-05T07:00:00-04
+### Get dividends
+# @name get_dividends
+GET {{url}}/quotes/dividends/{{symbol}}
 Content-Type: application/json

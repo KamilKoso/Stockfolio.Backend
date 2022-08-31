@@ -38,8 +38,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A9F6763B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B3ED4EBD-0881-4B81-BE67-B1D508C591DC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{98FCF07E-5A74-40B3-AF1B-29146FBE0166}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StockMarket", "StockMarket", "{24266F7D-EC6E-4072-A807-1E2EA7994DAB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Users", "Users", "{30D0171C-EB8A-4675-85E6-C38DE20696F2}"
@@ -54,9 +52,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stockfolio.Modules.Users.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stockfolio.Modules.StockMarket.Api", "src\Modules\StockMarket\Stockfolio.Modules.StockMarket.Api\Stockfolio.Modules.StockMarket.Api.csproj", "{8752A79D-6461-4108-B586-4073D28E6117}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockfolio.Modules.StockMarket.Infrastructure", "src\Modules\StockMarket\Stockfolio.Modules.StockMarket.Infrastructure\Stockfolio.Modules.StockMarket.Infrastructure.csproj", "{9DA398B7-8A00-4F55-B454-38704A17B9D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stockfolio.Modules.StockMarket.Infrastructure", "src\Modules\StockMarket\Stockfolio.Modules.StockMarket.Infrastructure\Stockfolio.Modules.StockMarket.Infrastructure.csproj", "{9DA398B7-8A00-4F55-B454-38704A17B9D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockfolio.Modules.StockMarket.Application", "src\Modules\StockMarket\Stockfolio.Modules.StockMarket.Application\Stockfolio.Modules.StockMarket.Application.csproj", "{E90AC67F-701B-4663-8408-52ED31B0DE03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stockfolio.Modules.StockMarket.Application", "src\Modules\StockMarket\Stockfolio.Modules.StockMarket.Application\Stockfolio.Modules.StockMarket.Application.csproj", "{E90AC67F-701B-4663-8408-52ED31B0DE03}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B899EFBD-B7CE-410B-83C0-78A540C50128}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stockfolio.Modules.StockMarket.Tests.Unit", "src\Modules\StockMarket\Tests\Stockfolio.Modules.StockMarket.Tests.Unit\Stockfolio.Modules.StockMarket.Tests.Unit.csproj", "{3E134109-A1FB-41C1-BB50-9346FD36DC16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockfolio.Modules.StockMarket.Tests.Integration", "src\Modules\StockMarket\Tests\Stockfolio.Modules.StockMarket.Tests.Integration\Stockfolio.Modules.StockMarket.Tests.Integration.csproj", "{64127889-7CA0-4DB6-B891-FE2A8B07D001}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -284,6 +288,30 @@ Global
 		{E90AC67F-701B-4663-8408-52ED31B0DE03}.Release|x64.Build.0 = Release|Any CPU
 		{E90AC67F-701B-4663-8408-52ED31B0DE03}.Release|x86.ActiveCfg = Release|Any CPU
 		{E90AC67F-701B-4663-8408-52ED31B0DE03}.Release|x86.Build.0 = Release|Any CPU
+		{3E134109-A1FB-41C1-BB50-9346FD36DC16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E134109-A1FB-41C1-BB50-9346FD36DC16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E134109-A1FB-41C1-BB50-9346FD36DC16}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3E134109-A1FB-41C1-BB50-9346FD36DC16}.Debug|x64.Build.0 = Debug|Any CPU
+		{3E134109-A1FB-41C1-BB50-9346FD36DC16}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3E134109-A1FB-41C1-BB50-9346FD36DC16}.Debug|x86.Build.0 = Debug|Any CPU
+		{3E134109-A1FB-41C1-BB50-9346FD36DC16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E134109-A1FB-41C1-BB50-9346FD36DC16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E134109-A1FB-41C1-BB50-9346FD36DC16}.Release|x64.ActiveCfg = Release|Any CPU
+		{3E134109-A1FB-41C1-BB50-9346FD36DC16}.Release|x64.Build.0 = Release|Any CPU
+		{3E134109-A1FB-41C1-BB50-9346FD36DC16}.Release|x86.ActiveCfg = Release|Any CPU
+		{3E134109-A1FB-41C1-BB50-9346FD36DC16}.Release|x86.Build.0 = Release|Any CPU
+		{64127889-7CA0-4DB6-B891-FE2A8B07D001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64127889-7CA0-4DB6-B891-FE2A8B07D001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64127889-7CA0-4DB6-B891-FE2A8B07D001}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{64127889-7CA0-4DB6-B891-FE2A8B07D001}.Debug|x64.Build.0 = Debug|Any CPU
+		{64127889-7CA0-4DB6-B891-FE2A8B07D001}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{64127889-7CA0-4DB6-B891-FE2A8B07D001}.Debug|x86.Build.0 = Debug|Any CPU
+		{64127889-7CA0-4DB6-B891-FE2A8B07D001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64127889-7CA0-4DB6-B891-FE2A8B07D001}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64127889-7CA0-4DB6-B891-FE2A8B07D001}.Release|x64.ActiveCfg = Release|Any CPU
+		{64127889-7CA0-4DB6-B891-FE2A8B07D001}.Release|x64.Build.0 = Release|Any CPU
+		{64127889-7CA0-4DB6-B891-FE2A8B07D001}.Release|x86.ActiveCfg = Release|Any CPU
+		{64127889-7CA0-4DB6-B891-FE2A8B07D001}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -313,6 +341,9 @@ Global
 		{8752A79D-6461-4108-B586-4073D28E6117} = {24266F7D-EC6E-4072-A807-1E2EA7994DAB}
 		{9DA398B7-8A00-4F55-B454-38704A17B9D8} = {24266F7D-EC6E-4072-A807-1E2EA7994DAB}
 		{E90AC67F-701B-4663-8408-52ED31B0DE03} = {24266F7D-EC6E-4072-A807-1E2EA7994DAB}
+		{B899EFBD-B7CE-410B-83C0-78A540C50128} = {24266F7D-EC6E-4072-A807-1E2EA7994DAB}
+		{3E134109-A1FB-41C1-BB50-9346FD36DC16} = {B899EFBD-B7CE-410B-83C0-78A540C50128}
+		{64127889-7CA0-4DB6-B891-FE2A8B07D001} = {B899EFBD-B7CE-410B-83C0-78A540C50128}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {824A34F1-8A95-4A8A-8585-3F7FCDE66AFB}
