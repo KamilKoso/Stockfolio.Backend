@@ -21,22 +21,13 @@ internal class QuotesController : ControllerBase
 
     [HttpGet]
     public async Task<IActionResult> GetQuotes([FromQuery] GetQuotes query)
-    {
-        var result = await _queryDispatcher.QueryAsync(query);
-        return Ok(result);
-    }
+        => Ok(await _queryDispatcher.QueryAsync(query));
 
     [HttpGet("dividends/{symbol}")]
     public async Task<IActionResult> GetDividends([FromRoute] string symbol, [FromQuery] DateTimeOffset? start, [FromQuery] DateTimeOffset? end)
-    {
-        var result = await _queryDispatcher.QueryAsync(new GetDividends(symbol, start, end));
-        return Ok(result);
-    }
+        => Ok(await _queryDispatcher.QueryAsync(new GetDividends(symbol, start, end)));
 
     [HttpGet("search")]
     public async Task<IActionResult> SearchQuotes([FromQuery] SearchQuotes searchQuery)
-    {
-        var result = await _queryDispatcher.QueryAsync(searchQuery);
-        return Ok(result);
-    }
+        => Ok(await _queryDispatcher.QueryAsync(searchQuery));
 }
