@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -141,10 +142,10 @@ public static class Extensions
             reDoc.DocumentTitle = "Modular API";
         });
         app.UseAuth();
-        app.UseContext();
-        app.UseLogging();
         app.UseRouting();
         app.UseAuthorization();
+        app.UseContext();
+        app.UseLogging();
 
         return app;
     }

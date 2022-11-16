@@ -33,5 +33,11 @@ public static class StringExtensions
         => value.Any(x => char.IsLower(x));
 
     public static string ToSnakeCase(this string value)
-          => string.Concat((value ?? string.Empty).Select((x, i) => i > 0 && char.IsUpper(x) && !char.IsUpper(value[i - 1]) ? $"_{x}" : x.ToString())).ToLower();
+        => string.Concat((value ?? string.Empty).Select((x, i) => i > 0 && char.IsUpper(x) && !char.IsUpper(value[i - 1]) ? $"_{x}" : x.ToString())).ToLower();
+
+    public static bool IsNullOrEmpty(this string value)
+        => string.IsNullOrEmpty(value);
+
+    public static bool IsNullOrWhiteSpace(this string value)
+        => string.IsNullOrWhiteSpace(value);
 }

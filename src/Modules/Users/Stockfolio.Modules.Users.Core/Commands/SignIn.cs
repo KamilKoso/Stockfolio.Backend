@@ -1,5 +1,4 @@
-﻿using Stockfolio.Shared.Abstractions.Auth;
-using Stockfolio.Shared.Abstractions.Commands;
+﻿using Stockfolio.Shared.Abstractions.Commands;
 using System.ComponentModel.DataAnnotations;
 
 namespace Stockfolio.Modules.Users.Core.Commands;

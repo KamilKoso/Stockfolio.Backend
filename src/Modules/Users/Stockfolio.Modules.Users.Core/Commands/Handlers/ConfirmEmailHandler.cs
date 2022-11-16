@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Stockfolio.Modules.Users.Core.Events;
 using Stockfolio.Modules.Users.Core.Exceptions;
 using Stockfolio.Modules.Users.Core.Managers;
@@ -13,14 +14,17 @@ internal sealed class ConfirmEmailHandler : ICommandHandler<ConfirmEmail>
     private readonly UserManager _userManager;
     private readonly ILogger<ConfirmEmailHandler> _logger;
     private readonly IMessageBroker _messageBroker;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
     public ConfirmEmailHandler(UserManager userManager,
                                                  ILogger<ConfirmEmailHandler> logger,
-                                                 IMessageBroker messageBroker)
+                                                 IMessageBroker messageBroker,
+                                                 IHttpContextAccessor httpContextAccessor)
     {
         _userManager = userManager;
         _logger = logger;
         _messageBroker = messageBroker;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public async Task HandleAsync(ConfirmEmail command, CancellationToken cancellationToken = default)
@@ -39,6 +43,7 @@ internal sealed class ConfirmEmailHandler : ICommandHandler<ConfirmEmail>
             throw new ConfirmEmailException(result.Errors.First().Description);
         }
 
+        await _httpContextAccessor.HttpContext.SignInAsStockfolioUser(user);
         await _messageBroker.PublishAsync(new EmailConfirmed(user.Id), cancellationToken);
         _logger.LogInformation($"User with ID: '{user.Id}' confirmed his email.");
     }

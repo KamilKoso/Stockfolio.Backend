@@ -3,8 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Stockfolio.Modules.Users.Core.DAL;
 using Stockfolio.Modules.Users.Core.Entities;
 using Stockfolio.Modules.Users.Core.Managers;
-using Stockfolio.Modules.Users.Core.Services;
-using Stockfolio.Modules.Users.Core.Services.RequestStorage;
 using Stockfolio.Modules.Users.Core.Stores;
 using Stockfolio.Modules.Users.Core.Validators;
 using Stockfolio.Shared.Infrastructure;
@@ -15,6 +13,7 @@ using IdentityOptions = Stockfolio.Modules.Users.Core.Options.IdentityOptions;
 
 [assembly: InternalsVisibleTo("Stockfolio.Modules.Users.Api")]
 [assembly: InternalsVisibleTo("Stockfolio.Modules.Users.Tests.Unit")]
+[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")] // XUnit internals
 
 namespace Stockfolio.Modules.Users.Core;
 
@@ -23,7 +22,6 @@ internal static class Extensions
     public static IServiceCollection AddCore(this IServiceCollection services)
     {
         return services
-            .AddSingleton<IUserRequestStorage, UserRequestStorage>()
             .AddPostgres<UsersDbContext>()
             .AddOutbox<UsersDbContext>()
             .AddUnitOfWork<UsersUnitOfWork>()

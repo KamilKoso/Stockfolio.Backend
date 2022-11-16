@@ -4,34 +4,26 @@ using Microsoft.AspNetCore.Mvc;
 using Stockfolio.Modules.Users.Core.Commands;
 using Stockfolio.Modules.Users.Core.DTO;
 using Stockfolio.Modules.Users.Core.Queries;
-using Stockfolio.Modules.Users.Core.Services;
 using Stockfolio.Shared.Abstractions.Contexts;
 using Stockfolio.Shared.Abstractions.Dispatchers;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Stockfolio.Modules.Users.Api.Controllers;
 
+[Authorize]
 internal class AccountController : BaseController
 {
-    private const string AccessTokenCookie = "__access-token";
     private readonly IDispatcher _dispatcher;
     private readonly IContext _context;
-    private readonly IUserRequestStorage _userRequestStorage;
-    private readonly CookieOptions _cookieOptions;
 
     public AccountController(IDispatcher dispatcher,
-                             IContext context,
-                             IUserRequestStorage userRequestStorage,
-                             CookieOptions cookieOptions)
+                             IContext context)
     {
         _dispatcher = dispatcher;
         _context = context;
-        _userRequestStorage = userRequestStorage;
-        _cookieOptions = cookieOptions;
     }
 
     [HttpGet]
-    [Authorize]
     [SwaggerOperation("Get account")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -39,6 +31,7 @@ internal class AccountController : BaseController
         => OkOrNotFound(await _dispatcher.QueryAsync(new GetUser { UserId = _context.Identity.Id }));
 
     [HttpPost("sign-up")]
+    [AllowAnonymous]
     [SwaggerOperation("Sign up")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -49,15 +42,14 @@ internal class AccountController : BaseController
     }
 
     [HttpPost("sign-in")]
+    [AllowAnonymous]
     [SwaggerOperation("Sign in")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<UserDto>> SignInAsync(SignIn command)
     {
         await _dispatcher.SendAsync(command);
-        var jwt = _userRequestStorage.GetToken(command.Id);
-        var user = await _dispatcher.QueryAsync(new GetUser { UserId = jwt.UserId });
-        AddCookie(AccessTokenCookie, jwt.AccessToken);
+        var user = await _dispatcher.QueryAsync(new GetUser { UserId = _context.Identity.Id });
         return Ok(user);
     }
 
@@ -65,9 +57,9 @@ internal class AccountController : BaseController
     [SwaggerOperation("Generate email confirmation token")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> GenerateEmailConfirmationTokenAsync(GenerateEmailConfirmationToken command)
+    public async Task<ActionResult> GenerateEmailConfirmationTokenAsync()
     {
-        await _dispatcher.SendAsync(command);
+        await _dispatcher.SendAsync(new GenerateEmailConfirmationToken(_context.Identity.Id));
         return NoContent();
     }
 
@@ -81,8 +73,7 @@ internal class AccountController : BaseController
         return NoContent();
     }
 
-    [Authorize]
-    [HttpDelete("sign-out")]
+    [HttpPost("sign-out")]
     [SwaggerOperation("Sign out")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -90,11 +81,6 @@ internal class AccountController : BaseController
     public async Task<ActionResult> SignOutAsync()
     {
         await _dispatcher.SendAsync(new SignOut(_context.Identity.Id));
-        DeleteCookie(AccessTokenCookie);
         return NoContent();
     }
-
-    private void AddCookie(string key, string value) => Response.Cookies.Append(key, value, _cookieOptions);
-
-    private void DeleteCookie(string key) => Response.Cookies.Delete(key, _cookieOptions);
 }

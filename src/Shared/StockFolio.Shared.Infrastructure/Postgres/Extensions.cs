@@ -82,7 +82,15 @@ public static class Extensions
     public static IServiceCollection AddPostgres<T>(this IServiceCollection services) where T : DbContext
     {
         var options = services.GetOptions<PostgresOptions>("postgres");
-        services.AddDbContext<T>(x => x.UseNpgsql(options.ConnectionString));
+        services.AddDbContext<T>(x =>
+        {
+            x.UseNpgsql(options.ConnectionString,
+                postgresOptions =>
+                {
+                    postgresOptions.EnableRetryOnFailure(maxRetryCount: 10, maxRetryDelay: TimeSpan.FromSeconds(30), errorCodesToAdd: null);
+                    postgresOptions.UseQuerySplittingBehavior(QuerySplittingBehavior.SingleQuery);
+                });
+        });
 
         return services;
     }

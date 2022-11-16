@@ -9,6 +9,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Stockfolio.Modules.Users.Api.Controllers;
 
+[Authorize]
 internal class PasswordController : BaseController
 {
     private readonly IDispatcher _dispatcher;
@@ -21,7 +22,6 @@ internal class PasswordController : BaseController
         _context = context;
     }
 
-    [Authorize]
     [HttpPut]
     [SwaggerOperation("Change password")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]

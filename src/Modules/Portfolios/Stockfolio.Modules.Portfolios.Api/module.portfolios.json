@@ -1,8 +1,8 @@
 {
-	"portfolios": {
-		"module": {
-			"name": "Portfolios",
-			"enabled": true
-		}
-	}
+  "portfolios": {
+    "module": {
+      "name": "Portfolios",
+      "enabled": true
+    }
+  }
 }

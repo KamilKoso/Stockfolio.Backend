@@ -6,12 +6,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\..\..\Shared\StockFolio.Shared.Abstractions\Stockfolio.Shared.Abstractions.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Commands\**" />
+    <EmbeddedResource Remove="Commands\**" />
+    <None Remove="Commands\**" />
+  </ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Commands\Handlers\" />
+		<ProjectReference Include="..\..\..\Shared\StockFolio.Shared.Abstractions\Stockfolio.Shared.Abstractions.csproj" />
 	</ItemGroup>
 	
 </Project>

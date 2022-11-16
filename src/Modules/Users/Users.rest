@@ -1,4 +1,4 @@
-@url = http://localhost:5000
+@url = https://localhost:5000
 
 ###
 GET {{url}}
@@ -31,6 +31,12 @@ Content-Type: application/json
 @authCookie = {{sign_in.response.headers.set-cookie}}
 @userId = {{sign_in.response.body.id}}
 
+### Use refresh token
+# @name refresh_token_use
+POST {{url}}/account/refresh-token/use
+Content-Type: application/json
+
+
 ### Activate account
 # @name generate_email_confirmation_token
 POST {{url}}/account/generate-email-confirmation-token
@@ -46,11 +52,6 @@ Content-Type: application/json
 POST {{url}}/account/sign-out
 Set-Cookie: {{authCookie}}
 Content-Type: application/json
-
-{
-  "email": "{{email}}",
-  "password": "{{password}}"
-}
 
 ### Get user account
 GET {{url}}/account

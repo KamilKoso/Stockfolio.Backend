@@ -8,6 +8,5 @@ namespace Stockfolio.Modules.Portfolios.Api.Controllers
     [Authorize]
     public class PortfoliosController : Controller
     {
-        
     }
 }

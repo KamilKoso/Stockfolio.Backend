@@ -9,6 +9,10 @@ namespace Stockfolio.Modules.Users.Api;
 internal class UsersModule : IModule
 {
     public string Name { get; } = "Users";
+    public IEnumerable<string> Policies { get; } = new[]
+   {
+        "users"
+    };
 
     public void Register(IServiceCollection services)
     {

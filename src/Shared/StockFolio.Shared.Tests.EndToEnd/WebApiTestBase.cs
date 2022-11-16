@@ -1,15 +1,13 @@
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
+using Stockfolio.Bootstrapper;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Stockfolio.Bootstrapper;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace Stockfolio.Shared.Tests.EndToEnd;
@@ -23,7 +21,7 @@ public abstract class WebApiTestBase : IDisposable, IClassFixture<WebApplication
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         Converters = { new JsonStringEnumConverter() }
     };
-        
+
     private string _route;
 
     protected void SetPath(string route)
@@ -58,12 +56,6 @@ public abstract class WebApiTestBase : IDisposable, IClassFixture<WebApplication
 
     protected Task<HttpResponseMessage> DeleteAsync(string endpoint)
         => Client.DeleteAsync(GetEndpoint(endpoint));
-        
-    protected void Authenticate(Guid userId, IDictionary<string, IEnumerable<string>> claims = null)
-    {
-        var jwt = AuthHelper.GenerateJwt(userId, claims: claims);
-        Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
-    }
 
     protected T Map<T>(object data)
         => JsonSerializer.Deserialize<T>(JsonSerializer.Serialize(data, SerializerOptions), SerializerOptions);
@@ -93,5 +85,5 @@ public abstract class WebApiTestBase : IDisposable, IClassFixture<WebApplication
     {
     }
 
-    #endregion
+    #endregion Arrange
 }

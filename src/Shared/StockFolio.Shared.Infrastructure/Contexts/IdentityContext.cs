@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Stockfolio.Shared.Abstractions.Contexts;
+using StockFolio.Shared.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using Stockfolio.Shared.Abstractions.Contexts;
 
 namespace Stockfolio.Shared.Infrastructure.Contexts;
 
@@ -10,6 +11,7 @@ public class IdentityContext : IIdentityContext
 {
     public bool IsAuthenticated { get; }
     public Guid Id { get; }
+    public string Email { get; }
     public string Role { get; }
 
     public Dictionary<string, IEnumerable<string>> Claims { get; }
@@ -26,21 +28,23 @@ public class IdentityContext : IIdentityContext
 
     public IdentityContext(ClaimsPrincipal principal)
     {
-        if (principal?.Identity is null || string.IsNullOrWhiteSpace(principal.Identity.Name))
+        var userId = principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+        if (principal?.Identity is null || userId.IsNullOrWhiteSpace())
         {
             return;
         }
-            
+
         IsAuthenticated = principal.Identity?.IsAuthenticated is true;
-        Id = IsAuthenticated ? Guid.Parse(principal.Identity.Name) : Guid.Empty;
+        Id = IsAuthenticated ? Guid.Parse(userId) : Guid.Empty;
+        Email = principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
         Role = principal.Claims.SingleOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
         Claims = principal.Claims.GroupBy(x => x.Type)
             .ToDictionary(x => x.Key, x => x.Select(c => c.Value.ToString()));
     }
-        
+
     public bool IsUser() => Role is "user";
-        
+
     public bool IsAdmin() => Role is "admin";
-        
+
     public static IIdentityContext Empty => new IdentityContext();
 }

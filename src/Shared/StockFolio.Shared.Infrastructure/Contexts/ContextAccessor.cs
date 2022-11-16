@@ -1,5 +1,5 @@
-﻿using System.Threading;
-using Stockfolio.Shared.Abstractions.Contexts;
+﻿using Stockfolio.Shared.Abstractions.Contexts;
+using System.Threading;
 
 namespace Stockfolio.Shared.Infrastructure.Contexts;
 
@@ -20,7 +20,7 @@ public sealed class ContextAccessor
 
             if (value != null)
             {
-                Holder.Value = new ContextHolder {Context = value};
+                Holder.Value = new ContextHolder { Context = value };
             }
         }
     }
