@@ -10,34 +10,33 @@ namespace Stockfolio.Modules.StockMarket.Infrastructure.YahooFinance.Repositorie
 
 internal class YahooFinanceQuotesRepository : IQuotesRepository
 {
-    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly HttpClient _httpClient;
     private readonly IJsonSerializer _jsonSerializer;
     private readonly YahooFinanceOptions _yahooFinanceOptions;
-    private readonly string _httpClientName = "QuotesHttpClient"; // Add polly for resiliency
 
-    public YahooFinanceQuotesRepository(IHttpClientFactory httpClientFactory,
+    public YahooFinanceQuotesRepository(HttpClient httpClient,
                             IJsonSerializer jsonSerializer,
                             YahooFinanceOptions yahooFinanceOptions)
     {
-        _httpClientFactory = httpClientFactory;
+        _httpClient = httpClient;
         _jsonSerializer = jsonSerializer;
         _yahooFinanceOptions = yahooFinanceOptions;
     }
 
-    public async Task<SearchQuotesDto> SearchQuotes(string searchQuery, int quotesCount = 6, CancellationToken cancellationToken = default)
+    public async Task<SearchQuotesDto> SearchQuotes(string searchQuery, int quotesCount = 7, CancellationToken cancellationToken = default)
     {
-        var httpClient = _httpClientFactory.CreateClient(_httpClientName);
         var requestUrl = $"{_yahooFinanceOptions.BaseApiUrl}/v1/finance/search?q={searchQuery}&quotesCount={quotesCount}&newsCount=0&listCount=0";
-
-        var response = await httpClient.GetAsync(requestUrl, cancellationToken);
-
+        var response = await _httpClient.GetAsync(requestUrl, cancellationToken);
         var responseStr = await response.Content.ReadAsStringAsync(cancellationToken);
         var quotesJsonArray = JsonNode.Parse(responseStr)["quotes"]?.ToString();
-        var yahooFinanceQuotesDto = _jsonSerializer.Deserialize<IEnumerable<YahooFinanceQuote>>(quotesJsonArray);
+        var searchQuoteDto = _jsonSerializer.Deserialize<IEnumerable<SearchYahooFinanceQuote>>(quotesJsonArray).ToDictionary(x => x.Symbol);
+        var quoteDetails = (await GetQuotesBySymbols(searchQuoteDto.Keys, cancellationToken))
+                                            .Select(x => x.AsSearchQuoteDto(searchQuoteDto[x.Symbol]))
+                                            .ToList();
 
         return new()
         {
-            Quotes = yahooFinanceQuotesDto.Select(x => x.AsQuoteDto()).ToList()
+            Quotes = quoteDetails
         };
     }
 
@@ -46,15 +45,8 @@ internal class YahooFinanceQuotesRepository : IQuotesRepository
         if (!symbols.Any())
             return new List<QuoteDetailsDto>();
 
-        var httpClient = _httpClientFactory.CreateClient(_httpClientName);
-        var requestUrl = $"{_yahooFinanceOptions.BaseApiUrl}/v7/finance/quote?symbols={string.Join(",", symbols)}";
-
-        var response = await httpClient.GetAsync(requestUrl, cancellationToken);
-        var responseStr = await response.Content.ReadAsStringAsync(cancellationToken);
-        var quotesJsonArray = JsonNode.Parse(responseStr)["quoteResponse"]["result"].ToString();
-        return _jsonSerializer
-                    .Deserialize<IEnumerable<YahooFinanceQuoteDetails>>(quotesJsonArray)
-                    .Select(x => x.AsQuoteDetailsDto());
+        return (await GetQuotesBySymbols(symbols, cancellationToken))
+                        .Select(x => x.AsQuoteDetailsDto());
     }
 
     public async Task<QuoteDetailsDto> GetQuote(string symbol, CancellationToken cancellationToken = default)
@@ -64,16 +56,27 @@ internal class YahooFinanceQuotesRepository : IQuotesRepository
 
     public async Task<QuoteDividendsDto> GetDividends(string symbol, DateTimeOffset start, DateTimeOffset end, CancellationToken cancellationToken = default)
     {
-        var httpClient = _httpClientFactory.CreateClient(_httpClientName);
-        var requestUrl = $"{_yahooFinanceOptions.BaseApiUrl}/v8/finance/chart/{symbol}?" +
-                         $"period1={start.ToUnixTimeSeconds()}&" +
-                         $"period2={end.ToUnixTimeSeconds()}&" +
-                         $"events=div&" +
-                         $"interval=1d";
+        var requestUrl = @$"{_yahooFinanceOptions.BaseApiUrl}/v8/finance/chart/{symbol}?
+                            period1={start.ToUnixTimeSeconds()}&
+                            period2={end.ToUnixTimeSeconds()}&
+                            events=div&
+                            interval=1d";
 
-        var response = await httpClient.GetAsync(requestUrl, cancellationToken);
+        var response = await _httpClient.GetAsync(requestUrl, cancellationToken);
         var responseStr = await response.Content.ReadAsStringAsync(cancellationToken);
         var contentStr = JsonNode.Parse(responseStr)["chart"]["result"][0].ToString();
         return _jsonSerializer.Deserialize<YahooFinanceQuoteDividend>(contentStr).AsQuoteDividendsDto();
+    }
+
+    public async Task<IEnumerable<YahooFinanceQuoteDetails>> GetQuotesBySymbols(IEnumerable<string> symbols, CancellationToken cancellationToken = default)
+    {
+        if (!symbols.Any())
+            return new List<YahooFinanceQuoteDetails>();
+
+        var requestUrl = $"{_yahooFinanceOptions.BaseApiUrl}/v7/finance/quote?symbols={string.Join(",", symbols)}";
+        var response = await _httpClient.GetAsync(requestUrl, cancellationToken);
+        var responseStr = await response.Content.ReadAsStringAsync(cancellationToken);
+        var quotesJsonArray = JsonNode.Parse(responseStr)["quoteResponse"]["result"].ToString();
+        return _jsonSerializer.Deserialize<IEnumerable<YahooFinanceQuoteDetails>>(quotesJsonArray);
     }
 }

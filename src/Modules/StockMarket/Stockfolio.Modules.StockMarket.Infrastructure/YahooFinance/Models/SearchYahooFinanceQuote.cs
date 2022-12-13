@@ -2,18 +2,10 @@
 
 namespace Stockfolio.Modules.StockMarket.Infrastructure.YahooFinance.Models;
 
-internal class YahooFinanceQuote
+internal class SearchYahooFinanceQuote : YahooFinanceQuoteBase
 {
-    public string Exchange { get; set; }
-    public string ShortName { get; set; }
-    public string LongName { get; set; }
-    public string QuoteType { get; set; }
-    public string Symbol { get; set; }
     public string Index { get; set; }
     public double Score { get; set; }
-
-    [JsonPropertyName("typeDisp")]
-    public string Type { get; set; }
 
     [JsonPropertyName("exchDisp")]
     public string ExchangeDisplayName { get; set; }

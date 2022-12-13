@@ -9,7 +9,7 @@ namespace Stockfolio.Modules.Users.Core;
 
 internal static class HttpContextExtensions
 {
-    public static async Task SignInAsStockfolioUser(this HttpContext httpContext, User user)
+    public static async Task SignInAsStockfolioUser(this HttpContext httpContext, User user, bool rememberMe = false)
     {
         List<Claim> claims = new()
         {
@@ -26,7 +26,7 @@ internal static class HttpContextExtensions
         ClaimsIdentity claimsIdentity = new(claims, CookieAuthenticationDefaults.AuthenticationScheme);
         ClaimsPrincipal claimsPrincipal = new(claimsIdentity);
 
-        await httpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal, new() { IsPersistent = true });
+        await httpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal, new() { IsPersistent = rememberMe });
     }
 
     public static async Task SignOutAsStockfolioUser(this HttpContext httpContext)

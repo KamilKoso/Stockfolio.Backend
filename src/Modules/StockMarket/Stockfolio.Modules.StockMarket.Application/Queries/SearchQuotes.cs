@@ -5,7 +5,7 @@ namespace Stockfolio.Modules.StockMarket.Application.Queries;
 
 internal class SearchQuotes : IQuery<SearchQuotesDto>
 {
-    private int _count = 6;
+    private int _count = 7;
 
     public string Query { get; set; }
 

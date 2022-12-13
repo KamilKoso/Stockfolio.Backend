@@ -1,6 +1,6 @@
 ﻿namespace Stockfolio.Modules.StockMarket.Infrastructure.YahooFinance.Models;
 
-internal class YahooFinanceQuoteDetails : YahooFinanceQuote
+internal class YahooFinanceQuoteDetails : YahooFinanceQuoteBase
 {
     public decimal Ask { get; set; }
     public string Language { get; set; }
@@ -11,9 +11,9 @@ internal class YahooFinanceQuoteDetails : YahooFinanceQuote
     public long FirstTradeDateMilliseconds { get; set; }
     public string Currency { get; set; }
     public long? RegularMarketVolume { get; set; }
-    public decimal? RegularMarketPreviousClose { get; set; }
-    public decimal? RegularMarketOpen { get; set; }
-    public decimal? RegularMarketPrice { get; set; }
+    public decimal RegularMarketPreviousClose { get; set; }
+    public decimal RegularMarketOpen { get; set; }
+    public decimal RegularMarketPrice { get; set; }
     public decimal Bid { get; set; }
     public long? BidSize { get; set; }
     public string FullExchangeName { get; set; }

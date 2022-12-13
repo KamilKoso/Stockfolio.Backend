@@ -31,7 +31,7 @@ internal sealed class SignInHandler : ICommandHandler<SignIn>
     public async Task HandleAsync(SignIn command, CancellationToken cancellationToken = default)
     {
         var user = await _userManager.FindByEmailAsync(command.Email)
-                                        .NotNull(() => new UserNotFoundException(command.Email));
+                                        .NotNull(() => new InvalidCredentialsException());
 
         if (user.State != UserState.Active)
         {
@@ -43,7 +43,7 @@ internal sealed class SignInHandler : ICommandHandler<SignIn>
             throw new InvalidCredentialsException();
         }
 
-        await _httpContextAccessor.HttpContext.SignInAsStockfolioUser(user);
+        await _httpContextAccessor.HttpContext.SignInAsStockfolioUser(user, command.RememberMe);
         await _messageBroker.PublishAsync(new SignedIn(user.Id), cancellationToken);
         _logger.LogInformation($"User with ID: '{user.Id}' has signed in.");
     }

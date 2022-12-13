@@ -2,7 +2,7 @@
 
 namespace Stockfolio.Modules.StockMarket.Application.Dto;
 
-internal class QuoteDetailsDto : QuoteDto
+internal class QuoteDetailsDto : QuoteBaseDto
 {
     public long MarketCap { get; set; }
     public string Language { get; set; }
@@ -10,11 +10,8 @@ internal class QuoteDetailsDto : QuoteDto
     public string QuoteSourceName { get; set; }
     public DateTimeOffset FirstTradeDate { get; set; }
     public DateTimeOffset? LastDividendPayDate { get; set; }
-    public string Currency { get; set; }
-    public long? RegularMarketVolume { get; set; }
-    public decimal? RegularMarketPreviousClose { get; set; }
-    public decimal? RegularMarketOpen { get; set; }
-    public decimal? RegularMarketPrice { get; set; }
+    public long? Volume { get; set; }
+    public decimal MarketOpenPrice { get; set; }
     public decimal Ask { get; set; }
     public decimal Bid { get; set; }
     public long? BidSize { get; set; }
