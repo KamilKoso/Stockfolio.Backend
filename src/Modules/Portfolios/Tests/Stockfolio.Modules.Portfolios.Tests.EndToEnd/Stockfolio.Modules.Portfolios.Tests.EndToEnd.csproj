@@ -18,6 +18,6 @@
 		</PackageReference>
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\..\Shared\StockFolio.Shared.Tests.EndToEnd\StockFolio.Shared.Tests.EndToEnd.csproj" />
+	  <ProjectReference Include="..\..\..\..\Shared\Stockfolio.Shared.Tests.EndToEnd\Stockfolio.Shared.Tests.EndToEnd.csproj" />
 	</ItemGroup>
 </Project>

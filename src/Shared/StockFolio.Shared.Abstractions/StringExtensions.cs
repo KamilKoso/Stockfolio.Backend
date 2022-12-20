@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace StockFolio.Shared.Abstractions;
+namespace Stockfolio.Shared.Abstractions;
 
 public static class StringExtensions
 {

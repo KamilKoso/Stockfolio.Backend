@@ -19,7 +19,7 @@
 	  </ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\..\Shared\StockFolio.Shared.Tests\StockFolio.Shared.Tests.csproj" />
+	  <ProjectReference Include="..\..\..\..\Shared\Stockfolio.Shared.Tests\Stockfolio.Shared.Tests.csproj" />
 	  <ProjectReference Include="..\..\Stockfolio.Modules.Portfolios.Application\Stockfolio.Modules.Portfolios.Application.csproj" />
 	  <ProjectReference Include="..\..\Stockfolio.Modules.Portfolios.Infrastructure\Stockfolio.Modules.Portfolios.Infrastructure.csproj" />
 	</ItemGroup>

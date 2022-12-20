@@ -1,5 +1,5 @@
 ﻿using Stockfolio.Shared.Abstractions.Contexts;
-using StockFolio.Shared.Abstractions;
+using Stockfolio.Shared.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Shared\StockFolio.Shared.Tests\StockFolio.Shared.Tests.csproj" />
+    <ProjectReference Include="..\..\..\..\Shared\Stockfolio.Shared.Tests\Stockfolio.Shared.Tests.csproj" />
     <ProjectReference Include="..\..\Stockfolio.Modules.Users.Api\Stockfolio.Modules.Users.Api.csproj" />
   </ItemGroup>
 

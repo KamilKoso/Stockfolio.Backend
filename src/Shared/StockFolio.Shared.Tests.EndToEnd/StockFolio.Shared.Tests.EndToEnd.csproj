@@ -20,7 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Bootstrapper\StockFolio.Bootstrapper\Stockfolio.Bootstrapper.csproj" />
+        <ProjectReference Include="..\..\Bootstrapper\Stockfolio.Bootstrapper\Stockfolio.Bootstrapper.csproj" />
         <ProjectReference Include="..\Stockfolio.Shared.Tests\Stockfolio.Shared.Tests.csproj" />
     </ItemGroup>
 

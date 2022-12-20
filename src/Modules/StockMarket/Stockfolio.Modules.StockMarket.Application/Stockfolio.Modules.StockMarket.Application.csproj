@@ -13,7 +13,7 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\Shared\StockFolio.Shared.Abstractions\Stockfolio.Shared.Abstractions.csproj" />
+		<ProjectReference Include="..\..\..\Shared\Stockfolio.Shared.Abstractions\Stockfolio.Shared.Abstractions.csproj" />
 	</ItemGroup>
 	
 </Project>
