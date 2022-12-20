@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Stockfolio.Shared.Abstractions.Modules;
 using System.Collections.Generic;
@@ -15,9 +16,9 @@ public static class Extensions
 {
     private const string AccessTokenCookieName = "__access-token";
 
-    public static IServiceCollection AddAuth(this IServiceCollection services, IList<IModule> modules = null)
+    public static IServiceCollection AddAuth(this IServiceCollection services, IConfiguration configuration, IList<IModule> modules = null)
     {
-        var authOptions = services.GetOptions<AuthOptions>("auth");
+        var authOptions = configuration.GetOptions<AuthOptions>("auth");
         if (authOptions.AuthenticationDisabled)
         {
             services.AddSingleton<IPolicyEvaluator, DisabledAuthenticationPolicyEvaluator>();

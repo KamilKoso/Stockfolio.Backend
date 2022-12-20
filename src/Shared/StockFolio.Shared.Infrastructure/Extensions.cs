@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -44,28 +43,23 @@ public static class Extensions
     public static IServiceCollection AddInitializer<T>(this IServiceCollection services) where T : class, IInitializer
         => services.AddTransient<IInitializer, T>();
 
-    public static IServiceCollection AddModularInfrastructure(this IServiceCollection services,
-        IList<Assembly> assemblies, IList<IModule> modules)
+    public static IServiceCollection AddModularInfrastructure(this IServiceCollection services, IList<Assembly> assemblies, IList<IModule> modules, IConfiguration configuration)
     {
         var disabledModules = new List<string>();
-        using (var serviceProvider = services.BuildServiceProvider())
+        foreach (var (key, value) in configuration.AsEnumerable())
         {
-            var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-            foreach (var (key, value) in configuration.AsEnumerable())
+            if (!key.Contains(":module:enabled"))
             {
-                if (!key.Contains(":module:enabled"))
-                {
-                    continue;
-                }
+                continue;
+            }
 
-                if (!bool.Parse(value))
-                {
-                    disabledModules.Add(key.Split(":")[0]);
-                }
+            if (!bool.Parse(value))
+            {
+                disabledModules.Add(key.Split(":")[0]);
             }
         }
 
-        services.AddCorsPolicy();
+        services.AddCorsPolicy(configuration);
         services.AddSwaggerGen(swagger =>
         {
             swagger.EnableAnnotations();
@@ -77,7 +71,7 @@ public static class Extensions
             });
         });
 
-        var appOptions = services.GetOptions<AppOptions>("app");
+        var appOptions = configuration.GetOptions<AppOptions>("app");
         services.AddSingleton(appOptions);
 
         services.AddMemoryCache();
@@ -87,20 +81,20 @@ public static class Extensions
         services.AddSingleton<IJsonSerializer, SystemTextJsonSerializer>();
         services.AddModuleInfo(modules);
         services.AddModuleRequests(assemblies);
-        services.AddAuth(modules);
+        services.AddAuth(configuration, modules);
         services.AddErrorHandling();
         services.AddContext();
         services.AddCommands(assemblies);
         services.AddQueries(assemblies);
         services.AddEvents(assemblies);
         services.AddDomainEvents(assemblies);
-        services.AddMessaging();
-        services.AddSecurity();
+        services.AddMessaging(configuration);
+        services.AddSecurity(configuration);
         services.AddSingleton<IClock, UtcClock>();
         services.AddSingleton<IDispatcher, InMemoryDispatcher>();
         services.AddLoggingDecorators();
-        services.AddPostgres();
-        services.AddOutbox();
+        services.AddPostgres(configuration);
+        services.AddOutbox(configuration);
         services.AddHostedService<DbContextAppInitializer>();
         services.AddContracts();
         services.AddControllers()
@@ -148,13 +142,6 @@ public static class Extensions
         app.UseLogging();
 
         return app;
-    }
-
-    public static T GetOptions<T>(this IServiceCollection services, string sectionName) where T : new()
-    {
-        using var serviceProvider = services.BuildServiceProvider();
-        var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-        return configuration.GetOptions<T>(sectionName);
     }
 
     public static T GetOptions<T>(this IConfiguration configuration, string sectionName) where T : new()

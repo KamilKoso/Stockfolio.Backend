@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Stockfolio.Modules.Portfolios.Application;
 using Stockfolio.Modules.Portfolios.Core;
@@ -12,7 +13,7 @@ internal class PortfoliosModule : IModule
 {
     public string Name { get; } = "Portfolios";
 
-    public void Register(IServiceCollection services)
+    public void Register(IServiceCollection services, IConfiguration configuration)
     {
         services.AddCore();
         services.AddApplication();

@@ -1,15 +1,16 @@
-﻿using System;
-using Stockfolio.Shared.Infrastructure.Security.Encryption;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Stockfolio.Shared.Infrastructure.Security.Encryption;
+using System;
 
 namespace Stockfolio.Shared.Infrastructure.Security;
 
 public static class Extensions
 {
-    public static IServiceCollection AddSecurity(this IServiceCollection services)
+    public static IServiceCollection AddSecurity(this IServiceCollection services, IConfiguration configuration)
     {
-        var securityOptions = services.GetOptions<SecurityOptions>("security");
+        var securityOptions = configuration.GetOptions<SecurityOptions>("security");
         using (var serviceProvider = services.BuildServiceProvider())
         {
             var logger = serviceProvider.GetRequiredService<ILogger<ISecurityProvider>>();

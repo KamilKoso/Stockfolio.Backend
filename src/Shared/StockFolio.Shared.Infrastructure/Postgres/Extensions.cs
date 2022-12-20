@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Stockfolio.Shared.Abstractions.Commands;
 using Stockfolio.Shared.Abstractions.Events;
@@ -62,9 +63,9 @@ public static class Extensions
         return await data.Skip((page - 1) * results).Take(results).ToListAsync(cancellationToken);
     }
 
-    public static IServiceCollection AddPostgres(this IServiceCollection services)
+    public static IServiceCollection AddPostgres(this IServiceCollection services, IConfiguration configuration)
     {
-        var options = services.GetOptions<PostgresOptions>("postgres");
+        var options = configuration.GetOptions<PostgresOptions>("postgres");
         services.AddSingleton(options);
         services.AddSingleton(new UnitOfWorkTypeRegistry());
 
@@ -79,9 +80,9 @@ public static class Extensions
         return services;
     }
 
-    public static IServiceCollection AddPostgres<T>(this IServiceCollection services) where T : DbContext
+    public static IServiceCollection AddPostgres<T>(this IServiceCollection services, IConfiguration configuration) where T : DbContext
     {
-        var options = services.GetOptions<PostgresOptions>("postgres");
+        var options = configuration.GetOptions<PostgresOptions>("postgres");
         services.AddDbContext<T>(x =>
         {
             x.UseNpgsql(options.ConnectionString,

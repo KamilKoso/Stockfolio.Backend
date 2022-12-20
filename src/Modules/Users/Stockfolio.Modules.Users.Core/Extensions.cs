@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Stockfolio.Modules.Users.Core.DAL;
 using Stockfolio.Modules.Users.Core.Entities;
@@ -19,19 +20,19 @@ namespace Stockfolio.Modules.Users.Core;
 
 internal static class Extensions
 {
-    public static IServiceCollection AddCore(this IServiceCollection services)
+    public static IServiceCollection AddCore(this IServiceCollection services, IConfiguration configuration)
     {
         return services
-            .AddPostgres<UsersDbContext>()
-            .AddOutbox<UsersDbContext>()
+            .AddPostgres<UsersDbContext>(configuration)
+            .AddOutbox<UsersDbContext>(configuration)
             .AddUnitOfWork<UsersUnitOfWork>()
             .AddInitializer<UsersInitializer>()
-            .AddIdentity();
+            .AddIdentity(configuration);
     }
 
-    private static IServiceCollection AddIdentity(this IServiceCollection services)
+    private static IServiceCollection AddIdentity(this IServiceCollection services, IConfiguration configuration)
     {
-        var identityOptions = services.GetOptions<IdentityOptions>("users:identity");
+        var identityOptions = configuration.GetOptions<IdentityOptions>("users:identity");
         services
             .AddSingleton(identityOptions)
             .AddIdentity<User, Role>(options =>

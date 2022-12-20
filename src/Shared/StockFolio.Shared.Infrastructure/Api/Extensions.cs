@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Stockfolio.Shared.Infrastructure.Api;
 
@@ -19,7 +20,7 @@ public static class Extensions
         object value)
     {
         var memberExpression = expression.Body as MemberExpression ??
-                               ((UnaryExpression) expression.Body).Operand as MemberExpression;
+                               ((UnaryExpression)expression.Body).Operand as MemberExpression;
         if (memberExpression is null)
         {
             return model;
@@ -39,10 +40,10 @@ public static class Extensions
         return model;
     }
 
-    public static IServiceCollection AddCorsPolicy(this IServiceCollection services)
+    public static IServiceCollection AddCorsPolicy(this IServiceCollection services, IConfiguration configuration)
     {
-        var corsOptions = services.GetOptions<CorsOptions>("cors");
-            
+        var corsOptions = configuration.GetOptions<CorsOptions>("cors");
+
         return services
             .AddSingleton(corsOptions)
             .AddCors(cors =>
@@ -70,14 +71,14 @@ public static class Extensions
                 });
             });
     }
-        
+
     public static string GetUserIpAddress(this HttpContext context)
     {
         if (context is null)
         {
             return string.Empty;
         }
-            
+
         var ipAddress = context.Connection.RemoteIpAddress?.ToString();
         if (context.Request.Headers.TryGetValue("x-forwarded-for", out var forwardedFor))
         {

@@ -2,30 +2,26 @@
 using Stockfolio.Modules.StockMarket.Application.DTO;
 using Stockfolio.Modules.StockMarket.Application.Repositories;
 using Stockfolio.Modules.StockMarket.Infrastructure.YahooFinance.Models;
-using Stockfolio.Modules.StockMarket.Infrastructure.YahooFinance.Options;
 using Stockfolio.Shared.Infrastructure.Serialization;
 using System.Text.Json.Nodes;
 
 namespace Stockfolio.Modules.StockMarket.Infrastructure.YahooFinance.Repositories;
 
-internal class YahooFinanceQuotesRepository : IQuotesRepository
+internal class YahooFinanceApi : IQuotesRepository
 {
     private readonly HttpClient _httpClient;
     private readonly IJsonSerializer _jsonSerializer;
-    private readonly YahooFinanceOptions _yahooFinanceOptions;
 
-    public YahooFinanceQuotesRepository(HttpClient httpClient,
-                            IJsonSerializer jsonSerializer,
-                            YahooFinanceOptions yahooFinanceOptions)
+    public YahooFinanceApi(HttpClient httpClient,
+                                        IJsonSerializer jsonSerializer)
     {
         _httpClient = httpClient;
         _jsonSerializer = jsonSerializer;
-        _yahooFinanceOptions = yahooFinanceOptions;
     }
 
     public async Task<SearchQuotesDto> SearchQuotes(string searchQuery, int quotesCount = 7, CancellationToken cancellationToken = default)
     {
-        var requestUrl = $"{_yahooFinanceOptions.BaseApiUrl}/v1/finance/search?q={searchQuery}&quotesCount={quotesCount}&newsCount=0&listCount=0";
+        var requestUrl = $"v1/finance/search?q={searchQuery}&quotesCount={quotesCount}&newsCount=0&listCount=0";
         var response = await _httpClient.GetAsync(requestUrl, cancellationToken);
         var responseStr = await response.Content.ReadAsStringAsync(cancellationToken);
         var quotesJsonArray = JsonNode.Parse(responseStr)["quotes"]?.ToString();
@@ -56,7 +52,7 @@ internal class YahooFinanceQuotesRepository : IQuotesRepository
 
     public async Task<QuoteDividendsDto> GetDividends(string symbol, DateTimeOffset start, DateTimeOffset end, CancellationToken cancellationToken = default)
     {
-        var requestUrl = @$"{_yahooFinanceOptions.BaseApiUrl}/v8/finance/chart/{symbol}?
+        var requestUrl = @$"v8/finance/chart/{symbol}?
                             period1={start.ToUnixTimeSeconds()}&
                             period2={end.ToUnixTimeSeconds()}&
                             events=div&
@@ -73,7 +69,7 @@ internal class YahooFinanceQuotesRepository : IQuotesRepository
         if (!symbols.Any())
             return new List<YahooFinanceQuoteDetails>();
 
-        var requestUrl = $"{_yahooFinanceOptions.BaseApiUrl}/v7/finance/quote?symbols={string.Join(",", symbols)}";
+        var requestUrl = $"v7/finance/quote?symbols={string.Join(",", symbols)}";
         var response = await _httpClient.GetAsync(requestUrl, cancellationToken);
         var responseStr = await response.Content.ReadAsStringAsync(cancellationToken);
         var quotesJsonArray = JsonNode.Parse(responseStr)["quoteResponse"]["result"].ToString();

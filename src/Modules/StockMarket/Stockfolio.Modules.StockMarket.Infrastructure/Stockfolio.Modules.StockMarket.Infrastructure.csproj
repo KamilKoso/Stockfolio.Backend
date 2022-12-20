@@ -6,7 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="YahooQuotesApi" Version="5.1.1" />
+	  <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="7.0.1" />
+	  <PackageReference Include="Polly.Contrib.WaitAndRetry" Version="1.1.1" />
   </ItemGroup>
 
 	<ItemGroup>

@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
 
 namespace Stockfolio.Shared.Abstractions.Modules;
 
@@ -8,6 +9,8 @@ public interface IModule
 {
     string Name { get; }
     IEnumerable<string> Policies => null;
-    void Register(IServiceCollection services);
+
+    void Register(IServiceCollection services, IConfiguration configuration);
+
     void Use(IApplicationBuilder app);
 }

@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -11,6 +8,9 @@ using Stockfolio.Shared.Abstractions.Modules;
 using Stockfolio.Shared.Infrastructure;
 using Stockfolio.Shared.Infrastructure.Contracts;
 using Stockfolio.Shared.Infrastructure.Modules;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace Stockfolio.Bootstrapper;
 
@@ -18,19 +18,21 @@ public class Startup
 {
     private readonly IList<Assembly> _assemblies;
     private readonly IList<IModule> _modules;
+    private readonly IConfiguration _configuration;
 
     public Startup(IConfiguration configuration)
     {
         _assemblies = ModuleLoader.LoadAssemblies(configuration, "Stockfolio.Modules.");
         _modules = ModuleLoader.LoadModules(_assemblies);
+        _configuration = configuration;
     }
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddModularInfrastructure(_assemblies, _modules);
+        services.AddModularInfrastructure(_assemblies, _modules, _configuration);
         foreach (var module in _modules)
         {
-            module.Register(services);
+            module.Register(services, _configuration);
         }
     }
 
