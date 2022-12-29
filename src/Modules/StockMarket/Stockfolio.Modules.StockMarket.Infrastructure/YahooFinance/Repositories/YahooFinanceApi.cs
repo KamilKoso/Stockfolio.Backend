@@ -13,7 +13,7 @@ internal class YahooFinanceApi : IQuotesRepository
     private readonly IJsonSerializer _jsonSerializer;
 
     public YahooFinanceApi(HttpClient httpClient,
-                                        IJsonSerializer jsonSerializer)
+                           IJsonSerializer jsonSerializer)
     {
         _httpClient = httpClient;
         _jsonSerializer = jsonSerializer;
