@@ -2,9 +2,9 @@
 
 namespace Stockfolio.Modules.StockMarket.Application.Dto;
 
-internal class SearchQuoteDto : QuoteBaseDto
+internal record SearchQuoteDto : QuoteBaseDto
 {
-    public string ExchangeDisplayName { get; set; }
-    public string Industry { get; set; }
-    public string Sector { get; set; }
+    public string ExchangeDisplayName { get; init; }
+    public string Industry { get; init; }
+    public string Sector { get; init; }
 }

@@ -3,16 +3,20 @@ using Stockfolio.Shared.Abstractions.Queries;
 
 namespace Stockfolio.Modules.StockMarket.Application.Queries;
 
-internal class GetDividends : IQuery<QuoteDividendsDto>
+internal class GetHistoricalData : IQuery<HistoricalDataDto>
 {
-    public GetDividends(string symbol, DateTimeOffset? start, DateTimeOffset? end)
+    public GetHistoricalData(string symbol, DateTimeOffset? start, DateTimeOffset? end, string range, string interval)
     {
         Symbol = symbol;
-        Start = start ?? DateTimeOffset.Now.AddYears(-1); ;
+        Range = range;
+        Interval = interval ?? "1d";
+        Start = start ?? DateTimeOffset.Now.AddYears(-1);
         End = end ?? DateTimeOffset.Now;
     }
 
     public string Symbol { get; set; }
     public DateTimeOffset Start { get; set; }
     public DateTimeOffset End { get; set; }
+    public string Interval { get; set; }
+    public string Range { get; set; }
 }

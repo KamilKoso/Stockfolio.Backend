@@ -7,73 +7,96 @@ internal static class Mappings
 {
     public static SearchQuoteDto AsSearchQuoteDto(this YahooFinanceQuoteDetails yahooFinanceQuoteDetails, SearchYahooFinanceQuote searchYahooFinanceQuote)
     {
-        var dto = yahooFinanceQuoteDetails.Map<SearchQuoteDto>();
-        dto.ExchangeDisplayName = searchYahooFinanceQuote.ExchangeDisplayName;
-        dto.Industry = searchYahooFinanceQuote.Industry;
-        dto.Sector = searchYahooFinanceQuote.Sector;
-        return dto;
+        return yahooFinanceQuoteDetails.Map<SearchQuoteDto>() with
+        {
+            ExchangeDisplayName = searchYahooFinanceQuote.ExchangeDisplayName,
+            Industry = searchYahooFinanceQuote.Industry,
+            Sector = searchYahooFinanceQuote.Sector,
+        };
     }
 
     public static QuoteDetailsDto AsQuoteDetailsDto(this YahooFinanceQuoteDetails quote)
     {
-        var dto = quote.Map<QuoteDetailsDto>();
-        dto.MarketCap = quote.MarketCap;
-        dto.Market = quote.Market;
-        dto.Volume = quote.RegularMarketVolume;
-        dto.Region = quote.Region;
-        dto.QuoteSourceName = quote.QuoteSourceName;
-        dto.FirstTradeDate = DateTimeOffset.FromUnixTimeMilliseconds(quote.FirstTradeDateMilliseconds);
-        dto.LastDividendPayDate = quote.DividendDate is null ? null : DateTimeOffset.FromUnixTimeSeconds((long)quote.DividendDate);
-        dto.Ask = quote.Ask;
-        dto.Bid = quote.Bid;
-        dto.BidSize = quote.BidSize;
-        dto.FullExchangeName = quote.FullExchangeName;
-        dto.FinancialCurrency = quote.FinancialCurrency;
-        dto.AverageDailyVolume3Month = quote.AverageDailyVolume3Month;
-        dto.AverageDailyVolume10Day = quote.AverageDailyVolume10Day;
-        dto.EarningsTime = DateTimeOffset.FromUnixTimeSeconds(quote.EarningsTimestamp);
-        dto.EarningsTimeStart = DateTimeOffset.FromUnixTimeSeconds(quote.EarningsTimestampStart);
-        dto.EarningsTimeEnd = DateTimeOffset.FromUnixTimeSeconds(quote.EarningsTimestampEnd);
-        dto.TrailingAnnualDividendRate = quote.TrailingAnnualDividendRate;
-        dto.TrailingPE = quote.TrailingPE;
-        dto.EpsTrailingTwelveMonths = quote.EpsTrailingTwelveMonths;
-        dto.EpsForward = quote.EpsForward;
-        dto.BookValue = quote.BookValue;
-        dto.FiftyTwoWeekRange = quote.FiftyTwoWeekRange;
-        dto.FiftyTwoWeekHigh = quote.FiftyTwoWeekHigh;
-        dto.FiftyDayAverageChangePercent = quote.FiftyDayAverageChangePercent;
-        dto.FiftyTwoWeekLow = quote.FiftyTwoWeekLow;
-        dto.FiftyTwoWeekLowChange = quote.FiftyTwoWeekLowChange;
-        dto.FiftyTwoWeekLowChangePercent = quote.FiftyTwoWeekLowChangePercent;
-        dto.FiftyDayAverage = quote.FiftyDayAverage;
-        dto.FiftyDayAverageChange = quote.FiftyDayAverageChange;
-        dto.TwoHundredDayAverage = quote.TwoHundredDayAverage;
-        dto.TwoHundredDayAverageChange = quote.TwoHundredDayAverageChange;
-        dto.TwoHundredDayAverageChangePercent = quote.TwoHundredDayAverageChangePercent;
-        dto.ExchangeTimezoneName = quote.ExchangeTimezoneName;
-        dto.ExchangeTimezoneShortName = quote.ExchangeTimezoneShortName;
-        dto.EpsCurrentYear = quote.EpsCurrentYear;
-        dto.PriceEpsCurrentYear = quote.PriceEpsCurrentYear;
-        dto.SharesOutstanding = quote.SharesOutstanding;
-        dto.ForwardPE = quote.ForwardPE;
-        dto.PriceToBook = quote.PriceToBook;
-        dto.ExchangeDataDelayedBy = quote.ExchangeDataDelayedBy;
-        dto.MarketOpenPrice = quote.RegularMarketPreviousClose;
-        return dto;
+        return quote.Map<QuoteDetailsDto>() with
+        {
+            MarketCap = quote.MarketCap,
+            Market = quote.Market,
+            Volume = quote.RegularMarketVolume,
+            Region = quote.Region,
+            QuoteSourceName = quote.QuoteSourceName,
+            FirstTradeDate = DateTimeOffset.FromUnixTimeMilliseconds(quote.FirstTradeDateMilliseconds),
+            LastDividendPayDate = quote.DividendDate is null ? null : DateTimeOffset.FromUnixTimeSeconds((long)quote.DividendDate),
+            Ask = quote.Ask,
+            Bid = quote.Bid,
+            BidSize = quote.BidSize,
+            FullExchangeName = quote.FullExchangeName,
+            FinancialCurrency = quote.FinancialCurrency,
+            AverageDailyVolume3Month = quote.AverageDailyVolume3Month,
+            AverageDailyVolume10Day = quote.AverageDailyVolume10Day,
+            EarningsTime = DateTimeOffset.FromUnixTimeSeconds(quote.EarningsTimestamp),
+            EarningsTimeStart = DateTimeOffset.FromUnixTimeSeconds(quote.EarningsTimestampStart),
+            EarningsTimeEnd = DateTimeOffset.FromUnixTimeSeconds(quote.EarningsTimestampEnd),
+            TrailingAnnualDividendRate = quote.TrailingAnnualDividendRate,
+            TrailingPE = quote.TrailingPE,
+            EpsTrailingTwelveMonths = quote.EpsTrailingTwelveMonths,
+            EpsForward = quote.EpsForward,
+            BookValue = quote.BookValue,
+            FiftyTwoWeekRange = quote.FiftyTwoWeekRange,
+            FiftyTwoWeekHigh = quote.FiftyTwoWeekHigh,
+            FiftyDayAverageChangePercent = quote.FiftyDayAverageChangePercent,
+            FiftyTwoWeekLow = quote.FiftyTwoWeekLow,
+            FiftyTwoWeekLowChange = quote.FiftyTwoWeekLowChange,
+            FiftyTwoWeekLowChangePercent = quote.FiftyTwoWeekLowChangePercent,
+            FiftyDayAverage = quote.FiftyDayAverage,
+            FiftyDayAverageChange = quote.FiftyDayAverageChange,
+            TwoHundredDayAverage = quote.TwoHundredDayAverage,
+            TwoHundredDayAverageChange = quote.TwoHundredDayAverageChange,
+            TwoHundredDayAverageChangePercent = quote.TwoHundredDayAverageChangePercent,
+            ExchangeTimezoneName = quote.ExchangeTimezoneName,
+            ExchangeTimezoneShortName = quote.ExchangeTimezoneShortName,
+            EpsCurrentYear = quote.EpsCurrentYear,
+            PriceEpsCurrentYear = quote.PriceEpsCurrentYear,
+            SharesOutstanding = quote.SharesOutstanding,
+            ForwardPE = quote.ForwardPE,
+            PriceToBook = quote.PriceToBook,
+            ExchangeDataDelayedBy = quote.ExchangeDataDelayedBy,
+            MarketOpenPrice = quote.RegularMarketPreviousClose,
+        };
     }
 
-    public static QuoteDividendsDto AsQuoteDividendsDto(this YahooFinanceQuoteDividend yahooFinanceQuoteDividend)
+    public static HistoricalDataDto AsQuoteHistoricalData(this YahooFinanceQuoteHistoricalData yahooFinanceQuoteDividend)
     {
-        return new QuoteDividendsDto
-        {
-            Currency = yahooFinanceQuoteDividend.Metadata.Currency,
-            Symbol = yahooFinanceQuoteDividend.Metadata.Symbol,
-            Dividends = yahooFinanceQuoteDividend.Events.Dividends.Select(x => new DividendDto(
-                                                                                    DateTimeOffset
-                                                                                        .FromUnixTimeSeconds(x.Key)
-                                                                                        .ToOffset(TimeSpan.FromSeconds(yahooFinanceQuoteDividend.Metadata.GmtOffsetInSeconds)),
-                                                                                    x.Value.Amount))
-        };
+        var dividends = yahooFinanceQuoteDividend.Events?.Dividends?
+                         .Select(x => new DividendDto(DateTimeOffset.FromUnixTimeSeconds(x.Key).ToOffset(TimeSpan.FromSeconds(yahooFinanceQuoteDividend.Metadata.GmtOffsetInSeconds)),
+                                                      x.Value.Amount))
+                         .ToList();
+        var splits = yahooFinanceQuoteDividend.Events?.Splits?
+                         .Select(x => new SplitDto(DateTimeOffset.FromUnixTimeSeconds(x.Key).ToOffset(TimeSpan.FromSeconds(yahooFinanceQuoteDividend.Metadata.GmtOffsetInSeconds)),
+                                                   x.Value.Numerator,
+                                                   x.Value.Denominator))
+                         .ToList();
+
+        var historicalData = yahooFinanceQuoteDividend.TimestampsInSeconds
+            .Select((value, index) =>
+            {
+                var date = DateTimeOffset
+                                .FromUnixTimeSeconds(yahooFinanceQuoteDividend.TimestampsInSeconds[index])
+                                .ToOffset(TimeSpan.FromSeconds(yahooFinanceQuoteDividend.Metadata.GmtOffsetInSeconds));
+
+                var open = yahooFinanceQuoteDividend.Indicators.Quote[0].Open[index];
+                var high = yahooFinanceQuoteDividend.Indicators.Quote[0].High[index];
+                var low = yahooFinanceQuoteDividend.Indicators.Quote[0].Low[index];
+                var close = yahooFinanceQuoteDividend.Indicators.Quote[0].Close[index];
+                var adjustedClose = yahooFinanceQuoteDividend.Indicators.AdjustedClose[0].AdjustedClosePrices[index];
+                var volume = yahooFinanceQuoteDividend.Indicators.Quote[0].Volume[index];
+                return new QuoteChartPricePoint(date, open, high, low, close, adjustedClose, volume);
+            }).ToList();
+
+        return new(symbol: yahooFinanceQuoteDividend.Metadata.Symbol,
+                   currency: yahooFinanceQuoteDividend.Metadata.Currency,
+                   dividends: dividends,
+                   splits: splits,
+                   prices: historicalData);
     }
 
     private static T Map<T>(this YahooFinanceQuoteDetails quote) where T : QuoteBaseDto, new()

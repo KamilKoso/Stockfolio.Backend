@@ -2,8 +2,13 @@
 
 namespace Stockfolio.Modules.StockMarket.Application.DTO;
 
-internal class SearchQuotesDto
+internal record SearchQuotesDto
 {
-    public IList<SearchQuoteDto> Quotes { get; set; } = Array.Empty<SearchQuoteDto>();
+    public SearchQuotesDto(IList<SearchQuoteDto> quotes)
+    {
+        Quotes = (quotes ?? Array.Empty<SearchQuoteDto>()).AsReadOnly();
+    }
+
+    public IReadOnlyCollection<SearchQuoteDto> Quotes { get; }
     public int Count { get => Quotes.Count; }
 }

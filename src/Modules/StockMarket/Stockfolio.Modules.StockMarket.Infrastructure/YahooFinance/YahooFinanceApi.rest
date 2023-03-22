@@ -1,0 +1,35 @@
+@url = https://query2.finance.yahoo.com
+
+
+@searchQuery = kghm
+
+### Search quotes
+# @name serach_quotes
+GET {{url}}/v1/finance/search?q={{searchQuery}}
+Content-Type: application/json
+
+
+@symbol = KGH.WA
+### Get quotes
+# @name get_quotes
+GET {{url}}/v7/finance/quote?symbols={{symbol}}
+Content-Type: application/json
+
+@interval = 1d
+@range = 1mo
+@events = capitalGain|div|split
+### Get historical data
+# @name get_historical_data_by_range
+GET {{url}}/v8/finance/chart/{{symbol}}?interval={{interval}}&events={{events}}&range={{range}}
+Content-Type: application/json
+
+
+# 2021-01-01
+@startDate = 1609494060
+# 2023-01-01
+@endDate = 1672566060
+
+### Get historical data
+# @name get_historical_data_by_period
+GET {{url}}/v8/finance/chart/{{symbol}}?interval={{interval}}&period1={{startDate}}&period2={{endDate}}&events={{events}}
+Content-Type: application/json

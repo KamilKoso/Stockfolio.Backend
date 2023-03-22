@@ -1,6 +1,6 @@
 ﻿namespace Stockfolio.Modules.StockMarket.Application.Dto;
 
-internal class DividendDto
+internal record DividendDto
 {
     public DividendDto(DateTimeOffset date, decimal amount)
     {
@@ -8,6 +8,6 @@ internal class DividendDto
         Amount = amount;
     }
 
-    public DateTimeOffset Date { get; set; }
-    public decimal Amount { get; set; }
+    public DateTimeOffset Date { get; init; }
+    public decimal Amount { get; init; }
 }

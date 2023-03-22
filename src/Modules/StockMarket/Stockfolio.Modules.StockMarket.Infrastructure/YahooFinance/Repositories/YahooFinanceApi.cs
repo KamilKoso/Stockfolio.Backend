@@ -1,4 +1,5 @@
-﻿using Stockfolio.Modules.StockMarket.Application.Dto;
+﻿using Stockfolio.Modules.Portfolios.Application.Models;
+using Stockfolio.Modules.StockMarket.Application.Dto;
 using Stockfolio.Modules.StockMarket.Application.DTO;
 using Stockfolio.Modules.StockMarket.Application.Repositories;
 using Stockfolio.Modules.StockMarket.Infrastructure.YahooFinance.Models;
@@ -30,10 +31,7 @@ internal class YahooFinanceApi : IQuotesRepository
                                             .Select(x => x.AsSearchQuoteDto(searchQuoteDto[x.Symbol]))
                                             .ToList();
 
-        return new()
-        {
-            Quotes = quoteDetails
-        };
+        return new(quoteDetails);
     }
 
     public async Task<IEnumerable<QuoteDetailsDto>> GetQuotes(IEnumerable<string> symbols, CancellationToken cancellationToken = default)
@@ -50,21 +48,36 @@ internal class YahooFinanceApi : IQuotesRepository
         return (await GetQuotes(new string[] { symbol }, cancellationToken)).FirstOrDefault();
     }
 
-    public async Task<QuoteDividendsDto> GetDividends(string symbol, DateTimeOffset start, DateTimeOffset end, CancellationToken cancellationToken = default)
+    public async Task<HistoricalDataDto> GetHistoricalData(string symbol,
+                                                           DateTimeOffset start,
+                                                           DateTimeOffset end,
+                                                           IEnumerable<QuoteEvent> eventsToInclude,
+                                                           string interval = "1d",
+                                                           CancellationToken cancellationToken = default)
     {
-        var requestUrl = @$"v8/finance/chart/{symbol}?
-                            period1={start.ToUnixTimeSeconds()}&
-                            period2={end.ToUnixTimeSeconds()}&
-                            events=div&
-                            interval=1d";
-
-        var response = await _httpClient.GetAsync(requestUrl, cancellationToken);
-        var responseStr = await response.Content.ReadAsStringAsync(cancellationToken);
-        var contentStr = JsonNode.Parse(responseStr)["chart"]["result"][0].ToString();
-        return _jsonSerializer.Deserialize<YahooFinanceQuoteDividend>(contentStr).AsQuoteDividendsDto();
+        var requestUrl = $"v8/finance/chart/{symbol}?period1={start.ToUnixTimeSeconds()}&period2={end.ToUnixTimeSeconds()}&events={string.Join("|", eventsToInclude)}&interval={interval}";
+        return (await GetHistoricalDataByUri(requestUrl, cancellationToken)).AsQuoteHistoricalData();
     }
 
-    public async Task<IEnumerable<YahooFinanceQuoteDetails>> GetQuotesBySymbols(IEnumerable<string> symbols, CancellationToken cancellationToken = default)
+    public async Task<HistoricalDataDto> GetHistoricalData(string symbol,
+                                                           string range,
+                                                           IEnumerable<QuoteEvent> eventsToInclude,
+                                                           string interval = "1d",
+                                                           CancellationToken cancellationToken = default)
+    {
+        var requestUrl = $"v8/finance/chart/{symbol}?range={range}&events={string.Join("|", eventsToInclude)}&interval={interval}";
+        return (await GetHistoricalDataByUri(requestUrl, cancellationToken)).AsQuoteHistoricalData();
+    }
+
+    private async Task<YahooFinanceQuoteHistoricalData> GetHistoricalDataByUri(string uri, CancellationToken cancellationToken = default)
+    {
+        var response = await _httpClient.GetAsync(uri, cancellationToken);
+        var responseStr = await response.Content.ReadAsStringAsync(cancellationToken);
+        var contentStr = JsonNode.Parse(responseStr)["chart"]["result"][0].ToString();
+        return _jsonSerializer.Deserialize<YahooFinanceQuoteHistoricalData>(contentStr);
+    }
+
+    private async Task<IEnumerable<YahooFinanceQuoteDetails>> GetQuotesBySymbols(IEnumerable<string> symbols, CancellationToken cancellationToken = default)
     {
         if (!symbols.Any())
             return new List<YahooFinanceQuoteDetails>();

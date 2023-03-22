@@ -23,9 +23,9 @@ internal class QuotesController : ControllerBase
     public async Task<IActionResult> GetQuotes([FromQuery] GetQuotes query)
         => Ok(await _queryDispatcher.QueryAsync(query));
 
-    [HttpGet("dividends/{symbol}")]
-    public async Task<IActionResult> GetDividends([FromRoute] string symbol, [FromQuery] DateTimeOffset? start, [FromQuery] DateTimeOffset? end)
-        => Ok(await _queryDispatcher.QueryAsync(new GetDividends(symbol, start, end)));
+    [HttpGet("historical-data/{symbol}")]
+    public async Task<IActionResult> GetHistoricalData([FromRoute] string symbol, [FromQuery] DateTimeOffset? start, [FromQuery] DateTimeOffset? end, [FromQuery] string interval, [FromQuery] string range)
+        => Ok(await _queryDispatcher.QueryAsync(new GetHistoricalData(symbol, start, end, range, interval)));
 
     [HttpGet("search")]
     public async Task<IActionResult> SearchQuotes([FromQuery] SearchQuotes searchQuery)

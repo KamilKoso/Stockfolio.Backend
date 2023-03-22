@@ -1,12 +1,12 @@
 ﻿namespace Stockfolio.Modules.StockMarket.Application.DTO;
 
-internal abstract class QuoteBaseDto
+internal abstract record QuoteBaseDto
 {
-    public string Exchange { get; set; }
-    public string ShortName { get; set; }
-    public string Name { get; set; }
-    public string Symbol { get; set; }
-    public decimal Price { get; set; }
-    public decimal PreviousClosePrice { get; set; }
-    public string Currency { get; set; }
+    public string Exchange { get; init; }
+    public string ShortName { get; init; }
+    public string Name { get; init; }
+    public string Symbol { get; init; }
+    public decimal Price { get; init; }
+    public decimal PreviousClosePrice { get; init; }
+    public string Currency { get; init; }
 }

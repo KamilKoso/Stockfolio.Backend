@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Stockfolio.Modules.StockMarket.Infrastructure.YahooFinance.Models;
+namespace Stockfolio.Modules.StockMarket.Infrastructure.YahooFinance.Models.HistoricalData;
 
 internal class YahooFinanceTimePeriod
 {

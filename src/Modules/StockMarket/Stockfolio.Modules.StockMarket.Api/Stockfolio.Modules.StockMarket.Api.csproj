@@ -6,11 +6,9 @@
 </PropertyGroup>
 
 <ItemGroup>
-	<None Remove="module.stockmarket.json" />
 	<Content Include="module.stockmarket.json">
 		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	</Content>
-	<None Remove="module.portfolios.development.json" />
 	<Content Include="module.stockmarket.development.json">
 		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	</Content>
