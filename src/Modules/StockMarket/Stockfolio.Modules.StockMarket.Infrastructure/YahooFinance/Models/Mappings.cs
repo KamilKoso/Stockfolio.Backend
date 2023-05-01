@@ -76,7 +76,7 @@ internal static class Mappings
                                                    x.Value.Denominator))
                          .ToList();
 
-        var historicalData = yahooFinanceQuoteDividend.TimestampsInSeconds
+        var historicalData = yahooFinanceQuoteDividend.TimestampsInSeconds?
             .Select((value, index) =>
             {
                 var date = DateTimeOffset
@@ -87,7 +87,7 @@ internal static class Mappings
                 var high = yahooFinanceQuoteDividend.Indicators.Quote[0].High[index];
                 var low = yahooFinanceQuoteDividend.Indicators.Quote[0].Low[index];
                 var close = yahooFinanceQuoteDividend.Indicators.Quote[0].Close[index];
-                var adjustedClose = yahooFinanceQuoteDividend.Indicators.AdjustedClose[0].AdjustedClosePrices[index];
+                var adjustedClose = yahooFinanceQuoteDividend.Indicators.AdjustedClose?[0].AdjustedClosePrices[index];
                 var volume = yahooFinanceQuoteDividend.Indicators.Quote[0].Volume[index];
                 return new QuoteChartPricePoint(date, open, high, low, close, adjustedClose, volume);
             }).ToList();

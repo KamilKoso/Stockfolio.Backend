@@ -2,7 +2,7 @@
 
 internal record SplitDto
 {
-    public SplitDto(DateTimeOffset date, uint numerator, uint denominator)
+    public SplitDto(DateTimeOffset date, decimal numerator, decimal denominator)
     {
         Date = date;
         Numerator = numerator;
@@ -10,8 +10,8 @@ internal record SplitDto
     }
 
     public DateTimeOffset Date { get; }
-    public uint Numerator { get; }
-    public uint Denominator { get; }
+    public decimal Numerator { get; }
+    public decimal Denominator { get; }
 
     public string SplitRatio
     {

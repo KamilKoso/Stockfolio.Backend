@@ -7,7 +7,7 @@ internal class YahooFinanceSplitDto
     [JsonPropertyName("date")]
     public long DateInSeconds { get; set; }
 
-    public uint Numerator { get; set; }
-    public uint Denominator { get; set; }
+    public decimal Numerator { get; set; }
+    public decimal Denominator { get; set; }
     public string SplitRatio { get; set; }
 }
