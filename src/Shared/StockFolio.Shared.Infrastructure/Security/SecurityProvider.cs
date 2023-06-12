@@ -1,5 +1,5 @@
-using System.Text.Encodings.Web;
 using Stockfolio.Shared.Infrastructure.Security.Encryption;
+using System.Text.Encodings.Web;
 
 namespace Stockfolio.Shared.Infrastructure.Security;
 

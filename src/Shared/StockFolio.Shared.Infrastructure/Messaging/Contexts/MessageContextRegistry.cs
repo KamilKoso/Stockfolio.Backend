@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.Extensions.Caching.Memory;
+﻿using Microsoft.Extensions.Caching.Memory;
 using Stockfolio.Shared.Abstractions.Messaging;
+using System;
 
 namespace Stockfolio.Shared.Infrastructure.Messaging.Contexts;
 

@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using Stockfolio.Shared.Abstractions.Modules;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Microsoft.Extensions.Configuration;
-using Stockfolio.Shared.Abstractions.Modules;
 
 namespace Stockfolio.Shared.Infrastructure.Modules;
 
@@ -38,7 +38,7 @@ public static class ModuleLoader
         {
             files.Remove(disabledModule);
         }
-            
+
         files.ForEach(x => assemblies.Add(AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(x))));
 
         return assemblies;

@@ -1,7 +1,7 @@
-﻿using System;
-using System.Linq;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Stockfolio.Shared.Abstractions.Exceptions;
+using System;
+using System.Linq;
 
 namespace Stockfolio.Shared.Infrastructure.Exceptions;
 
@@ -13,7 +13,7 @@ internal sealed class ExceptionCompositionRoot : IExceptionCompositionRoot
     {
         _serviceProvider = serviceProvider;
     }
-        
+
     public ExceptionResponse Map(Exception exception)
     {
         using var scope = _serviceProvider.CreateScope();

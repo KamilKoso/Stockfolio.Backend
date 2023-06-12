@@ -1,9 +1,9 @@
-using System.Threading;
-using System.Threading.Tasks;
 using Stockfolio.Shared.Abstractions.Commands;
 using Stockfolio.Shared.Abstractions.Dispatchers;
 using Stockfolio.Shared.Abstractions.Events;
 using Stockfolio.Shared.Abstractions.Queries;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Stockfolio.Shared.Infrastructure.Dispatchers;
 

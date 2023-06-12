@@ -35,6 +35,6 @@ internal sealed class GenerateEmailConfirmationTokenHandler : ICommandHandler<Ge
 
         var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
         await _messageBroker.PublishAsync(new EmailConfirmationTokenGenerated(user.UserName, user.Email, emailConfirmationToken));
-        _logger.LogInformation($"User with ID: '{user.Id}' has generated email confirmation token.");
+        _logger.LogInformation("User with ID: '{UserId}' has generated email confirmation token.", user.Id);
     }
 }

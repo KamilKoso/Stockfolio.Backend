@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Stockfolio.Shared.Abstractions.Events;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace Stockfolio.Shared.Infrastructure.Events;
 

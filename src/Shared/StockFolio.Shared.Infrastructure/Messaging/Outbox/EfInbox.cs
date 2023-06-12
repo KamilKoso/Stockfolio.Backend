@@ -1,9 +1,9 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Stockfolio.Shared.Abstractions.Time;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Stockfolio.Shared.Infrastructure.Messaging.Outbox;
 
@@ -30,18 +30,18 @@ internal sealed class EfInbox<T> : IInbox where T : DbContext
         var module = _dbContext.GetModuleName();
         if (!Enabled)
         {
-            _logger.LogWarning($"Outbox is disabled ('{module}'), incoming messages won't be processed.");
+            _logger.LogWarning("Outbox is disabled ('{Module}'), incoming messages won't be processed.", module);
             return;
         }
 
-        _logger.LogTrace($"Received a message with ID: '{messageId}' to be processed ('{module}').");
+        _logger.LogTrace("Received a message with ID: '{MessageId}' to be processed ('{Module}').", messageId, module);
         if (await _set.AnyAsync(m => m.Id == messageId && m.ProcessedAt != null))
         {
-            _logger.LogTrace($"Message with ID: '{messageId}' was already processed ('{module}').");
+            _logger.LogTrace("Message with ID: '{MessageId}' was already processed ('{Module}').", messageId, module);
             return;
         }
 
-        _logger.LogTrace($"Processing a message with ID: '{messageId}' ('{module}')...");
+        _logger.LogTrace("Processing a message with ID: '{MessageId}' ('{Module}')...", messageId, module);
 
         var inboxMessage = new InboxMessage
         {
@@ -63,11 +63,11 @@ internal sealed class EfInbox<T> : IInbox where T : DbContext
                 await transaction.CommitAsync();
             }
 
-            _logger.LogTrace($"Processed a message with ID: '{messageId}' ('{module}').");
+            _logger.LogTrace("Processed a message with ID: '{MessageId}' ('{Module}').", messageId, module);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"There was an error when processing a message with ID: '{messageId}' ('{module}').");
+            _logger.LogError(ex, "There was an error when processing a message with ID: '{MessageId}' ('{Module}').", messageId, module);
             if (transaction is not null)
             {
                 await transaction.RollbackAsync();
@@ -88,7 +88,7 @@ internal sealed class EfInbox<T> : IInbox where T : DbContext
         var module = _dbContext.GetModuleName();
         if (!Enabled)
         {
-            _logger.LogWarning($"Outbox is disabled ('{module}'), incoming messages won't be cleaned up.");
+            _logger.LogWarning("Outbox is disabled ('{Module}'), incoming messages won't be cleaned up.", module);
             return;
         }
 
@@ -96,13 +96,13 @@ internal sealed class EfInbox<T> : IInbox where T : DbContext
         var sentMessages = await _set.Where(x => x.ReceivedAt <= dateTo).ToListAsync();
         if (!sentMessages.Any())
         {
-            _logger.LogTrace($"No received messages found in inbox ('{module}') till: {dateTo}.");
+            _logger.LogTrace("No received messages found in inbox ('{Module}') till: {DateTo}.", module, dateTo);
             return;
         }
 
-        _logger.LogInformation($"Found {sentMessages.Count} received messages in inbox ('{module}') till: {dateTo}, cleaning up...");
+        _logger.LogInformation("Found {SentMessagesCount} received messages in inbox ('{Module}') till: {DateTo}, cleaning up...", sentMessages.Count, module, dateTo);
         _set.RemoveRange(sentMessages);
         await _dbContext.SaveChangesAsync();
-        _logger.LogInformation($"Removed {sentMessages.Count} received messages from inbox ('{module}') till: {dateTo}.");
+        _logger.LogInformation("Removed {SentMessagesCount} received messages from inbox ('{Module}') till: {DateTo}.", sentMessages.Count, module, dateTo);
     }
 }

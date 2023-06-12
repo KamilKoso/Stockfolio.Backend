@@ -1,0 +1,48 @@
+@url = https://localhost:5000
+
+###
+GET {{url}}
+
+################### ASSETS ###################
+
+@searchQuery = kghm
+
+### Search quotes
+# @name serach_quotes
+GET {{url}}/assets/search?query={{searchQuery}}
+Content-Type: application/json
+
+@symbol = EXPO
+### Get quotes
+# @name get_quotes
+GET {{url}}/assets?symbols={{symbol}}
+Content-Type: application/json
+
+@interval = 1d
+@startDate = 2022-01-03T07:00:00-04
+@endDate = 2023-01-03T07:00:00-04
+### Get historical data by start and end date
+# @name get_historical_data_by_start_and_end_date
+GET {{url}}/assets/historical/{{symbol}}?start={{startDate}}&end={{endDate}}&interval={{interval}}
+Content-Type: application/json
+
+@range = 1y
+### Get historical data by range
+# @name get_historical_data_by_range
+GET {{url}}/assets/historical-data/{{symbol}}?range={{range}}&interval={{interval}}
+Content-Type: application/json
+
+################### FOREX ###################
+
+@from = PlN
+@to = JPY
+@date = 2016-01-03T17:00:00-00
+### Get exchange rates
+# @name get_exchange_rates
+GET {{url}}/forex/exchange-rate?from={{from}}&to={{to}}&date={{date}}
+Content-Type: application/json
+
+### Get supported currencies
+# @name get_supported_currencies
+GET {{url}}/forex/supported-currencies
+Content-Type: application/json

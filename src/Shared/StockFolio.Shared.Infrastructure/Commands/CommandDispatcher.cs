@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Stockfolio.Shared.Abstractions.Commands;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Stockfolio.Shared.Abstractions.Commands;
 
 namespace Stockfolio.Shared.Infrastructure.Commands;
 

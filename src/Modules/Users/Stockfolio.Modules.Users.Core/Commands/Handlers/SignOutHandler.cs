@@ -25,6 +25,6 @@ internal sealed class SignOutHandler : ICommandHandler<SignOut>
     {
         await _httpContextAccessor.HttpContext.SignOutAsStockfolioUser();
         await _messageBroker.PublishAsync(new SignedOut(command.UserId), cancellationToken);
-        _logger.LogInformation($"User with ID: '{command.UserId}' has signed out.");
+        _logger.LogInformation("User with ID: '{UserId}' has signed out.", command.UserId);
     }
 }

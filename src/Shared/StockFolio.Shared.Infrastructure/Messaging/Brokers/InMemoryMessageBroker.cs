@@ -1,15 +1,15 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Humanizer;
+﻿using Humanizer;
+using Microsoft.Extensions.Logging;
 using Stockfolio.Shared.Abstractions.Contexts;
+using Stockfolio.Shared.Abstractions.Messaging;
+using Stockfolio.Shared.Abstractions.Modules;
 using Stockfolio.Shared.Infrastructure.Messaging.Contexts;
 using Stockfolio.Shared.Infrastructure.Messaging.Dispatchers;
 using Stockfolio.Shared.Infrastructure.Messaging.Outbox;
-using Microsoft.Extensions.Logging;
-using Stockfolio.Shared.Abstractions.Messaging;
-using Stockfolio.Shared.Abstractions.Modules;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Stockfolio.Shared.Infrastructure.Messaging.Brokers;
 
@@ -25,7 +25,7 @@ internal sealed class InMemoryMessageBroker : IMessageBroker
 
     public InMemoryMessageBroker(IModuleClient moduleClient, IAsyncMessageDispatcher asyncMessageDispatcher,
         IContext context, IOutboxBroker outboxBroker, IMessageContextRegistry messageContextRegistry,
-        MessagingOptions messagingOptions,ILogger<InMemoryMessageBroker> logger)
+        MessagingOptions messagingOptions, ILogger<InMemoryMessageBroker> logger)
     {
         _moduleClient = moduleClient;
         _asyncMessageDispatcher = asyncMessageDispatcher;
@@ -41,7 +41,7 @@ internal sealed class InMemoryMessageBroker : IMessageBroker
 
     public Task PublishAsync(IMessage[] messages, CancellationToken cancellationToken = default)
         => PublishAsync(cancellationToken, messages);
-        
+
     private async Task PublishAsync(CancellationToken cancellationToken, params IMessage[] messages)
     {
         if (messages is null)
@@ -60,7 +60,7 @@ internal sealed class InMemoryMessageBroker : IMessageBroker
         {
             var messageContext = new MessageContext(Guid.NewGuid(), _context);
             _messageContextRegistry.Set(message, messageContext);
-                
+
             var module = message.GetModuleName();
             var name = message.GetType().Name.Underscore();
             var requestId = _context.RequestId;
@@ -68,7 +68,7 @@ internal sealed class InMemoryMessageBroker : IMessageBroker
             var userId = _context.Identity?.Id;
             var messageId = messageContext.MessageId;
             var correlationId = messageContext.Context.CorrelationId;
-                
+
             _logger.LogInformation("Publishing a message: {Name} ({Module}) [Request ID: {RequestId}, Message ID: {MessageId}, Correlation ID: {CorrelationId}, Trace ID: '{TraceId}', User ID: '{UserId}]...",
                 name, module, requestId, messageId, correlationId, traceId, userId);
         }

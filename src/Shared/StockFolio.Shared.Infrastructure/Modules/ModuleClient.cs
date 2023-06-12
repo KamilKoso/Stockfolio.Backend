@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Stockfolio.Shared.Abstractions.Commands;
+using Stockfolio.Shared.Abstractions.Messaging;
+using Stockfolio.Shared.Abstractions.Modules;
+using Stockfolio.Shared.Infrastructure.Messaging.Contexts;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Stockfolio.Shared.Infrastructure.Messaging.Contexts;
-using Stockfolio.Shared.Abstractions.Commands;
-using Stockfolio.Shared.Abstractions.Messaging;
-using Stockfolio.Shared.Abstractions.Modules;
 
 namespace Stockfolio.Shared.Infrastructure.Modules;
 

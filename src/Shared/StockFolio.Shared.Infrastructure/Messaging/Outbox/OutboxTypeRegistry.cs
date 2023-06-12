@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Stockfolio.Shared.Abstractions.Messaging;
+using System;
 using System.Collections.Generic;
-using Stockfolio.Shared.Abstractions.Messaging;
 
 namespace Stockfolio.Shared.Infrastructure.Messaging.Outbox;
 

@@ -24,6 +24,6 @@ internal sealed class ChangePasswordHandler : ICommandHandler<ChangePassword>
                                         .NotNull(() => new UserNotFoundException(command.UserId));
 
         await _userManager.ChangePasswordAsync(user, command.CurrentPassword, command.NewPassword);
-        _logger.LogInformation($"User with ID: '{user.Id}' has changed the password.");
+        _logger.LogInformation("User with ID: '{UserId}' has changed the password.", user.Id);
     }
 }

@@ -1,9 +1,9 @@
+using Humanizer;
+using Microsoft.Extensions.Logging;
+using Stockfolio.Shared.Abstractions.Contexts;
+using Stockfolio.Shared.Abstractions.Queries;
 using System.Threading;
 using System.Threading.Tasks;
-using Humanizer;
-using Stockfolio.Shared.Abstractions.Contexts;
-using Microsoft.Extensions.Logging;
-using Stockfolio.Shared.Abstractions.Queries;
 
 namespace Stockfolio.Shared.Infrastructure.Logging.Decorators;
 

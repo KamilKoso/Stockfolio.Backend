@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
-using Stockfolio.Shared.Infrastructure.Queries.Decorators;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Stockfolio.Shared.Abstractions.Queries;
+using Stockfolio.Shared.Infrastructure.Queries.Decorators;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace Stockfolio.Shared.Infrastructure.Queries;
 
@@ -16,14 +16,14 @@ public static class Extensions
                 .WithoutAttribute<DecoratorAttribute>())
             .AsImplementedInterfaces()
             .WithScopedLifetime());
-            
+
         return services;
     }
-        
+
     public static IServiceCollection AddPagedQueryDecorator(this IServiceCollection services)
     {
         services.TryDecorate(typeof(IQueryHandler<,>), typeof(PagedQueryHandlerDecorator<,>));
-            
+
         return services;
     }
 }

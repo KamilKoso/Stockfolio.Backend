@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Stockfolio.Shared.Abstractions.Events;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Stockfolio.Shared.Abstractions.Events;
 
 namespace Stockfolio.Shared.Infrastructure.Events;
 

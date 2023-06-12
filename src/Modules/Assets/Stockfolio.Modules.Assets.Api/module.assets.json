@@ -1,0 +1,12 @@
+{
+  "assets": {
+    "module": {
+      "name": "Assets",
+      "enabled": true
+    },
+    "yahooFinanceOptions": {
+      "baseApiUrl": "https://query2.finance.yahoo.com", // this api uses HTTP/1.1. There's also query1.finance.yahoo.com which uses HTTP/1.0
+      "urlToObtainTheCookie": "https://fc.yahoo.com"
+    }
+  }
+}

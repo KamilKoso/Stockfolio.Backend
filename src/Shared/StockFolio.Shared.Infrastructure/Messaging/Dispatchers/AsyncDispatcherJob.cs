@@ -1,10 +1,10 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Stockfolio.Shared.Infrastructure.Contexts;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Stockfolio.Shared.Abstractions.Modules;
+using Stockfolio.Shared.Infrastructure.Contexts;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Stockfolio.Shared.Infrastructure.Messaging.Dispatchers;
 

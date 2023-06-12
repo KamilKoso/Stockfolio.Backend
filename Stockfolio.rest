@@ -10,7 +10,7 @@ GET {{url}}/modules
 GET {{url}}/portfolios
 
 ###
-GET {{url}}/stockmarket
+GET {{url}}/assets
 
 ###
 GET {{url}}/users

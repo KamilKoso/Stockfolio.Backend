@@ -1,5 +1,5 @@
-using System;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Stockfolio.Shared.Tests;
 
@@ -11,7 +11,7 @@ public abstract class TestDbContext<T> where T : DbContext, IDisposable
     {
         // ReSharper disable once VirtualMemberCallInConstructor
         Context = Init(connectionString);
-            
+
         if (Context is null)
         {
             throw new InvalidOperationException($"DB context for {typeof(T)} was not initialized.");

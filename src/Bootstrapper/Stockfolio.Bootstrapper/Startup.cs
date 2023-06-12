@@ -38,7 +38,7 @@ public class Startup
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
     {
-        logger.LogInformation($"Modules: {string.Join(", ", _modules.Select(x => x.Name))}");
+        logger.LogInformation("Modules: {modules}", string.Join(", ", _modules.Select(x => x.Name)));
         app.UseModularInfrastructure();
         foreach (var module in _modules)
         {

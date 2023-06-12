@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Stockfolio.Shared.Infrastructure.Logging.Decorators;
-using Stockfolio.Shared.Infrastructure.Logging.Options;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -14,6 +9,11 @@ using Stockfolio.Shared.Abstractions.Commands;
 using Stockfolio.Shared.Abstractions.Contexts;
 using Stockfolio.Shared.Abstractions.Events;
 using Stockfolio.Shared.Abstractions.Queries;
+using Stockfolio.Shared.Infrastructure.Logging.Decorators;
+using Stockfolio.Shared.Infrastructure.Logging.Options;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Stockfolio.Shared.Infrastructure.Logging;
 
@@ -41,9 +41,9 @@ public static class Extensions
             var context = ctx.RequestServices.GetRequiredService<IContext>();
             logger.LogInformation("Started processing a request [Request ID: '{RequestId}', Correlation ID: '{CorrelationId}', Trace ID: '{TraceId}', User ID: '{UserId}']...",
                 context.RequestId, context.CorrelationId, context.TraceId, context.Identity.IsAuthenticated ? context.Identity.Id : string.Empty);
-                
+
             await next();
-                
+
             logger.LogInformation("Finished processing a request with status code: {StatusCode} [Request ID: '{RequestId}', Correlation ID: '{CorrelationId}', Trace ID: '{TraceId}', User ID: '{UserId}']",
                 ctx.Response.StatusCode, context.RequestId, context.CorrelationId, context.TraceId, context.Identity.IsAuthenticated ? context.Identity.Id : string.Empty);
         });
@@ -108,7 +108,7 @@ public static class Extensions
     private static void Configure(LoggerConfiguration loggerConfiguration, LoggerOptions options)
     {
         var consoleOptions = options.Console ?? new ConsoleOptions();
-        var fileOptions = options.File ?? new FileOptions();
+        var fileOptions = options.File ?? new Options.FileOptions();
         var seqOptions = options.Seq ?? new SeqOptions();
 
         if (consoleOptions.Enabled)

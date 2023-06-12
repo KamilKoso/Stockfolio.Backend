@@ -1,12 +1,12 @@
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Stockfolio.Shared.Abstractions.Time;
 using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Stockfolio.Shared.Abstractions.Time;
 
 namespace Stockfolio.Shared.Infrastructure.Messaging.Outbox;
 
@@ -67,7 +67,7 @@ internal sealed class InboxCleanupProcessor : BackgroundService
                 {
                     Interlocked.Exchange(ref _isProcessing, 0);
                     stopwatch.Stop();
-                    _logger.LogTrace($"Finished cleaning up inbox messages in {stopwatch.ElapsedMilliseconds} ms.");
+                    _logger.LogTrace("Finished cleaning up inbox messages in {ElapsedMilliseconds} ms.", stopwatch.ElapsedMilliseconds);
                 }
             }
 

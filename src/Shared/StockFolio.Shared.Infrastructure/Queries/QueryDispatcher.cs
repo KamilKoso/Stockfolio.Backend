@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Stockfolio.Shared.Abstractions.Queries;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Stockfolio.Shared.Abstractions.Queries;
 
 namespace Stockfolio.Shared.Infrastructure.Queries;
 
@@ -25,6 +25,6 @@ internal sealed class QueryDispatcher : IQueryDispatcher
         }
 
         // ReSharper disable once PossibleNullReferenceException
-        return await (Task<TResult>)method.Invoke(handler, new object[] {query, cancellationToken});
+        return await (Task<TResult>)method.Invoke(handler, new object[] { query, cancellationToken });
     }
 }

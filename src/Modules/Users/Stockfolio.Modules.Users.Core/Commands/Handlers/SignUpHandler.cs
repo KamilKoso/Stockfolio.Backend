@@ -5,7 +5,6 @@ using Stockfolio.Modules.Users.Core.Events;
 using Stockfolio.Modules.Users.Core.Exceptions;
 using Stockfolio.Modules.Users.Core.Managers;
 using Stockfolio.Shared.Abstractions.Commands;
-using Stockfolio.Shared.Abstractions.Kernel.Exceptions;
 using Stockfolio.Shared.Abstractions.Messaging;
 using Stockfolio.Shared.Abstractions.Time;
 
@@ -63,6 +62,6 @@ internal sealed class SignUpHandler : ICommandHandler<SignUp>
         }
 
         await _messageBroker.PublishAsync(new SignedUp(user.Id, command.Email, role.Name), cancellationToken);
-        _logger.LogInformation($"User with ID: '{user.Id}' has signed up.");
+        _logger.LogInformation("User with ID: '{UserId}' has signed up.", user.Id);
     }
 }

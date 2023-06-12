@@ -1,5 +1,5 @@
-﻿using System;
-using Stockfolio.Shared.Abstractions.Time;
+﻿using Stockfolio.Shared.Abstractions.Time;
+using System;
 
 namespace Stockfolio.Shared.Infrastructure.Time;
 

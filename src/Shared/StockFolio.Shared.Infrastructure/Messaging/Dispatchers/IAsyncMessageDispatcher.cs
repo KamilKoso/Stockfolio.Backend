@@ -1,6 +1,6 @@
-﻿using System.Threading;
+﻿using Stockfolio.Shared.Abstractions.Messaging;
+using System.Threading;
 using System.Threading.Tasks;
-using Stockfolio.Shared.Abstractions.Messaging;
 
 namespace Stockfolio.Shared.Infrastructure.Messaging.Dispatchers;
 

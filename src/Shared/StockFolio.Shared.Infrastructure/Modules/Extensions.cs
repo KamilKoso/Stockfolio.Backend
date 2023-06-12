@@ -1,10 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +7,12 @@ using Microsoft.Extensions.Hosting;
 using Stockfolio.Shared.Abstractions.Commands;
 using Stockfolio.Shared.Abstractions.Events;
 using Stockfolio.Shared.Abstractions.Modules;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace Stockfolio.Shared.Infrastructure.Modules;
 
@@ -38,7 +38,7 @@ public static class Extensions
             return context.Response.WriteAsJsonAsync(moduleInfoProvider.Modules);
         });
     }
-        
+
     public static IHostBuilder ConfigureModules(this IHostBuilder builder)
         => builder.ConfigureAppConfiguration((ctx, cfg) =>
         {
@@ -51,7 +51,7 @@ public static class Extensions
                 => Directory.EnumerateFiles(ctx.HostingEnvironment.ContentRootPath,
                     "module.*.json", SearchOption.AllDirectories).Where(x => Regex.IsMatch(x, pattern));
         });
-        
+
     public static IServiceCollection AddModuleRequests(this IServiceCollection services, IList<Assembly> assemblies)
     {
         services.AddModuleRegistry(assemblies);
@@ -70,11 +70,11 @@ public static class Extensions
     {
         var registry = new ModuleRegistry();
         var types = assemblies.SelectMany(x => x.GetTypes()).ToArray();
-            
+
         var commandTypes = types
             .Where(t => t.IsClass && typeof(ICommand).IsAssignableFrom(t))
             .ToArray();
-            
+
         var eventTypes = types
             .Where(x => x.IsClass && typeof(IEvent).IsAssignableFrom(x))
             .ToArray();
@@ -83,24 +83,24 @@ public static class Extensions
         {
             var commandDispatcher = sp.GetRequiredService<ICommandDispatcher>();
             var commandDispatcherType = commandDispatcher.GetType();
-                
+
             var eventDispatcher = sp.GetRequiredService<IEventDispatcher>();
             var eventDispatcherType = eventDispatcher.GetType();
 
             foreach (var type in commandTypes)
             {
                 registry.AddBroadcastAction(type, (@event, cancellationToken) =>
-                    (Task) commandDispatcherType.GetMethod(nameof(commandDispatcher.SendAsync))
+                    (Task)commandDispatcherType.GetMethod(nameof(commandDispatcher.SendAsync))
                         ?.MakeGenericMethod(type)
-                        .Invoke(commandDispatcher, new[] {@event, cancellationToken}));
+                        .Invoke(commandDispatcher, new[] { @event, cancellationToken }));
             }
-                
+
             foreach (var type in eventTypes)
             {
                 registry.AddBroadcastAction(type, (@event, cancellationToken) =>
-                    (Task) eventDispatcherType.GetMethod(nameof(eventDispatcher.PublishAsync))
+                    (Task)eventDispatcherType.GetMethod(nameof(eventDispatcher.PublishAsync))
                         ?.MakeGenericMethod(type)
-                        .Invoke(eventDispatcher, new[] {@event, cancellationToken}));
+                        .Invoke(eventDispatcher, new[] { @event, cancellationToken }));
             }
 
             return registry;

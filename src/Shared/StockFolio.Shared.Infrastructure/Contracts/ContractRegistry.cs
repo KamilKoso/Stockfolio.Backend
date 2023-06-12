@@ -1,12 +1,12 @@
+using Microsoft.Extensions.Logging;
+using Stockfolio.Shared.Abstractions.Contracts;
+using Stockfolio.Shared.Abstractions.Messaging;
+using Stockfolio.Shared.Infrastructure.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
-using Stockfolio.Shared.Abstractions.Contracts;
-using Stockfolio.Shared.Abstractions.Messaging;
-using Stockfolio.Shared.Infrastructure.Modules;
-using Microsoft.Extensions.Logging;
 
 namespace Stockfolio.Shared.Infrastructure.Contracts;
 
@@ -39,7 +39,7 @@ internal sealed class ContractRegistry : IContractRegistry
 
     public IContractRegistry RegisterPathWithResponse<TResponse>(string path) where TResponse : class
         => RegisterPath<Empty, TResponse>(path);
-        
+
     public IContractRegistry RegisterPath<TRequest, TResponse>(string path)
         where TRequest : class where TResponse : class
     {
@@ -52,7 +52,7 @@ internal sealed class ContractRegistry : IContractRegistry
         {
             throw new ContractException($"Path: '{path}' is already registered.");
         }
-            
+
         var requestContract = GetContractType<TRequest>();
         var responseContract = GetContractType<TResponse>();
         _paths.Add(path, (requestContract, responseContract));
@@ -78,7 +78,7 @@ internal sealed class ContractRegistry : IContractRegistry
                 throw new ContractException($"Request registration was not found for path: '{path}'.");
             }
 
-            _logger.LogTrace($"Validating the contracts for path: '{path}'...");
+            _logger.LogTrace("Validating the contracts for path: '{Path}'...", path);
             if (requestType != typeof(Empty))
             {
                 ValidateContract(requestType, path);
@@ -89,7 +89,7 @@ internal sealed class ContractRegistry : IContractRegistry
                 ValidateContract(responseType, path);
             }
 
-            _logger.LogTrace($"Validated the contracts for path: '{path}'.");
+            _logger.LogTrace("Validated the contracts for path: '{Path}'.", path);
         }
     }
 
@@ -108,7 +108,7 @@ internal sealed class ContractRegistry : IContractRegistry
         {
             return;
         }
-            
+
         var contractModule = contract.GetModuleName();
         var messageAttribute = contractType.GetCustomAttribute<MessageAttribute>() ??
                                contract.Type.GetCustomAttribute<MessageAttribute>();
@@ -129,8 +129,8 @@ internal sealed class ContractRegistry : IContractRegistry
             throw new ContractException($"Contract: '{contractName}' was not found in module: '{module}'.");
         }
 
-        _logger.LogTrace($"Validating the contract for: '{contractName}', " +
-                         $"from module: '{contractModule}', original module: '{module}'...");
+        _logger.LogTrace("Validating the contract for: '{ContractName}', " +
+                         "from module: '{ContractModule}', original module: '{Module}'...", contractName, contractModule, module);
 
         var originalContract = FormatterServices.GetUninitializedObject(originalType);
         var originalContractType = originalContract.GetType();
@@ -144,8 +144,8 @@ internal sealed class ContractRegistry : IContractRegistry
                 contractModule, path);
         }
 
-        _logger.LogTrace($"Successfully validated the contract for: '{contractName}', " +
-                         $"from module: '{contractModule}', original module: '{module}'.");
+        _logger.LogTrace("Successfully validated the contract for: '{ContractName}', " +
+                         "from module: '{ContractModule}', original module: '{Module}'.", contractName, contractModule, module);
     }
 
     private static void ValidateProperty(PropertyInfo localProperty, PropertyInfo originalProperty,
@@ -205,16 +205,16 @@ internal sealed class ContractRegistry : IContractRegistry
                 name = string.Join(".", nameParts.Skip(1));
                 continue;
             }
-                
+
             type = property.PropertyType;
             name = string.Join(".", nameParts.Skip(1));
         }
     }
-        
+
     private class Empty
     {
     }
-        
+
     private class EmptyContract : Contract<Empty>
     {
     }

@@ -10,6 +10,8 @@ public interface IIdentityContext
     string Email { get; }
     string Role { get; }
     Dictionary<string, IEnumerable<string>> Claims { get; }
+
     bool IsUser();
+
     bool IsAdmin();
 }

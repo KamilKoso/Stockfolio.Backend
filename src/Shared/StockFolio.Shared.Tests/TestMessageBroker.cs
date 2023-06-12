@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Stockfolio.Shared.Abstractions.Messaging;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Stockfolio.Shared.Abstractions.Messaging;
 
 namespace Stockfolio.Shared.Tests;
 

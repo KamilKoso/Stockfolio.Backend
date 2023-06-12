@@ -1,7 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Stockfolio.Shared.Abstractions.Messaging;
-using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Threading.Tasks;
 
 namespace Stockfolio.Shared.Infrastructure.Messaging.Outbox;
 

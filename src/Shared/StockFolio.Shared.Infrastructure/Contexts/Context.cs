@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Stockfolio.Shared.Abstractions.Contexts;
 using Stockfolio.Shared.Infrastructure.Api;
+using System;
 
 namespace Stockfolio.Shared.Infrastructure.Contexts;
 

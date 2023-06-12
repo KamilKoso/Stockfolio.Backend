@@ -1,5 +1,5 @@
-using System;
 using MessagePack;
+using System;
 
 namespace Stockfolio.Shared.Infrastructure.Modules;
 

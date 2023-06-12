@@ -1,5 +1,5 @@
-﻿using System;
-using Stockfolio.Shared.Abstractions.Exceptions;
+﻿using Stockfolio.Shared.Abstractions.Exceptions;
+using System;
 
 namespace Stockfolio.Shared.Infrastructure.Exceptions;
 

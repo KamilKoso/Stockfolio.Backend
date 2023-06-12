@@ -1,6 +1,6 @@
-﻿using System.Threading;
+﻿using Stockfolio.Shared.Abstractions.Queries;
+using System.Threading;
 using System.Threading.Tasks;
-using Stockfolio.Shared.Abstractions.Queries;
 
 namespace Stockfolio.Shared.Infrastructure.Queries.Decorators;
 
@@ -19,7 +19,7 @@ internal sealed class PagedQueryHandlerDecorator<TQuery, TResult> : IQueryHandle
     {
         const int maxResults = 100;
         const int defaultResults = 10;
-            
+
         if (query is IPagedQuery pagedQuery)
         {
             if (pagedQuery.Page <= 0)

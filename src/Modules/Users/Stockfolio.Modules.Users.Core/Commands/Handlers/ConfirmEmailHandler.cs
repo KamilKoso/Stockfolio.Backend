@@ -45,6 +45,6 @@ internal sealed class ConfirmEmailHandler : ICommandHandler<ConfirmEmail>
 
         await _httpContextAccessor.HttpContext.SignInAsStockfolioUser(user);
         await _messageBroker.PublishAsync(new EmailConfirmed(user.Id), cancellationToken);
-        _logger.LogInformation($"User with ID: '{user.Id}' confirmed his email.");
+        _logger.LogInformation("User with ID: '{UserId}' confirmed his email.", user.Id);
     }
 }

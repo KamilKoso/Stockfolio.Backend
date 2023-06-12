@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Stockfolio.Shared.Infrastructure.Services;
 
@@ -17,7 +17,7 @@ public class AppInitializer : IHostedService
         _serviceProvider = serviceProvider;
         _logger = logger;
     }
-        
+
     public async Task StartAsync(CancellationToken cancellationToken)
     {
         using var scope = _serviceProvider.CreateScope();
@@ -26,7 +26,7 @@ public class AppInitializer : IHostedService
         {
             try
             {
-                _logger.LogInformation($"Running the initializer: {initializer.GetType().Name}...");
+                _logger.LogInformation("Running the initializer: {InitializerName}...", initializer.GetType().Name);
                 await initializer.InitAsync();
             }
             catch (Exception exception)

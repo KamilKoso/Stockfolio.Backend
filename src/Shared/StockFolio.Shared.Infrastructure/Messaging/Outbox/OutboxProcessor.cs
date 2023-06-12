@@ -1,11 +1,11 @@
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace Stockfolio.Shared.Infrastructure.Messaging.Outbox;
 
@@ -36,7 +36,7 @@ internal sealed class OutboxProcessor : BackgroundService
             return;
         }
 
-        _logger.LogInformation($"Outbox is enabled, start delay: {_startDelay}, interval: {_interval}");
+        _logger.LogInformation("Outbox is enabled, start delay: {StartDelay}, interval: {Interval}", _startDelay, _interval);
         await Task.Delay(_startDelay, stoppingToken);
         while (!stoppingToken.IsCancellationRequested)
         {
@@ -45,7 +45,7 @@ internal sealed class OutboxProcessor : BackgroundService
                 await Task.Delay(_interval, stoppingToken);
                 continue;
             }
-                
+
             _logger.LogTrace("Started processing outbox messages...");
             var stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -66,7 +66,7 @@ internal sealed class OutboxProcessor : BackgroundService
                 {
                     Interlocked.Exchange(ref _isProcessing, 0);
                     stopwatch.Stop();
-                    _logger.LogTrace($"Finished processing outbox messages in {stopwatch.ElapsedMilliseconds} ms.");
+                    _logger.LogTrace("Finished processing outbox messages in {ElapsedMilliseconds} ms.", stopwatch.ElapsedMilliseconds);
                 }
             }
 

@@ -45,6 +45,6 @@ internal sealed class SignInHandler : ICommandHandler<SignIn>
 
         await _httpContextAccessor.HttpContext.SignInAsStockfolioUser(user, command.RememberMe);
         await _messageBroker.PublishAsync(new SignedIn(user.Id), cancellationToken);
-        _logger.LogInformation($"User with ID: '{user.Id}' has signed in.");
+        _logger.LogInformation("User with ID: '{UserId}' has signed in.", user.Id);
     }
 }

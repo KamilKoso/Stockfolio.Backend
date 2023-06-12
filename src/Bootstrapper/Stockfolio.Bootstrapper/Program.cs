@@ -1,8 +1,8 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Stockfolio.Shared.Infrastructure.Logging;
 using Stockfolio.Shared.Infrastructure.Modules;
+using System.Threading.Tasks;
 
 namespace Stockfolio.Bootstrapper;
 

@@ -1,5 +1,5 @@
-﻿using System;
-using Stockfolio.Shared.Abstractions.Contexts;
+﻿using Stockfolio.Shared.Abstractions.Contexts;
+using System;
 
 namespace Stockfolio.Shared.Abstractions.Messaging;
 
