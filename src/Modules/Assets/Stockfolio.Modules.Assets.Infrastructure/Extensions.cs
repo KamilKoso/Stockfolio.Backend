@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
 using Stockfolio.Modules.Assets.Application.Repositories;
+using Stockfolio.Modules.Assets.Infrastructure.Repositories;
 using Stockfolio.Modules.Assets.Infrastructure.YahooFinance.Options;
 using Stockfolio.Modules.Assets.Infrastructure.YahooFinance.Repositories;
 using Stockfolio.Shared.Abstractions.Forex;
@@ -25,6 +26,7 @@ internal static class Extensions
         services.Configure<YahooFinanceOptions>(configuration.GetSection(optionsSection));
 
         services.AddScoped<IStockMarketRepository, YahooFinanceApi>();
+        services.AddScoped<IAssetsRepository, AssetsRepository>();
         services.AddHttpClient<IStockMarketRepository, YahooFinanceApi>((options) =>
         {
             options.BaseAddress = new Uri(yahooFinanceOptions.BaseApiUrl);

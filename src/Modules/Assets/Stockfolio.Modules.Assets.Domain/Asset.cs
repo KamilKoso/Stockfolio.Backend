@@ -5,7 +5,9 @@ using Stockfolio.Shared.Abstractions.Kernel.Types;
 using Stockfolio.Shared.Abstractions.Kernel.ValueObjects.Currencies;
 using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("Stockfolio.Modules.Assets.Api")]
 [assembly: InternalsVisibleTo("Stockfolio.Modules.Assets.Application")]
+[assembly: InternalsVisibleTo("Stockfolio.Modules.Assets.Infrastructure")]
 
 namespace Stockfolio.Modules.Assets.Core;
 

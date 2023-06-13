@@ -28,6 +28,6 @@ internal class AssetsController : ControllerBase
         => Ok(await _queryDispatcher.QueryAsync(new GetHistoricalQuotes(symbol, start, end, range, interval)));
 
     [HttpGet("search")]
-    public async Task<IActionResult> SearchAssets([FromQuery] SearchAssets searchQuery)
-        => Ok(await _queryDispatcher.QueryAsync(searchQuery));
+    public async Task<IActionResult> SearchAssets([FromQuery] SearchAssets query)
+        => Ok(await _queryDispatcher.QueryAsync(query));
 }

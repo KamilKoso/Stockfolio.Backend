@@ -2,4 +2,8 @@
 
 namespace Stockfolio.Shared.Abstractions.Exceptions;
 
-public record ExceptionResponse(object Response, HttpStatusCode StatusCode);
+public record ExceptionResponse(ErrorsResponse Response, HttpStatusCode StatusCode);
+
+public record Error(string Code, string Message);
+
+public record ErrorsResponse(params Error[] Errors);

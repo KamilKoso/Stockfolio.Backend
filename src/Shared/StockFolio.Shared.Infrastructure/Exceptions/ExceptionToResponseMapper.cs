@@ -14,8 +14,4 @@ internal sealed class ExceptionToResponseMapper : IExceptionToResponseMapper
             _ => new ExceptionResponse(new ErrorsResponse(new Error("Error", "Unrecognized error occurred.")),
                 HttpStatusCode.InternalServerError)
         };
-
-    private record Error(string Code, string Message);
-
-    private record ErrorsResponse(params Error[] Errors);
 }

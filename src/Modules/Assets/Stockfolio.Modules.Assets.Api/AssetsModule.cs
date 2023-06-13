@@ -16,6 +16,7 @@ internal class AssetsModule : IModule
     {
         services.AddApplication();
         services.AddInfrastructure(configuration);
+        services.AddApi();
     }
 
     public void Use(IApplicationBuilder app)
