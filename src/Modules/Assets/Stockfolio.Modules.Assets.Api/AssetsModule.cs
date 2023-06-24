@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Stockfolio.Modules.Assets.Application;
 using Stockfolio.Modules.Assets.Infrastructure;
-using Stockfolio.Modules.Portfolios.Application;
 using Stockfolio.Shared.Abstractions.Modules;
 using Stockfolio.Shared.Infrastructure.Modules;
 
-namespace Stockfolio.Modules.Wallets.Api;
+namespace Stockfolio.Modules.Portfolios.Api;
 
 internal class AssetsModule : IModule
 {

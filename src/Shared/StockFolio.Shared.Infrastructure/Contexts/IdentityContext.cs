@@ -10,7 +10,7 @@ namespace Stockfolio.Shared.Infrastructure.Contexts;
 public class IdentityContext : IIdentityContext
 {
     public bool IsAuthenticated { get; }
-    public Guid Id { get; }
+    public Guid? Id { get; }
     public string Email { get; }
     public string Role { get; }
 
@@ -22,7 +22,7 @@ public class IdentityContext : IIdentityContext
 
     public IdentityContext(Guid? id)
     {
-        Id = id ?? Guid.Empty;
+        Id = id;
         IsAuthenticated = id.HasValue;
     }
 
@@ -41,10 +41,6 @@ public class IdentityContext : IIdentityContext
         Claims = principal.Claims.GroupBy(x => x.Type)
             .ToDictionary(x => x.Key, x => x.Select(c => c.Value.ToString()));
     }
-
-    public bool IsUser() => Role is "user";
-
-    public bool IsAdmin() => Role is "admin";
 
     public static IIdentityContext Empty => new IdentityContext();
 }

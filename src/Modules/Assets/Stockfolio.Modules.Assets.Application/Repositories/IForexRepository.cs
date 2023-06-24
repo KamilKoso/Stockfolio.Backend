@@ -1,7 +1,7 @@
 ﻿using Stockfolio.Modules.Assets.Application.Dto.Forex;
 using Stockfolio.Shared.Abstractions.Kernel.ValueObjects.Currencies;
 
-namespace Stockfolio.Shared.Abstractions.Forex;
+namespace Stockfolio.Modules.Assets.Application.Repositories;
 
 internal interface IForexRepository
 {

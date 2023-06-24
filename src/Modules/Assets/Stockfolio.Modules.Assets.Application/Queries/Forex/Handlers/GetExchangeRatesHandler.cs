@@ -1,5 +1,5 @@
 ﻿using Stockfolio.Modules.Assets.Application.Dto.Forex;
-using Stockfolio.Shared.Abstractions.Forex;
+using Stockfolio.Modules.Assets.Application.Repositories;
 using Stockfolio.Shared.Abstractions.Queries;
 using Stockfolio.Shared.Abstractions.Time;
 

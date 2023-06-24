@@ -126,6 +126,7 @@ public static class Extensions
             ForwardedHeaders = ForwardedHeaders.All
         });
         app.UseCors("cors");
+        app.UseContext();
         app.UseCorrelationId();
         app.UseErrorHandling();
         app.UseSwagger();
@@ -138,7 +139,6 @@ public static class Extensions
         app.UseAuth();
         app.UseRouting();
         app.UseAuthorization();
-        app.UseContext();
         app.UseLogging();
 
         return app;

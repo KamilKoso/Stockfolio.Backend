@@ -1,4 +1,4 @@
-﻿using Stockfolio.Modules.Assets.Core;
+﻿using Stockfolio.Modules.Assets.Core.Assets;
 using Stockfolio.Shared.Abstractions.Kernel.Types;
 
 namespace Stockfolio.Modules.Assets.Application.Repositories;

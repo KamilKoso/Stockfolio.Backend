@@ -1,4 +1,4 @@
-﻿namespace Stockfolio.Modules.Assets.Core.ValueObjects;
+﻿namespace Stockfolio.Modules.Assets.Core.Assets.Quotes;
 public record QuoteId(Guid Value)
 {
     public static implicit operator QuoteId(Guid? id) => id is null || id == Guid.Empty ? null : new(id);

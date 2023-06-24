@@ -7,7 +7,7 @@ using Stockfolio.Modules.Portfolios.Infrastructure;
 using Stockfolio.Shared.Abstractions.Modules;
 using Stockfolio.Shared.Infrastructure.Contracts;
 
-namespace Stockfolio.Modules.Wallets.Api;
+namespace Stockfolio.Modules.Portfolios.Api;
 
 internal class PortfoliosModule : IModule
 {

@@ -1,7 +1,7 @@
 @url = https://localhost:5000
 
 ###
-GET {{url}}
+GET {{url}}/modules
 
 ################### ASSETS ###################
 
@@ -14,7 +14,7 @@ Content-Type: application/json
 
 @symbol = EXPO
 ### Get quotes
-# @name get_quotes
+# @name zget_quotes
 GET {{url}}/assets?symbols={{symbol}}
 Content-Type: application/json
 
@@ -34,12 +34,13 @@ Content-Type: application/json
 
 ################### FOREX ###################
 
-@from = PlN
-@to = JPY
-@date = 2016-01-03T17:00:00-00
+@from = USD
+@to = PLN
+@startDate = 2000-01-03T17:00:00-00
+@endDate = 2023-01-03T17:00:00-00
 ### Get exchange rates
 # @name get_exchange_rates
-GET {{url}}/forex/exchange-rate?from={{from}}&to={{to}}&date={{date}}
+GET {{url}}/forex/exchange-rates?from={{from}}&to={{to}}&start={{startDate}}&end={{endDate}}
 Content-Type: application/json
 
 ### Get supported currencies

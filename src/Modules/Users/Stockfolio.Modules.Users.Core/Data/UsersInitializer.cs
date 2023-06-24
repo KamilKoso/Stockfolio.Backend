@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using Stockfolio.Modules.Users.Core.Entities;
 using Stockfolio.Shared.Infrastructure;
 
-namespace Stockfolio.Modules.Users.Core.DAL;
+namespace Stockfolio.Modules.Users.Core.Data;
 
 internal sealed class UsersInitializer : IInitializer
 {

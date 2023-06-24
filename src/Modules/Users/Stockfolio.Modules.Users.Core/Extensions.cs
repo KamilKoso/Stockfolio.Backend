@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Stockfolio.Modules.Users.Core.DAL;
+using Stockfolio.Modules.Users.Core.Data;
 using Stockfolio.Modules.Users.Core.Entities;
 using Stockfolio.Modules.Users.Core.Managers;
 using Stockfolio.Modules.Users.Core.Stores;

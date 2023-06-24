@@ -3,10 +3,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
 using Stockfolio.Modules.Assets.Application.Repositories;
+using Stockfolio.Modules.Assets.Infrastructure.Exceptions;
 using Stockfolio.Modules.Assets.Infrastructure.Repositories;
 using Stockfolio.Modules.Assets.Infrastructure.YahooFinance.Options;
 using Stockfolio.Modules.Assets.Infrastructure.YahooFinance.Repositories;
-using Stockfolio.Shared.Abstractions.Forex;
+using Stockfolio.Shared.Abstractions.Exceptions;
 using Stockfolio.Shared.Infrastructure;
 using System.Net;
 using System.Runtime.CompilerServices;
@@ -14,7 +15,6 @@ using System.Web;
 
 [assembly: InternalsVisibleTo("Stockfolio.Modules.Assets.Tests.Integration")]
 [assembly: InternalsVisibleTo("Stockfolio.Modules.Assets.Api")]
-
 namespace Stockfolio.Modules.Assets.Infrastructure;
 
 internal static class Extensions
@@ -27,6 +27,8 @@ internal static class Extensions
 
         services.AddScoped<IStockMarketRepository, YahooFinanceApi>();
         services.AddScoped<IAssetsRepository, AssetsRepository>();
+        services.AddSingleton<IExceptionToResponseMapper, InfrastructureExceptionsToResponseMapper>();
+
         services.AddHttpClient<IStockMarketRepository, YahooFinanceApi>((options) =>
         {
             options.BaseAddress = new Uri(yahooFinanceOptions.BaseApiUrl);

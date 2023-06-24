@@ -5,11 +5,11 @@ using Stockfolio.Modules.Assets.Application.Dto.Forex;
 using Stockfolio.Modules.Assets.Application.Repositories;
 using Stockfolio.Modules.Assets.Infrastructure.Exceptions;
 using Stockfolio.Modules.Assets.Infrastructure.YahooFinance.Models;
+using Stockfolio.Modules.Assets.Infrastructure.YahooFinance.Models.HistoricalData;
 using Stockfolio.Modules.Assets.Infrastructure.YahooFinance.Options;
-using Stockfolio.Shared.Abstractions.Forex;
 using Stockfolio.Shared.Abstractions.Kernel.ValueObjects.Currencies;
-using Stockfolio.Shared.Abstractions.Time;
 using Stockfolio.Shared.Infrastructure.Serialization;
+using System.Net;
 using System.Text.Json.Nodes;
 
 namespace Stockfolio.Modules.Assets.Infrastructure.YahooFinance.Repositories;
@@ -20,21 +20,18 @@ internal class YahooFinanceApi : IStockMarketRepository, IForexRepository
     private readonly IJsonSerializer _jsonSerializer;
     private readonly YahooFinanceOptions _options;
     private readonly ILogger<YahooFinanceApi> _logger;
-    private readonly IClock _clock;
     private readonly string quoteEvents = string.Join('|', QuoteEvent.CapitalGains, QuoteEvent.Dividends, QuoteEvent.Splits);
     internal static string _crumb;
 
     public YahooFinanceApi(HttpClient httpClient,
                            IJsonSerializer jsonSerializer,
                            IOptions<YahooFinanceOptions> options,
-                           ILogger<YahooFinanceApi> logger,
-                           IClock clock)
+                           ILogger<YahooFinanceApi> logger)
     {
         _httpClient = httpClient;
         _jsonSerializer = jsonSerializer;
         _options = options.Value;
         _logger = logger;
-        _clock = clock;
     }
 
     public async Task<SearchAssetsResultDto> SearchSecurities(string searchQuery, int quotesCount = 7, CancellationToken cancellationToken = default)
@@ -44,7 +41,9 @@ internal class YahooFinanceApi : IStockMarketRepository, IForexRepository
 
         if (!response.IsSuccessStatusCode)
         {
-            throw new YahooFinanceUnsucessfulResponseException(response.RequestMessage.RequestUri.ToString(), response.StatusCode, await response.Content.ReadAsStringAsync());
+            throw new FinancialDataProviderError(response.RequestMessage.RequestUri.ToString(),
+                                                 response.StatusCode,
+                                                 await response.Content.ReadAsStringAsync());
         }
 
         var responseStr = await response.Content.ReadAsStringAsync(cancellationToken);
@@ -105,16 +104,21 @@ internal class YahooFinanceApi : IStockMarketRepository, IForexRepository
         // This request will obtain "A3" cookie which is required for obtaining the crumb
         var cookieResponse = await _httpClient.GetAsync(_options.UrlToObtainTheCookie);
 
-        if (!cookieResponse.IsSuccessStatusCode)
+        // It is expected to get 404 here, cookie will be issued anyway
+        if (cookieResponse.StatusCode is not HttpStatusCode.NotFound)
         {
-            throw new YahooFinanceUnsucessfulResponseException(cookieResponse.RequestMessage.RequestUri.ToString(), cookieResponse.StatusCode, await cookieResponse.Content.ReadAsStringAsync());
+            throw new FinancialDataProviderError(cookieResponse.RequestMessage.RequestUri.ToString(),
+                                                 cookieResponse.StatusCode,
+                                                 await cookieResponse.Content.ReadAsStringAsync());
         }
 
         var crumbResponse = await _httpClient.GetAsync("/v1/test/getcrumb");
 
         if (!crumbResponse.IsSuccessStatusCode)
         {
-            throw new YahooFinanceUnsucessfulResponseException(crumbResponse.RequestMessage.RequestUri.ToString(), crumbResponse.StatusCode, await crumbResponse.Content.ReadAsStringAsync());
+            throw new FinancialDataProviderError(crumbResponse.RequestMessage.RequestUri.ToString(),
+                                                 crumbResponse.StatusCode,
+                                                 await crumbResponse.Content.ReadAsStringAsync());
         }
 
         _crumb = await crumbResponse.Content.ReadAsStringAsync();
@@ -127,7 +131,9 @@ internal class YahooFinanceApi : IStockMarketRepository, IForexRepository
 
         if (!response.IsSuccessStatusCode)
         {
-            throw new YahooFinanceUnsucessfulResponseException(response.RequestMessage.RequestUri.ToString(), response.StatusCode, await response.Content.ReadAsStringAsync());
+            throw new FinancialDataProviderError(response.RequestMessage.RequestUri.ToString(),
+                                                 response.StatusCode,
+                                                 await response.Content.ReadAsStringAsync());
         }
 
         var responseStr = await response.Content.ReadAsStringAsync(cancellationToken);
@@ -145,7 +151,9 @@ internal class YahooFinanceApi : IStockMarketRepository, IForexRepository
 
         if (!response.IsSuccessStatusCode)
         {
-            throw new YahooFinanceUnsucessfulResponseException(response.RequestMessage.RequestUri.ToString(), response.StatusCode, await response.Content.ReadAsStringAsync());
+            throw new FinancialDataProviderError(response.RequestMessage.RequestUri.ToString(),
+                                                 response.StatusCode,
+                                                 await response.Content.ReadAsStringAsync());
         }
 
         var responseStr = await response.Content.ReadAsStringAsync(cancellationToken);

@@ -1,6 +1,5 @@
-﻿using Stockfolio.Modules.Assets.Core.Entities;
-using Stockfolio.Modules.Assets.Core.Exceptions;
-using Stockfolio.Modules.Assets.Core.ValueObjects;
+﻿using Stockfolio.Modules.Assets.Core.Assets.Exceptions;
+using Stockfolio.Modules.Assets.Core.Assets.Quotes;
 using Stockfolio.Shared.Abstractions.Kernel.Types;
 using Stockfolio.Shared.Abstractions.Kernel.ValueObjects.Currencies;
 using System.Runtime.CompilerServices;
@@ -9,7 +8,7 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("Stockfolio.Modules.Assets.Application")]
 [assembly: InternalsVisibleTo("Stockfolio.Modules.Assets.Infrastructure")]
 
-namespace Stockfolio.Modules.Assets.Core;
+namespace Stockfolio.Modules.Assets.Core.Assets;
 
 internal class Asset
 {
@@ -56,18 +55,28 @@ internal class Asset
         Currency = newCurrency;
     }
 
-    public void AddQuotes(params Quote[] quotes)
+    public void AddQuotes(Currency quotesCurrency, params Quote[] quotes)
     {
+        if (quotesCurrency != Currency)
+        {
+            throw new QuoteCurrencyDoesentMatchAssetCurrencyException();
+        }
         _historicalQuotes.AddRange(quotes);
     }
 
-    public void ModifyQuote(Quote modifiedQuote)
+    public void ModifyQuote(Quote modifiedQuote, Currency quoteCurrency)
     {
         var quote = _historicalQuotes.SingleOrDefault(x => x.Id == modifiedQuote.Id);
         if (quote is null)
         {
             throw new QuoteNotFoundException(modifiedQuote.Id, Name);
         }
+
+        if (quoteCurrency != Currency)
+        {
+            throw new QuoteCurrencyDoesentMatchAssetCurrencyException();
+        }
+
         quote = modifiedQuote;
     }
 }

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Stockfolio.Modules.Users.Core.Entities;
 
-namespace Stockfolio.Modules.Users.Core.DAL.Configurations;
+namespace Stockfolio.Modules.Users.Core.Data.Configurations;
 
 internal class RoleConfiguration : IEntityTypeConfiguration<Role>
 {

@@ -31,10 +31,10 @@ internal sealed class LoggingQueryHandlerDecorator<TQuery, TResult> : IQueryHand
         var correlationId = _context.CorrelationId;
         var traceId = _context.TraceId;
         var userId = _context.Identity?.Id;
-        _logger.LogInformation("Handling a query: {Name} ({Module}) [Request ID: {RequestId}, Correlation ID: {CorrelationId}, Trace ID: '{TraceId}', User ID: '{UserId}]...",
+        _logger.LogInformation("Handling a query: {Name} ({Module}) [Request ID: {RequestId}, Correlation ID: {CorrelationId}, Trace ID: '{TraceId}', User ID: '{UserId}']...",
             name, module, requestId, correlationId, traceId, userId);
         var result = await _handler.HandleAsync(query, cancellationToken);
-        _logger.LogInformation("Handled a query: {Name} ({Module}) [Request ID: {RequestId}, Correlation ID: {CorrelationId}, Trace ID: '{TraceId}', User ID: '{UserId}]",
+        _logger.LogInformation("Handled a query: {Name} ({Module}) [Request ID: {RequestId}, Correlation ID: {CorrelationId}, Trace ID: '{TraceId}', User ID: '{UserId}']",
             name, module, requestId, correlationId, traceId, userId);
 
         return result;

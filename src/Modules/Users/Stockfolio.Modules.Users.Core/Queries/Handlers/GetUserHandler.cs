@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Stockfolio.Modules.Users.Core.DAL;
+using Stockfolio.Modules.Users.Core.Data;
 using Stockfolio.Modules.Users.Core.DTO;
 using Stockfolio.Modules.Users.Core.Mappings;
 using Stockfolio.Shared.Abstractions.Queries;

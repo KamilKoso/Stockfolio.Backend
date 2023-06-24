@@ -1,7 +1,6 @@
-﻿using Stockfolio.Modules.Assets.Infrastructure.YahooFinance.Models.HistoricalData;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
-namespace Stockfolio.Modules.Assets.Infrastructure.YahooFinance.Models;
+namespace Stockfolio.Modules.Assets.Infrastructure.YahooFinance.Models.HistoricalData;
 
 internal class YahooFinanceCurrentTradingPeriod
 {

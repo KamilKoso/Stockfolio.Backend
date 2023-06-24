@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("Stockfolio.Modules.Assets.Api")]
 [assembly: InternalsVisibleTo("Stockfolio.Modules.Assets.Infrastructure")]
 
-namespace Stockfolio.Modules.Portfolios.Application;
+namespace Stockfolio.Modules.Assets.Application;
 
 internal static class Extensions
 {

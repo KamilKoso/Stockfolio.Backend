@@ -28,7 +28,7 @@ internal class AccountController : BaseController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult<UserDto>> GetAsync()
-        => OkOrNotFound(await _dispatcher.QueryAsync(new GetUser { UserId = _context.Identity.Id }));
+        => OkOrNotFound(await _dispatcher.QueryAsync(new GetUser { UserId = (Guid)_context.Identity.Id }));
 
     [HttpPost("sign-up")]
     [AllowAnonymous]
@@ -49,7 +49,7 @@ internal class AccountController : BaseController
     public async Task<ActionResult<UserDto>> SignInAsync(SignIn command)
     {
         await _dispatcher.SendAsync(command);
-        var user = await _dispatcher.QueryAsync(new GetUser { UserId = _context.Identity.Id });
+        var user = await _dispatcher.QueryAsync(new GetUser { UserId = (Guid)_context.Identity.Id });
         return Ok(user);
     }
 
@@ -59,7 +59,7 @@ internal class AccountController : BaseController
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> GenerateEmailConfirmationTokenAsync()
     {
-        await _dispatcher.SendAsync(new GenerateEmailConfirmationToken(_context.Identity.Id));
+        await _dispatcher.SendAsync(new GenerateEmailConfirmationToken((Guid)_context.Identity.Id));
         return NoContent();
     }
 
@@ -80,7 +80,7 @@ internal class AccountController : BaseController
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult> SignOutAsync()
     {
-        await _dispatcher.SendAsync(new SignOut(_context.Identity.Id));
+        await _dispatcher.SendAsync(new SignOut((Guid)_context.Identity.Id));
         return NoContent();
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Stockfolio.Modules.Users.Core.DAL;
+using Stockfolio.Modules.Users.Core.Data;
 using Stockfolio.Modules.Users.Core.Entities;
 using Identity = Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 

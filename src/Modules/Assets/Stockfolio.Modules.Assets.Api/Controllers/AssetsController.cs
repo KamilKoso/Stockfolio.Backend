@@ -5,7 +5,7 @@ using Stockfolio.Shared.Abstractions.Queries;
 using System;
 using System.Threading.Tasks;
 
-namespace Stockfolio.Modules.Assets.Api.Controllers;
+namespace Stockfolio.Modules.Portfolios.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]

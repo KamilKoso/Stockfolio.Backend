@@ -1,17 +1,17 @@
-﻿using Stockfolio.Modules.Assets.Core.Exceptions;
+﻿using Stockfolio.Modules.Assets.Core.Assets.Exceptions;
 
-namespace Stockfolio.Modules.Assets.Core.ValueObjects;
+namespace Stockfolio.Modules.Assets.Core.Assets;
 internal record AssetName
 {
-    private static readonly int _maximumLength = 40;
+    public static readonly int MaximumLength = 40;
     public string Value { get; init; }
     public object Length { get; internal set; }
 
     public AssetName(string value)
     {
-        if (value.Length >= _maximumLength)
+        if (value.Length >= MaximumLength)
         {
-            throw new AssetNameTooLongException(value, _maximumLength);
+            throw new AssetNameTooLongException(value, MaximumLength);
         }
         Value = value;
     }

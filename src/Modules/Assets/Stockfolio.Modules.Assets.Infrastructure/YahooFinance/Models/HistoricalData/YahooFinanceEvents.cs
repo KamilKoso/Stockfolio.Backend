@@ -1,4 +1,4 @@
-﻿namespace Stockfolio.Modules.Assets.Infrastructure.YahooFinance.Models;
+﻿namespace Stockfolio.Modules.Assets.Infrastructure.YahooFinance.Models.HistoricalData;
 
 internal class YahooFinanceEvents
 {

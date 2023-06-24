@@ -4,7 +4,7 @@ using Stockfolio.Modules.Assets.Application.Queries.Forex;
 using Stockfolio.Shared.Abstractions.Queries;
 using System.Threading.Tasks;
 
-namespace Stockfolio.Modules.Assets.Api.Controllers;
+namespace Stockfolio.Modules.Portfolios.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]

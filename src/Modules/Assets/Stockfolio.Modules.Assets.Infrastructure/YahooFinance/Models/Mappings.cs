@@ -1,4 +1,5 @@
 ﻿using Stockfolio.Modules.Assets.Application.Dto.Assets;
+using Stockfolio.Modules.Assets.Infrastructure.YahooFinance.Models.HistoricalData;
 
 namespace Stockfolio.Modules.Assets.Infrastructure.YahooFinance.Models;
 

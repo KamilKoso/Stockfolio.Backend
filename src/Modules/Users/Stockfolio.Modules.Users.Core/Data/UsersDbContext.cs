@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Stockfolio.Modules.Users.Core.Entities;
 using Stockfolio.Shared.Infrastructure.Messaging.Outbox;
 
-namespace Stockfolio.Modules.Users.Core.DAL;
+namespace Stockfolio.Modules.Users.Core.Data;
 
 internal class UsersDbContext : IdentityDbContext<User, Role, Guid, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>
 {

@@ -10,6 +10,7 @@ using Stockfolio.Shared.Abstractions.Contexts;
 using Stockfolio.Shared.Abstractions.Events;
 using Stockfolio.Shared.Abstractions.Queries;
 using Stockfolio.Shared.Infrastructure.Logging.Decorators;
+using Stockfolio.Shared.Infrastructure.Logging.Enrichers;
 using Stockfolio.Shared.Infrastructure.Logging.Options;
 using System;
 using System.Collections.Generic;
@@ -83,7 +84,8 @@ public static class Extensions
             .Enrich.WithProperty("Environment", environmentName)
             .Enrich.WithProperty("Application", appOptions.Name)
             .Enrich.WithProperty("Instance", appOptions.Instance)
-            .Enrich.WithProperty("Version", appOptions.Version);
+            .Enrich.WithProperty("Version", appOptions.Version)
+            .Enrich.WithDiagnosticEnricher();
 
         foreach (var (key, value) in loggerOptions.Tags ?? new Dictionary<string, object>())
         {
