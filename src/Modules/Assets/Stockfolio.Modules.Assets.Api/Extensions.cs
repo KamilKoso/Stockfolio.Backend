@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Stockfolio.Modules.Portfolios.Api;
+namespace Stockfolio.Modules.Assets.Api;
 
 internal static class Extensions
 {
