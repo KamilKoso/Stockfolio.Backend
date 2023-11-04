@@ -126,7 +126,6 @@ public static class Extensions
             ForwardedHeaders = ForwardedHeaders.All
         });
         app.UseCors("cors");
-        app.UseContext();
         app.UseCorrelationId();
         app.UseErrorHandling();
         app.UseSwagger();
@@ -136,9 +135,9 @@ public static class Extensions
             reDoc.SpecUrl("/swagger/v1/swagger.json");
             reDoc.DocumentTitle = "Modular API";
         });
-        app.UseAuth();
         app.UseRouting();
-        app.UseAuthorization();
+        app.UseAuth();
+        app.UseContext();
         app.UseLogging();
 
         return app;

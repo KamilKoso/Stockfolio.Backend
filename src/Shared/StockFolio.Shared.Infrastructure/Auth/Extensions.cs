@@ -77,6 +77,7 @@ public static class Extensions
     public static IApplicationBuilder UseAuth(this IApplicationBuilder app)
     {
         app.UseAuthentication();
+        app.UseAuthorization();
         return app;
     }
 }
