@@ -93,8 +93,8 @@ internal class YahooFinanceApi : IStockMarketRepository, IForexRepository
     {
         var result = await GetHistoricalQuotes(ConvertCurrencyPairToSymbol(from, to), start, end, cancellationToken: cancellationToken);
         var exchangeRates = result.Quotes
-            .Where(x => x.Value is not null)
-            .Select(x => new ExchangeRateDto((decimal)x.Value, x.Date));
+            .Where(x => x.Price is not null)
+            .Select(x => new ExchangeRateDto((decimal)x.Price, x.Date));
         return new(from, to, exchangeRates);
     }
 

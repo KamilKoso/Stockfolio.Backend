@@ -15,6 +15,7 @@ using System.Web;
 
 [assembly: InternalsVisibleTo("Stockfolio.Modules.Assets.Tests.Integration")]
 [assembly: InternalsVisibleTo("Stockfolio.Modules.Assets.Api")]
+
 namespace Stockfolio.Modules.Assets.Infrastructure;
 
 internal static class Extensions
@@ -32,6 +33,7 @@ internal static class Extensions
         services.AddHttpClient<IStockMarketRepository, YahooFinanceApi>((options) =>
         {
             options.BaseAddress = new Uri(yahooFinanceOptions.BaseApiUrl);
+            options.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36");
         }).AddYahooFinanceSessionManagement()
           .AddTransientHttpErrorPolicy(policyBuilder =>
                                             policyBuilder.WaitAndRetryAsync(Backoff.DecorrelatedJitterBackoffV2(TimeSpan.FromSeconds(1), 5, fastFirst: true)));

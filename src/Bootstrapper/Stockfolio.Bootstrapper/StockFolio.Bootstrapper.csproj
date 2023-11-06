@@ -8,8 +8,8 @@
     <ProjectReference Include="..\..\Modules\Portfolios\Stockfolio.Modules.Portfolios.Api\Stockfolio.Modules.Portfolios.Api.csproj" />
     <ProjectReference Include="..\..\Modules\Assets\Stockfolio.Modules.Assets.Api\Stockfolio.Modules.Assets.Api.csproj" />
     <ProjectReference Include="..\..\Modules\Users\Stockfolio.Modules.Users.Api\Stockfolio.Modules.Users.Api.csproj" />
-    <ProjectReference Include="..\..\Shared\StockFolio.Shared.Abstractions\Stockfolio.Shared.Abstractions.csproj" />
-    <ProjectReference Include="..\..\Shared\StockFolio.Shared.Infrastructure\Stockfolio.Shared.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Shared\Stockfolio.Shared.Abstractions\Stockfolio.Shared.Abstractions.csproj" />
+    <ProjectReference Include="..\..\Shared\Stockfolio.Shared.Infrastructure\Stockfolio.Shared.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

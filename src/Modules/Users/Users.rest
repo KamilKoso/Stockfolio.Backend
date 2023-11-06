@@ -1,4 +1,4 @@
-@url = https://localhost:5000
+@url = http://localhost:80
 
 ###
 GET {{url}}
@@ -30,11 +30,6 @@ Content-Type: application/json
 ###
 @authCookie = {{sign_in.response.headers.set-cookie}}
 @userId = {{sign_in.response.body.id}}
-
-### Use refresh token
-# @name refresh_token_use
-POST {{url}}/account/refresh-token/use
-Content-Type: application/json
 
 
 ### Activate account

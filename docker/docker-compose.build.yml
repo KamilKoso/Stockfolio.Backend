@@ -1,0 +1,82 @@
+version: '3'
+name: stockfolio
+
+services:
+  stockfolio:
+    build: ../
+    container_name: stockfolio-backend
+    ports:
+      - "80:80"
+    env_file:
+      - .env
+    environment:
+      #POSTGRES
+      - POSTGRES__CONNECTIONSTRING=Host=postgres;Database=${POSTGRES_DB:-Stockfolio};Username=${POSTGRES_USER:-postgres};Password=${POSTGRES_PASSWORD}
+      # SEQ
+      - LOGGER__SEQ__ENABLED=${SEQ_ENABLED}
+      - LOGGER__SEQ__URL=http://seq:5341
+      - LOGGER__SEQ__APIKEY=${SEQ_APIKEY}
+    depends_on:
+      postgres:
+        condition: service_healthy
+  
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    env_file:
+      - ../.env
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    shm_size: '4gb'
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $${POSTGRES_USER:-postgres}']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: stockfolio@stockfolio.io
+      PGADMIN_DEFAULT_PASSWORD: password
+    ports:
+      - "5435:80"
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+  
+  seq:
+    image: datalust/seq 
+    container_name: seq
+    restart: unless-stopped
+    environment:
+      - ACCEPT_EULA=Y
+      - SEQ_FIRSTRUN_REQUIREAUTHENTICATIONFORHTTPINGESTION=true
+    ports:
+      - 5341:80
+    volumes:
+      - seq:/data
+  # vault:
+  #   image: vault:1.13.3
+  #   container_name: vault
+  #   restart: unless-stopped
+  #   environment:
+  #     - VAULT_ADDR=http://127.0.0.1:8200
+  #   cap_add:
+  #     - "IPC_LOCK"
+  #   ports:
+  #     - 8200:8200
+
+volumes:
+  postgres:
+    driver: local
+  pgadmin:
+    driver: local
+  seq:
+    driver: local

@@ -52,6 +52,12 @@ public static class Extensions
                     "module.*.json", SearchOption.AllDirectories).Where(x => Regex.IsMatch(x, pattern));
         });
 
+    public static IHostBuilder AddEnviromentVariables(this IHostBuilder builder)
+       => builder.ConfigureAppConfiguration((ctx, cfg) =>
+       {
+           cfg.AddEnvironmentVariables();
+       });
+
     public static IServiceCollection AddModuleRequests(this IServiceCollection services, IList<Assembly> assemblies)
     {
         services.AddModuleRegistry(assemblies);

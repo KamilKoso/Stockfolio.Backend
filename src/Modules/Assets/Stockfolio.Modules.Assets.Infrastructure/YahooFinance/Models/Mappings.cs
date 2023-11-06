@@ -84,10 +84,12 @@ internal static class Mappings
                                 .ToOffset(TimeSpan.FromSeconds(yahooFinanceQuoteDividend.Metadata.GmtOffsetInSeconds));
 
                 var open = yahooFinanceQuoteDividend.Indicators.Quote[0].Open[index];
+                var high = yahooFinanceQuoteDividend.Indicators.Quote[0].High[index];
+                var low = yahooFinanceQuoteDividend.Indicators.Quote[0].Low[index];
                 var close = yahooFinanceQuoteDividend.Indicators.Quote[0].Close[index];
                 var adjustedClose = yahooFinanceQuoteDividend.Indicators.AdjustedClose?[0].AdjustedClosePrices[index];
                 var volume = yahooFinanceQuoteDividend.Indicators.Quote[0].Volume[index];
-                return new Quote(date, adjustedClose ?? close ?? open, volume);
+                return new Quote(date, open, high, low, close, adjustedClose, volume);
             }).ToList();
 
         return new(symbol: yahooFinanceQuoteDividend.Metadata.Symbol,

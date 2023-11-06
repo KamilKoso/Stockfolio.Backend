@@ -1,4 +1,4 @@
-@url = https://localhost:5000
+@url = http://localhost:80
 
 ###
 GET {{url}}/modules
@@ -14,7 +14,7 @@ Content-Type: application/json
 
 @symbol = EXPO
 ### Get quotes
-# @name zget_quotes
+# @name get_quotes
 GET {{url}}/assets?symbols={{symbol}}
 Content-Type: application/json
 
@@ -29,7 +29,7 @@ Content-Type: application/json
 @range = 1y
 ### Get historical data by range
 # @name get_historical_data_by_range
-GET {{url}}/assets/historical-data/{{symbol}}?range={{range}}&interval={{interval}}
+GET {{url}}/assets/historical/{{symbol}}?range={{range}}&interval={{interval}}
 Content-Type: application/json
 
 ################### FOREX ###################
