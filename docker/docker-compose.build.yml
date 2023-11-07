@@ -10,15 +10,20 @@ services:
     env_file:
       - .env
     environment:
-      #POSTGRES
+      # POSTGRES
       - POSTGRES__CONNECTIONSTRING=Host=postgres;Database=${POSTGRES_DB:-Stockfolio};Username=${POSTGRES_USER:-postgres};Password=${POSTGRES_PASSWORD}
       # SEQ
-      - LOGGER__SEQ__ENABLED=${SEQ_ENABLED}
       - LOGGER__SEQ__URL=http://seq:5341
-      - LOGGER__SEQ__APIKEY=${SEQ_APIKEY}
+      # VAULT
+      - VAULT__URL=http://vault:8200
+      - VAULT__USERNAME=${VAULT_USERNAME}
+      - VAULT__PASSWORD=${VAULT_PASSWORD}
+      - VAULT__KV__PATH=${VAULT_KV_PATH}
     depends_on:
       postgres:
         condition: service_healthy
+      vault:
+        condition: service_started
   
   postgres:
     image: postgres:16
@@ -36,6 +41,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 5s
     volumes:
       - postgres:/var/lib/postgresql/data
 
@@ -52,7 +58,7 @@ services:
       - pgadmin:/var/lib/pgadmin
   
   seq:
-    image: datalust/seq 
+    image: datalust/seq:2023.4
     container_name: seq
     restart: unless-stopped
     environment:
@@ -62,16 +68,20 @@ services:
       - 5341:80
     volumes:
       - seq:/data
-  # vault:
-  #   image: vault:1.13.3
-  #   container_name: vault
-  #   restart: unless-stopped
-  #   environment:
-  #     - VAULT_ADDR=http://127.0.0.1:8200
-  #   cap_add:
-  #     - "IPC_LOCK"
-  #   ports:
-  #     - 8200:8200
+  vault:
+    image: hashicorp/vault:1.15
+    container_name: vault
+    restart: unless-stopped
+    environment:
+      - VAULT_ADDR=http://127.0.0.1:8200
+    cap_add:
+      - "IPC_LOCK"
+    ports:
+      - 8200:8200
+    volumes:
+      - vault:/vault/file
+      - ./vault:/vault/config
+    entrypoint: vault server -config=/vault/config/vault.json
 
 volumes:
   postgres:
@@ -79,4 +89,6 @@ volumes:
   pgadmin:
     driver: local
   seq:
+    driver: local
+  vault:
     driver: local

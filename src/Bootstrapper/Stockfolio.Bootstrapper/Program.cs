@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Stockfolio.Shared.Infrastructure.Logging;
 using Stockfolio.Shared.Infrastructure.Modules;
+using Stockfolio.Shared.Infrastructure.Vault;
 using System.Threading.Tasks;
 
 namespace Stockfolio.Bootstrapper;
@@ -15,5 +16,6 @@ public class Program
         Host.CreateDefaultBuilder(args)
             .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>())
             .ConfigureModules()
+            .UseVault()
             .UseLogging();
 }
