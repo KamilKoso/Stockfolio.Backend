@@ -5,8 +5,11 @@ using Stockfolio.Shared.Abstractions.Queries;
 
 namespace Stockfolio.Modules.Assets.Application.Queries.Assets.Handlers;
 
-internal class SearchAssetsHandler : IQueryHandler<SearchAssets, SearchAssetsResultDto>
+internal sealed class SearchAssetsHandler : IQueryHandler<SearchAssets, SearchAssetsResultDto>
 {
+    internal static Func<SearchAssets, string> CacheKeyBuilder = (query) => $"{typeof(SearchAssets)}_{query.Query}";
+    internal static TimeSpan CacheExpiration = TimeSpan.FromMinutes(5);
+
     private readonly IStockMarketRepository _quotesRepository;
 
     public SearchAssetsHandler(IStockMarketRepository stockMarketRepository)

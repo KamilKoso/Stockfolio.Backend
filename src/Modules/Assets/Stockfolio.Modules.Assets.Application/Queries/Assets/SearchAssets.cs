@@ -7,7 +7,7 @@ internal record SearchAssets : IQuery<SearchAssetsResultDto>
 {
     private int _count = 7;
 
-    public string Query { get; set; }
+    public string Query { get; }
 
     public int Count
     {

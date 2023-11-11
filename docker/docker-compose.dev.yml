@@ -26,8 +26,18 @@ services:
     volumes:
       - pgadmin:/var/lib/pgadmin
 
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - 6379:6379
+    volumes: 
+      - redis:/data
+
 volumes:
   postgres:
     driver: local
   pgadmin:
+    driver: local
+  redis:
     driver: local

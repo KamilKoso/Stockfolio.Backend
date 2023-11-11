@@ -5,5 +5,5 @@ namespace Stockfolio.Modules.Assets.Application.Queries.Assets;
 
 internal class GetAssets : IQuery<IEnumerable<AssetDto>>
 {
-    public IEnumerable<string> Symbols { get; set; }
+    public IEnumerable<string> Symbols { get; }
 }

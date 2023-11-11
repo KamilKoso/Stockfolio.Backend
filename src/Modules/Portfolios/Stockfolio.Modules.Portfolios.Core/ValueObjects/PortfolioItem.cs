@@ -2,7 +2,7 @@
 
 namespace Stockfolio.Modules.Portfolios.Core.ValueObjects;
 
-internal class PortfolioItem
+internal record PortfolioItem
 {
     public string Name { get; }
     public uint Quantity { get; }

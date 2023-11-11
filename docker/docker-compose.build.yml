@@ -19,6 +19,9 @@ services:
       - VAULT__USERNAME=${VAULT_USERNAME}
       - VAULT__PASSWORD=${VAULT_PASSWORD}
       - VAULT__KV__PATH=${VAULT_KV_PATH}
+      
+      # REDIS
+      - REDIS__CONNECTIONSTRING=${REDIS_CONNECTIONSTRING}
     depends_on:
       postgres:
         condition: service_healthy
@@ -83,6 +86,12 @@ services:
       - ./vault:/vault/config
     entrypoint: vault server -config=/vault/config/vault.json
 
+  redis:
+    image: redis
+    container_name: redis
+    volumes: 
+      - redis:/data
+
 volumes:
   postgres:
     driver: local
@@ -91,4 +100,6 @@ volumes:
   seq:
     driver: local
   vault:
+    driver: local
+  redis:
     driver: local

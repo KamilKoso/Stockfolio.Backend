@@ -11,6 +11,7 @@ using Stockfolio.Shared.Abstractions.Storage;
 using Stockfolio.Shared.Abstractions.Time;
 using Stockfolio.Shared.Infrastructure.Api;
 using Stockfolio.Shared.Infrastructure.Auth;
+using Stockfolio.Shared.Infrastructure.Cache;
 using Stockfolio.Shared.Infrastructure.Commands;
 using Stockfolio.Shared.Infrastructure.Contexts;
 using Stockfolio.Shared.Infrastructure.Contracts;
@@ -100,6 +101,7 @@ public static class Extensions
         services.AddOutbox(configuration);
         services.AddHostedService<DbContextAppInitializer>();
         services.AddContracts();
+        services.AddRedisCache(configuration);
         services.AddControllers()
             .ConfigureApplicationPartManager(manager =>
             {

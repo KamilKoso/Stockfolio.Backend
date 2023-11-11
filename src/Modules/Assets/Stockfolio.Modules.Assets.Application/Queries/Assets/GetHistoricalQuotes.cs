@@ -1,4 +1,5 @@
 ﻿using Stockfolio.Modules.Assets.Application.Dto.Assets;
+using Stockfolio.Modules.Assets.Core.ValueObjects;
 using Stockfolio.Shared.Abstractions.Queries;
 
 namespace Stockfolio.Modules.Assets.Application.Queries.Assets;
@@ -9,14 +10,14 @@ internal record GetHistoricalQuotes : IQuery<HistoricalQuotesDto>
     {
         Symbol = symbol;
         Range = range;
-        Interval = interval ?? "1d";
+        Interval = new Interval(interval ?? "1d");
         Start = start ?? DateTimeOffset.Now.AddYears(-1);
         End = end ?? DateTimeOffset.Now;
     }
 
-    public string Symbol { get; set; }
-    public DateTimeOffset Start { get; set; }
-    public DateTimeOffset End { get; set; }
-    public string Interval { get; set; }
-    public string Range { get; set; }
+    public string Symbol { get; }
+    public DateTimeOffset Start { get; }
+    public DateTimeOffset End { get; }
+    public Interval Interval { get; }
+    public string Range { get; }
 }

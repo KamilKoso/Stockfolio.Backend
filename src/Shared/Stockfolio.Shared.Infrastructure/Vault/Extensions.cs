@@ -58,41 +58,37 @@ internal static class Extensions
         }
 
         var options = configuration.GetOptions<VaultOptions>(sectionName);
-        VerifyOptions(options);
-        services.AddSingleton(options);
-        var (client, settings) = GetClientAndSettings(options);
-        services.AddSingleton(settings);
-        services.AddSingleton(client);
+        if (VerifyOptions(options))
+        {
+            services.AddSingleton(options);
+            var (client, settings) = GetClientAndSettings(options);
+            services.AddSingleton(settings);
+            services.AddSingleton(client);
+        }
 
         return services;
     }
 
-    private static void VerifyOptions(VaultOptions options)
+    private static bool VerifyOptions(VaultOptions options)
     {
-        if (options.Kv is null)
-        {
-            return;
-        }
+        if (options.Kv is null || !options.Kv.Enabled || !options.Enabled)
+            return false;
 
         if (options.Kv.EngineVersion > 2 || options.Kv.EngineVersion < 0)
-        {
             throw new VaultException($"Invalid KV engine version: {options.Kv.EngineVersion} (available: 1 or 2).");
-        }
 
         if (options.Kv.EngineVersion == 0)
-        {
             options.Kv.EngineVersion = 2;
-        }
+
+        return true;
     }
 
     private static async Task AddVaultAsync(this IConfigurationBuilder builder, VaultOptions options)
     {
-        VerifyOptions(options);
-        var (client, _) = GetClientAndSettings(options);
-        if (options.Kv is null || !options.Kv.Enabled)
-        {
+        if (!VerifyOptions(options))
             return;
-        }
+
+        var (client, _) = GetClientAndSettings(options);
 
         var kvPath = options.Kv?.Path;
         if (string.IsNullOrWhiteSpace(kvPath))

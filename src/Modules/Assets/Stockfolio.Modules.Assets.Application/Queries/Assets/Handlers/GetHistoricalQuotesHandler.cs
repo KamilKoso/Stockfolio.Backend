@@ -5,8 +5,18 @@ using Stockfolio.Shared.Abstractions.Queries;
 
 namespace Stockfolio.Modules.Assets.Application.Queries.Assets.Handlers;
 
-internal class GetHistoricalQuotesHandler : IQueryHandler<GetHistoricalQuotes, HistoricalQuotesDto>
+internal sealed class GetHistoricalQuotesHandler : IQueryHandler<GetHistoricalQuotes, HistoricalQuotesDto>
 {
+    internal static Func<GetHistoricalQuotes, string> CacheKeyBuilder = (query) => $"{typeof(GetHistoricalQuotes)}_{query.Symbol}_{query.Range}_{query.Interval}_{query.Start}_{query.End}";
+
+    internal static Func<GetHistoricalQuotes, TimeSpan?> CacheExpirationBuilder = (query) => query.Interval.Unit switch
+    {
+        "m" => TimeSpan.FromMinutes(query.Interval.Value),
+        "h" => TimeSpan.FromHours(query.Interval.Value),
+        "d" or "wk" or "mo" => TimeSpan.FromDays(1),
+        _ => TimeSpan.FromMinutes(5)
+    };
+
     private readonly IStockMarketRepository _quotesRepository;
 
     public GetHistoricalQuotesHandler(IStockMarketRepository quotesRepository)

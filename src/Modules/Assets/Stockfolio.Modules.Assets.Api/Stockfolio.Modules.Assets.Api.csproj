@@ -15,7 +15,6 @@
 </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Shared\Stockfolio.Shared.Infrastructure\Stockfolio.Shared.Infrastructure.csproj" />
     <ProjectReference Include="..\Stockfolio.Modules.Assets.Infrastructure\Stockfolio.Modules.Assets.Infrastructure.csproj" />
   </ItemGroup>
 
