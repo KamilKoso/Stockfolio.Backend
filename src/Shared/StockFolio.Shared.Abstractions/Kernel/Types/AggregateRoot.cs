@@ -6,7 +6,7 @@ namespace Stockfolio.Shared.Abstractions.Kernel.Types;
 public abstract class AggregateRoot<T>
 {
     public T Id { get; protected set; }
-    public int Version { get; protected set; } = 1;
+    public ushort Version { get; protected set; } = ushort.MinValue;
     public IEnumerable<IDomainEvent> Events => _events;
 
     private readonly List<IDomainEvent> _events = new();
@@ -14,10 +14,9 @@ public abstract class AggregateRoot<T>
 
     protected void AddEvent(IDomainEvent @event)
     {
-        if (!_events.Any() && !_versionIncremented)
+        if (!_events.Any())
         {
-            Version++;
-            _versionIncremented = true;
+            IncrementVersion();
         }
 
         _events.Add(@event);
@@ -31,8 +30,7 @@ public abstract class AggregateRoot<T>
         {
             return;
         }
-
-        Version++;
+        Version = unchecked(Version++);
         _versionIncremented = true;
     }
 }
