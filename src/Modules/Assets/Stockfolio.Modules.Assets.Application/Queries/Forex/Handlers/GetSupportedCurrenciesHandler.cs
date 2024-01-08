@@ -7,8 +7,7 @@ namespace Stockfolio.Modules.Assets.Application.Queries.Forex.Handlers;
 internal class GetSupportedCurrenciesHandler : IQueryHandler<GetSupportedCurrencies, Dictionary<string, SupportedCurrencyDto>>
 {
     public Task<Dictionary<string, SupportedCurrencyDto>> HandleAsync(GetSupportedCurrencies query, CancellationToken cancellationToken = default)
-    => Task.FromResult(Currency
-          .SupportedCurrencies
-          .ToDictionary(key => key.Key,
-                        value => new SupportedCurrencyDto(value.Value.Code, value.Value.DisplayName, value.Value.Symbol)));
+    => Task.FromResult(SupportedCurrencies.All
+                        .ToDictionary(key => key.Key,
+                                      value => new SupportedCurrencyDto(value.Value.Code, value.Value.DisplayName, value.Value.Symbol)));
 }
