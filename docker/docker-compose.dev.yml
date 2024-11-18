@@ -22,7 +22,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: stockfolio@stockfolio.io
       PGADMIN_DEFAULT_PASSWORD: password
     ports:
-      - "80"
+      - "5435:80"
     volumes:
       - pgadmin:/var/lib/pgadmin
 

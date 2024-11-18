@@ -1,6 +1,6 @@
 ﻿using Stockfolio.Modules.Assets.Application.Dto.Forex;
-using Stockfolio.Shared.Abstractions.Kernel.ValueObjects.Currencies;
 using Stockfolio.Shared.Abstractions.Queries;
+using Stockfolio.Shared.Core.ValueObjects.Currencies;
 
 namespace Stockfolio.Modules.Assets.Application.Queries.Forex.Handlers;
 

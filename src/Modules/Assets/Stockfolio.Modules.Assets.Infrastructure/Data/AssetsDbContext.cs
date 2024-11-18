@@ -14,7 +14,7 @@ internal class AssetsDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder); // Keep this line first so ASP .NET Identity registers its default, which later could be override
+        base.OnModelCreating(modelBuilder);
         modelBuilder.HasDefaultSchema("assets");
         modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
     }

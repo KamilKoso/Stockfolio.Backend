@@ -1,7 +1,7 @@
 ﻿using Stockfolio.Modules.Assets.Core.Assets.Exceptions;
 using Stockfolio.Modules.Assets.Core.Assets.Quotes;
-using Stockfolio.Shared.Abstractions.Kernel.Types;
-using Stockfolio.Shared.Abstractions.Kernel.ValueObjects.Currencies;
+using Stockfolio.Shared.Core.Types;
+using Stockfolio.Shared.Core.ValueObjects.Currencies;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("Stockfolio.Modules.Assets.Api")]

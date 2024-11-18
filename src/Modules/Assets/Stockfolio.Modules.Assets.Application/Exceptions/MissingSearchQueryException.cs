@@ -1,4 +1,4 @@
-﻿using Stockfolio.Shared.Abstractions.Exceptions;
+﻿using Stockfolio.Shared.Core.Exceptions;
 
 namespace Stockfolio.Modules.Assets.Application.Exceptions;
 

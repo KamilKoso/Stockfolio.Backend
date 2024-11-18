@@ -1,7 +1,7 @@
 ﻿using Stockfolio.Modules.Assets.Application.Dto.Assets;
 using Stockfolio.Modules.Assets.Application.Repositories;
-using Stockfolio.Shared.Abstractions;
 using Stockfolio.Shared.Abstractions.Queries;
+using Stockfolio.Shared.Core;
 
 namespace Stockfolio.Modules.Assets.Application.Queries.Assets.Handlers;
 

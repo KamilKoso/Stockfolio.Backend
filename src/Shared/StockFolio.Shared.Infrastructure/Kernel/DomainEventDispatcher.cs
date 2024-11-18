@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Stockfolio.Shared.Abstractions.Kernel;
+using Stockfolio.Shared.Core.Events;
 using System;
 using System.Linq;
 using System.Threading;

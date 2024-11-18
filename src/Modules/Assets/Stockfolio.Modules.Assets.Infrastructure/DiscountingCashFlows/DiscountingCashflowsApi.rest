@@ -1,0 +1,35 @@
+@baseUrl = https://discountingcashflows.com/api
+
+@ticker = AAPL
+@period = annual
+@tickers = AAPL,MSFT,KO
+
+### Get Symbol List
+# @name get_symbol_list
+GET {{baseUrl}}/symbol-list/
+Content-Type: application/json
+
+### Get Income Statement
+# @name get_income_statement
+GET {{baseUrl}}/income-statement/?ticker={{ticker}}&period={{period}}
+Content-Type: application/json
+
+### Get Balance Sheet Statement
+# @name get_balance_sheet_statement
+GET {{baseUrl}}/balance-sheet-statement/?ticker={{ticker}}&period={{period}}
+Content-Type: application/json
+
+### Get Ratios
+# @name get_ratios
+GET {{baseUrl}}/ratios/?ticker={{ticker}}&period={{period}}
+Content-Type: application/json
+
+### Get Profile
+# @name get_profile
+GET {{baseUrl}}/profile/?ticker={{ticker}}
+Content-Type: application/json
+
+### Get Quotes
+# @name get_quotes
+GET {{baseUrl}}/quotes/?tickers={{tickers}}
+Content-Type: application/json

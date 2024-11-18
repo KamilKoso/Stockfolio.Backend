@@ -3,5 +3,5 @@
 public class Transaction
 {
     public Guid Id { get; set; }
-    public DateTimeOffset TransactionDate { get; private set; }
+    public DateTimeOffset Date { get; private set; }
 }

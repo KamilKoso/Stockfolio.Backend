@@ -1,5 +1,5 @@
 ﻿using Stockfolio.Modules.Assets.Core.ValueObjects;
-using Stockfolio.Shared.Abstractions.Exceptions;
+using Stockfolio.Shared.Core.Exceptions;
 
 namespace Stockfolio.Modules.Assets.Core.Exceptions;
 

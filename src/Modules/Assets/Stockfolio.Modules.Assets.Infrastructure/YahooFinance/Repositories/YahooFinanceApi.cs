@@ -7,7 +7,7 @@ using Stockfolio.Modules.Assets.Infrastructure.Exceptions;
 using Stockfolio.Modules.Assets.Infrastructure.YahooFinance.Models;
 using Stockfolio.Modules.Assets.Infrastructure.YahooFinance.Models.HistoricalData;
 using Stockfolio.Modules.Assets.Infrastructure.YahooFinance.Options;
-using Stockfolio.Shared.Abstractions.Kernel.ValueObjects.Currencies;
+using Stockfolio.Shared.Core.ValueObjects.Currencies;
 using Stockfolio.Shared.Infrastructure.Serialization;
 using System.Net;
 using System.Text.Json.Nodes;

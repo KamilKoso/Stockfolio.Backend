@@ -1,4 +1,5 @@
 ﻿using Stockfolio.Shared.Abstractions.Exceptions;
+using Stockfolio.Shared.Core.Exceptions;
 using System;
 using System.Net;
 
